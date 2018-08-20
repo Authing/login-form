@@ -21,7 +21,10 @@
     window.onload = function() {
 
         var loadBasicHTML = function() {
-            document.body.innerHTML = '';
+            var html = '';
+            if(html) {
+                document.body.innerHTML = html;
+            }
         }
 
         var loadVue = function(onload) {
