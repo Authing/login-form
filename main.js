@@ -20,6 +20,10 @@
 
     window.onload = function() {
 
+        var loadBasicHTML = function() {
+            document.body.innerHTML = '';
+        }
+
         var loadVue = function(onload) {
             var vueScript = document.createElement('script');
             vueScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vue');
@@ -27,14 +31,21 @@
             document.body.appendChild(vueScript);
         }
 
+        loadBasicHTML();
+
         loadVue(function() {
-            console.log(Vue);
+            var lockApp = new Vue({
+                el: '#app',
+                data: {
+                  message: 'Hello Vue!'
+                }
+            });
         });
 
     }
     
     return {
-        a: '1'
+        hello: 'Authing Lock'
     }
   }));
   
