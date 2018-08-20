@@ -50,7 +50,6 @@
           scanCodeVisible: false,
           signUpVisible: false
 
-
         },
         methods: {
           gotoLogin: function gotoLogin() {
@@ -88,7 +87,6 @@
           },
           handleForgetPassword: function handleForgetPassword() {
             console.log('handleForgetPassword')
-
           },
         }
       })

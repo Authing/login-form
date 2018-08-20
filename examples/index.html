@@ -6,7 +6,54 @@
   <title>UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
-  <script src="../main.js"></script>
+  <style type="text/css">
+
+    @media screen and (max-width: 768px) {
+
+      body {
+        height: 100vh;
+      }
+
+      #app, .container, .row, .col-md-4 {
+        height: 100%;
+      }
+
+      .form-footer {
+        margin-bottom: 0px!important;
+        width: calc(100% + 30px);
+        position: absolute;
+        padding-left: -15px;
+        padding-right: 44px;
+        left: 0px;
+        bottom: 0px;                
+      }  
+
+      .fh5co-form {
+        padding-bottom: 0px;
+        margin-top: 0px!important; 
+        height: 100%;       
+      }
+
+      .container {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+    }
+
+    .form-footer .btn {
+      width: 100%;
+      border-radius: 0px;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .marginTop11 {
+      margin-top: 11px;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -28,13 +75,25 @@
           </div>
           <div class="form-group">
             <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
+            <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>            
           </div>
           <div class="form-group">
-            <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>
-          </div>
-          <div class="form-group">
+            <div class="logmod__alter">
+              <div class="logmod__alter-container">
+                <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
+                  <div class="connect__icon">
+                    <i class="fa fa-github"></i>
+                  </div>
+                  <div class="connect__context">
+                    <span>使用 <strong>Github</strong> 登录</span>
+                  </div>
+                </a>               
+              </div>
+            </div>
+          </div>          
+
+          <div class="form-group form-footer">
             <input @click="handleLogin" type="submit" value="登录" class="btn btn-primary">
-            <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
           </div>
         </form>
 
@@ -51,7 +110,7 @@
           <div class="form-group">
             <p><a href="#" @click="gotoLogin">登录</a> 或 <a href="#" @click="gotoSignUp">注册</a></p>
           </div>
-          <div class="form-group">
+          <div class="form-group form-footer">
             <input @click="handleForgetPassword" type="submit" value="发送邮件" class="btn btn-primary">
           </div>
         </form>
@@ -84,7 +143,7 @@
           <div class="form-group">
             <p>已经注册？ <a href="#" @click="gotoLogin">登录</a></p>
           </div>
-          <div class="form-group">
+          <div class="form-group form-footer">
             <input @click="handleSignUp" type="submit" value="注册" class="btn btn-primary">
             <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
           </div>
@@ -95,6 +154,7 @@
 </div>
 </body>
 
+<script src="../main.js"></script>
 <script>
   console.log(AuthingLock)
 </script>
