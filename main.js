@@ -1,5 +1,7 @@
 /*
-* Authing.cn
+ * Authing Lock v1.0.0 (https://authing.cn)
+ * Copyright 2017-2018 Authing, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
 */
 
 (function (global, factory) {
@@ -37,7 +39,7 @@
         loadBasicHTML();
 
         loadVue(function() {
-            var lockApp = new Vue({
+            var authingLockApp = new Vue({
                 el: '#app',
                 data: {
                   message: 'Hello Vue!'
