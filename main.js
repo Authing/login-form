@@ -1,3 +1,7 @@
+/*
+* Authing.cn
+*/
+
 (function (global, factory) {
     // CommonJS and Node.js module support.
     if (typeof exports !== 'undefined') {
@@ -13,10 +17,24 @@
         global.AuthingLock = global.AuthingLock || factory();
     }
   }(this, function() {
+
+    window.onload = function() {
+
+        var loadScript = function(onload) {
+            var vueScript = document.createElement('script');
+            vueScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vue');
+            vueScript.onload = onload;
+            document.body.appendChild(vueScript);
+        }
+
+        loadScript(function() {
+            console.log(Vue);
+        });
+
+    }
     
     return {
         a: '1'
     }
   }));
-  
   
