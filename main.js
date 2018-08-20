@@ -20,14 +20,14 @@
 
     window.onload = function() {
 
-        var loadScript = function(onload) {
+        var loadVue = function(onload) {
             var vueScript = document.createElement('script');
             vueScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vue');
             vueScript.onload = onload;
             document.body.appendChild(vueScript);
         }
 
-        loadScript(function() {
+        loadVue(function() {
             console.log(Vue);
         });
 
