@@ -1,0 +1,23 @@
+{
+  "name": "authing-login-form",
+  "version": "1.0.0",
+  "description": "UI components of login form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Authing/login-form.git"
+  },
+  "keywords": [
+    "authing",
+    "login"
+  ],
+  "author": "Authing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Authing/login-form/issues"
+  },
+  "homepage": "https://github.com/Authing/login-form#readme"
+}
