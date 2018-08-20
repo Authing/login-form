@@ -1,48 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>UI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="../main.js"></script>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
+  <script src="../main.js"></script>
 </head>
 
 <body>
-    <div id="app">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					
-					<form action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
-						<h2>Sign In</h2>
-						<div class="form-group">
-							<label for="username" class="sr-only">Username</label>
-							<input type="text" class="form-control" id="username" placeholder="Username" autocomplete="off">
-						</div>
-						<div class="form-group">
-							<label for="password" class="sr-only">Password</label>
-							<input type="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
-						</div>
-						<div class="form-group">
-							<label for="remember"><input type="checkbox" id="remember"> Remember Me</label>
-						</div>
-						<div class="form-group">
-							<p>Not registered? <a href="sign-up.html">Sign Up</a> | <a href="forgot.html">Forgot Password?</a></p>
-						</div>
-						<div class="form-group">
-							<input type="submit" value="Sign In" class="btn btn-primary">
-						</div>
-					</form>
+<div id="app">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
 
-				</div>
-			</div>
-		</div>
-    </div>    
+        <!-- 登录对话框 -->
+        <form v-if="loginVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+          <h2>登录</h2>
+          <div class="form-group">
+            <label for="login-username" class="sr-only">用户名</label>
+            <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="login-password" class="sr-only">密码</label>
+            <input type="password" class="form-control" id="login-password" placeholder="密码" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
+          </div>
+          <div class="form-group">
+            <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>
+          </div>
+          <div class="form-group">
+            <input @click="handleLogin" type="submit" value="登录" class="btn btn-primary">
+            <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
+          </div>
+        </form>
+
+        <!-- 忘记密码对话框 -->
+        <form v-if="forgetPasswordVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+          <h2>忘记密码</h2>
+          <!--<div class="form-group">-->
+            <!--<div class="alert alert-success" role="alert">Your email has been sent.</div>-->
+          <!--</div>-->
+          <div class="form-group">
+            <label for="forget-password-email" class="sr-only">邮箱地址</label>
+            <input type="email" class="form-control" id="forget-password-email" placeholder="邮箱地址" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <p><a href="#" @click="gotoLogin">登录</a> 或 <a href="#" @click="gotoSignUp">注册</a></p>
+          </div>
+          <div class="form-group">
+            <input @click="handleForgetPassword" type="submit" value="发送邮件" class="btn btn-primary">
+          </div>
+        </form>
+
+        <!-- 注册对话框 -->
+        <form v-if="signUpVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+          <h2>注册</h2>
+          <!--<div class="form-group">-->
+            <!--<div class="alert alert-success" role="alert">Your info has been saved.</div>-->
+          <!--</div>-->
+          <div class="form-group">
+            <label for="sign-up-name" class="sr-only">昵称</label>
+            <input type="text" class="form-control" id="sign-up-name" placeholder="昵称" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="sign-up-email" class="sr-only">邮箱地址</label>
+            <input type="email" class="form-control" id="sign-up-email" placeholder="邮箱地址" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="sign-up-password" class="sr-only">密码</label>
+            <input type="password" class="form-control" id="sign-up-password" placeholder="密码" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="sign-up-re-password" class="sr-only">确认密码</label>
+            <input type="password" class="form-control" id="sign-up-re-password" placeholder="确认密码" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="sign-up-remember"><input type="checkbox" id="sign-up-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
+          </div>
+          <div class="form-group">
+            <p>已经注册？ <a href="#" @click="gotoLogin">登录</a></p>
+          </div>
+          <div class="form-group">
+            <input @click="handleSignUp" type="submit" value="注册" class="btn btn-primary">
+            <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 <script>
-    console.log(AuthingLock);
+  console.log(AuthingLock)
 </script>
 </html>
