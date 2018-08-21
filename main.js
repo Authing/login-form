@@ -21,7 +21,6 @@
 }(this, function () {
 
   window.onload = function () {
-    console.log('test')
     var loadBasicHTML = function () {
       var html = ''
       if (html) {
