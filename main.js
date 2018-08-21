@@ -93,6 +93,7 @@
           },
         }
       })
+      console.log(document.getElementById('app').classList);
       document.getElementById('app').classList.remove('hide')
     })
   }

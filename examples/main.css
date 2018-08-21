@@ -637,7 +637,7 @@ body {
   
   .menu {
     padding: 0;
-    margin: 30px 0 0 .authing-form .form-group0;
+    margin: 30px 0 0 0;
   }
   .menu li {
     list-style: none;
@@ -654,15 +654,21 @@ body {
     color: #b3b3b3;
   }
   
-  .authing-form {
+  .authing-form, .form-wrapper {
     padding: 22px;
-    margin-top: 4em;
     -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
+    background: #FFFFFF;
   }
+
+  .form-wrapper {
+  	padding: 0px;
+    margin-top: 4em;
+    border-radius: 5px;  	
+  }
+
   .style-2 .authing-form {
     -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
