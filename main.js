@@ -21,7 +21,6 @@
 }(this, function () {
 
   window.onload = function () {
-    console.log('test')
     var loadBasicHTML = function () {
       var html = ''
       if (html) {
@@ -49,7 +48,6 @@
           oauthVisible: false,
           scanCodeVisible: false,
           signUpVisible: false
-
 
         },
         mounted: function () {
@@ -91,7 +89,6 @@
           },
           handleForgetPassword: function handleForgetPassword() {
             console.log('handleForgetPassword')
-
           },
         }
       })
