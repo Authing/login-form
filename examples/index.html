@@ -50,7 +50,16 @@
       border-radius: 0px;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
+      height: 60px;
+      font-size: 16px;
+      background: #00a1ea;
+      box-shadow: none;
+      font-weight: 200;
     }
+
+    .form-footer .btn:hover, .form-footer .btn:focus, .form-footer .btn:active {
+      background: #0184bf !important;
+    }    
 
     .full-width {
       width: 100%;
@@ -58,6 +67,12 @@
 
     .marginTop11 {
       margin-top: 11px;
+    }
+
+    .form-tip {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 400;
     }
 
   </style>
@@ -102,6 +117,8 @@
                   </div>
               </div>
 
+              <P class="form-tip">或者</P>
+
               <div class="form-group">
                 <label for="login-username" class="sr-only">用户名</label>
                 <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
@@ -110,10 +127,21 @@
                 <label for="login-password" class="sr-only">密码</label>
                 <input type="password" class="form-control" id="login-password" placeholder="密码" autocomplete="off">
               </div>
-              <div class="form-group">
-                <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
-                <p><a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>
+              <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" style="margin-bottom:0px;">
+                  <label for="login-remember" style="width:100%">
+                    <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span>
+                    <a href="#" @click="gotoSignUp">注册</a>
+                  </label>
+                </div>                
               </div>
+              <div class="col-md-6">
+                <div style="display:inline-block;text-align:right;width:100%;font-size:14px">
+                  <a href="#" @click="gotoForgetPassword">忘记密码？</a>
+                </div>                
+              </div>                   
+              </div>           
     
             </form>
           </div>

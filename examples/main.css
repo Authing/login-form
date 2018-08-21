@@ -162,7 +162,7 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
 .connect__icon {
   vertical-align: middle;
   float: left;
-  width: 70px;
+  width: 50px;
   text-align: center;
   font-size: 22px;
 }
@@ -171,14 +171,14 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   text-align: center;
 }
 .connect.facebook {
-  background: #3b5998;
+  background: #0099CC;
   color: #FFF;
 }
 .connect.facebook a {
   color: #FFF;
 }
 .connect.facebook .connect__icon {
-  background: #283d68;
+  background: #006699;
 }
 .connect.googleplus {
   background: #dd4b39;
