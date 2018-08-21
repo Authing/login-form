@@ -6,7 +6,17 @@
   <title>UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="animate.css"/>
   <script src="../main.js"></script>
+  <script src="../authing-js-sdk-bundle.js"></script>
+  <style>
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,6 +26,7 @@
       <div class="col-md-4 col-md-offset-4">
 
         <!-- 登录对话框 -->
+        <transition name="fade">
         <form v-if="loginVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
           <h2>登录</h2>
           <div class="form-group">
@@ -37,7 +48,7 @@
             <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
           </div>
         </form>
-
+        </transition>
         <!-- 忘记密码对话框 -->
         <form v-if="forgetPasswordVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
           <h2>忘记密码</h2>
@@ -97,5 +108,6 @@
 
 <script>
   console.log(AuthingLock)
+
 </script>
 </html>

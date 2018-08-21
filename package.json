@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Authing/login-form/issues"
   },
-  "homepage": "https://github.com/Authing/login-form#readme"
+  "homepage": "https://github.com/Authing/login-form#readme",
+  "dependencies": {
+    "authing-js-sdk": "^0.1.23"
+  }
 }
