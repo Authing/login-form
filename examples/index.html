@@ -64,39 +64,41 @@
       <div class="col-md-4 col-md-offset-4">
 
         <!-- 登录对话框 -->
-        <form v-if="loginVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
-          <h2>登录</h2>
-          <div class="form-group">
-            <label for="login-username" class="sr-only">用户名</label>
-            <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="login-password" class="sr-only">密码</label>
-            <input type="password" class="form-control" id="login-password" placeholder="密码" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
-            <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>            
-          </div>
-          <div class="form-group">
-            <div class="logmod__alter">
-              <div class="logmod__alter-container">
-                <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
-                  <div class="connect__icon">
-                    <i class="fa fa-github"></i>
-                  </div>
-                  <div class="connect__context">
-                    <span>使用 <strong>Github</strong> 登录</span>
-                  </div>
-                </a>               
-              </div>
+        <div class="form-wrapper">
+          <form v-if="loginVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+            <h2>登录</h2>
+            <div class="form-group">
+              <label for="login-username" class="sr-only">用户名</label>
+              <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
             </div>
-          </div>          
+            <div class="form-group">
+              <label for="login-password" class="sr-only">密码</label>
+              <input type="password" class="form-control" id="login-password" placeholder="密码" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
+              <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>            
+            </div>
+            <div class="form-group">
+              <div class="logmod__alter">
+                <div class="logmod__alter-container">
+                  <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
+                    <div class="connect__icon">
+                      <i class="fa fa-github"></i>
+                    </div>
+                    <div class="connect__context">
+                      <span>使用 <strong>Github</strong> 登录</span>
+                    </div>
+                  </a>               
+                </div>
+              </div>
+            </div>          
+          </form>
 
           <div class="form-group form-footer">
             <input @click="handleLogin" type="submit" value="登录" class="btn btn-primary">
           </div>
-        </form>
+        </div>
 
         <!-- 忘记密码对话框 -->
         <form v-if="forgetPasswordVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
