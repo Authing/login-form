@@ -44,33 +44,37 @@
           message: 'Hello Vue!',
 
           forgetPasswordVisible: false,
-          loginVisible: true,
+          loginVisible: false,
           oauthVisible: false,
           scanCodeVisible: false,
-          signUpVisible: false
+          signUpVisible: false,
 
+        },
+        mounted: function () {
+          console.log(this)
+          this.loginVisible = true
         },
         methods: {
           gotoLogin: function gotoLogin() {
-            authingLockApp.forgetPasswordVisible = false
-            authingLockApp.oauthVisible = false
-            authingLockApp.scanCodeVisible = false
-            authingLockApp.signUpVisible = false
-            authingLockApp.loginVisible = true
+            this.forgetPasswordVisible = false
+            this.oauthVisible = false
+            this.scanCodeVisible = false
+            this.signUpVisible = false
+            this.loginVisible = true
           },
           gotoSignUp: function gotoSignUp() {
-            authingLockApp.loginVisible = false
-            authingLockApp.forgetPasswordVisible = false
-            authingLockApp.oauthVisible = false
-            authingLockApp.scanCodeVisible = false
-            authingLockApp.signUpVisible = true
+            this.loginVisible = false
+            this.forgetPasswordVisible = false
+            this.oauthVisible = false
+            this.scanCodeVisible = false
+            this.signUpVisible = true
           },
           gotoForgetPassword: function gotoForgetPassword() {
-            authingLockApp.loginVisible = false
-            authingLockApp.oauthVisible = false
-            authingLockApp.scanCodeVisible = false
-            authingLockApp.signUpVisible = false
-            authingLockApp.forgetPasswordVisible = true
+            this.loginVisible = false
+            this.oauthVisible = false
+            this.scanCodeVisible = false
+            this.signUpVisible = false
+            this.forgetPasswordVisible = true
           },
 
           handleSignUp: function handleSignUp() {
@@ -89,12 +93,11 @@
           },
         }
       })
+      document.getElementById('app').classList.remove('hide')
     })
-
   }
 
   return {
     hello: 'Authing Lock'
   }
 }))
-  

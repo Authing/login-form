@@ -6,9 +6,13 @@
   <title>UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css"/>
   <link href=https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css rel=stylesheet>  
-  <style type="text/css">
 
+  <style type="text/css">
+    .hide {
+      display: none;
+    }
     @media screen and (max-width: 768px) {
 
       body {
@@ -29,7 +33,7 @@
         bottom: 0px;                
       }  
 
-      .fh5co-form {
+      .authing-form {
         padding-bottom: 0px;
         margin-top: 0px!important; 
         height: 100%;       
@@ -58,15 +62,41 @@
 </head>
 
 <body>
-<div id="app">
-  <div class="container">
+<div id="app" class="hide">
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
 
-        <!-- 登录对话框 -->
         <div class="form-wrapper">
-          <form v-if="loginVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
-            <h2>登录</h2>
+          <div class="form-header">
+              <div class="form-header-bg"></div>
+              <div class="form-header-welcome">
+                <img class="form-header-logo" src="https://usercontents.authing.cn/user-avatars/FvchPXRB9aRMzrwej_JTQodyyG5U">
+                <div class="form-header-name" title="Default App">Authing</div>
+              </div>                
+          </div>
+          <!-- 登录对话框 -->
+          <form v-show="loginVisible" action="#" class="authing-form animate-box" :class="{
+              animated: loginVisible,
+              fadeIn: loginVisible,
+              faster: loginVisible,
+              'authing-form': true
+            }">
+
+            <div class="form-group">
+                <div class="logmod__alter">
+                  <div class="logmod__alter-container">
+                    <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
+                      <div class="connect__icon">
+                        <i class="fa fa-github"></i>
+                      </div>
+                      <div class="connect__context">
+                        <span>使用 <strong>Github</strong> 登录</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+            </div>
+
             <div class="form-group">
               <label for="login-username" class="sr-only">用户名</label>
               <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
@@ -77,31 +107,24 @@
             </div>
             <div class="form-group">
               <label for="login-remember"><input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
-              <p>未注册？ <a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>            
+              <p><a href="#" @click="gotoSignUp">注册</a> | <a href="#" @click="gotoForgetPassword">忘记密码？</a></p>
             </div>
-            <div class="form-group">
-              <div class="logmod__alter">
-                <div class="logmod__alter-container">
-                  <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
-                    <div class="connect__icon">
-                      <i class="fa fa-github"></i>
-                    </div>
-                    <div class="connect__context">
-                      <span>使用 <strong>Github</strong> 登录</span>
-                    </div>
-                  </a>               
-                </div>
-              </div>
-            </div>          
-          </form>
+  
+          </form>          
 
           <div class="form-group form-footer">
             <input @click="handleLogin" type="submit" value="登录" class="btn btn-primary">
-          </div>
+          </div>          
         </div>
 
         <!-- 忘记密码对话框 -->
-        <form v-if="forgetPasswordVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+        <form v-show="forgetPasswordVisible" action="#" class="authing-form" :class="{
+            animated: forgetPasswordVisible,
+            fadeIn: forgetPasswordVisible,
+            faster: forgetPasswordVisible,
+            'authing-form': true
+
+          }" data-animate-effect="fadeIn">
           <h2>忘记密码</h2>
           <!--<div class="form-group">-->
             <!--<div class="alert alert-success" role="alert">Your email has been sent.</div>-->
@@ -119,7 +142,12 @@
         </form>
 
         <!-- 注册对话框 -->
-        <form v-if="signUpVisible" action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+        <form v-show="signUpVisible" action="#" class="authing-form" :class="{
+            animated: signUpVisible,
+            fadeIn: signUpVisible,
+            faster: signUpVisible,
+            'authing-form': true
+          }" data-animate-effect="fadeIn">
           <h2>注册</h2>
           <!--<div class="form-group">-->
             <!--<div class="alert alert-success" role="alert">Your info has been saved.</div>-->
@@ -148,12 +176,24 @@
           </div>
           <div class="form-group form-footer">
             <input @click="handleSignUp" type="submit" value="注册" class="btn btn-primary">
-            <input @click="handleOauthLogin" type="submit" value="微信登录" class="btn btn-primary">
+          </div>
+          <div class="form-group">
+            <div class="logmod__alter">
+              <div class="logmod__alter-container">
+                <a href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c" class="connect facebook">
+                  <div class="connect__icon">
+                    <i class="fa fa-github"></i>
+                  </div>
+                  <div class="connect__context">
+                    <span>使用 <strong>Github</strong> 登录</span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
 </div>
 </body>
 
@@ -161,5 +201,6 @@
 <script src="../main.js"></script>
 <script>
   console.log(AuthingLock)
+
 </script>
 </html>

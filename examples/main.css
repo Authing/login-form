@@ -637,7 +637,7 @@ body {
   
   .menu {
     padding: 0;
-    margin: 30px 0 0 0;
+    margin: 30px 0 0 .authing-form .form-group0;
   }
   .menu li {
     list-style: none;
@@ -654,8 +654,8 @@ body {
     color: #b3b3b3;
   }
   
-  .fh5co-form {
-    padding: 30px;
+  .authing-form {
+    padding: 22px;
     margin-top: 4em;
     -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
@@ -663,41 +663,38 @@ body {
     box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     background: #ffffff;
   }
-  .style-2 .fh5co-form {
+  .style-2 .authing-form {
     -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -o-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
   }
   @media screen and (max-width: 768px) {
-    .fh5co-form {
+    .authing-form {
       padding: 15px;
     }
   }
-  .fh5co-form h2 {
+  .authing-form h2 {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 20px;
     margin: 0 0 30px 0;
     color: #000000;
   }
-  .fh5co-form .form-group {
-    margin-bottom: 30px;
-  }
-  .fh5co-form .form-group p {
+  .authing-form .form-group p {
     font-size: 14px;
     color: #9f9f9f;
     font-weight: 300;
   }
-  .fh5co-form .form-group p a {
+  .authing-form .form-group p a {
     color: #000000;
   }
-  .fh5co-form label {
+  .authing-form label {
     font-weight: 300;
     font-size: 14px;
     font-weight: 300;
   }
-  .fh5co-form .form-control {
+  .authing-form .form-control {
     font-size: 16px;
     font-weight: 300;
     height: 50px;
@@ -719,23 +716,23 @@ body {
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
   }
-  .fh5co-form .form-control::-webkit-input-placeholder {
+  .authing-form .form-control::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
   }
-  .fh5co-form .form-control::-moz-placeholder {
+  .authing-form .form-control::-moz-placeholder {
     color: rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
   }
-  .fh5co-form .form-control:-ms-input-placeholder {
+  .authing-form .form-control:-ms-input-placeholder {
     color: rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
   }
-  .fh5co-form .form-control:-moz-placeholder {
+  .authing-form .form-control:-moz-placeholder {
     color: rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
   }
-  .fh5co-form .form-control:focus, .fh5co-form .form-control:active {
+  .authing-form .form-control:focus, .authing-form .form-control:active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
   
@@ -780,4 +777,50 @@ body {
 .form-wrapper {
   background: #FFFFFF;
 }
-  
+
+.form-header {
+  text-align: center;
+  padding: 11px;
+  height: 118px;
+  color: #333;
+  position: relative;
+  background: #fff;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.form-header-bg {
+  position: absolute;
+  height: 118px;
+  width: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  pointer-events: none; 
+  background: rgba(241,241,241,0.8); 
+}
+
+.form-header-welcome {
+  font-size: 18px;
+  position: relative;
+}
+
+.form-header-logo {
+  width: auto;
+  height: 58px;
+  display: inline-block;
+  margin: 0 0 11px;
+  vertical-align: middle;
+  -webkit-transition: margin-top 0.4s;
+  transition: margin-top 0.4s;
+}
+
+.form-header-name {
+  font-size: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 10px;
+  line-height: 30px;
+}
