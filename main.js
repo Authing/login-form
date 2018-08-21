@@ -47,10 +47,11 @@
           loginVisible: false,
           oauthVisible: false,
           scanCodeVisible: false,
-          signUpVisible: false
+          signUpVisible: false,
 
         },
         mounted: function () {
+          console.log(this)
           this.loginVisible = true
         },
         methods: {
@@ -92,6 +93,7 @@
           },
         }
       })
+      document.getElementById('app').classList.remove('hide')
     })
   }
 
