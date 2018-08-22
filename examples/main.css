@@ -848,3 +848,62 @@ body {
   box-shadow: none!important;
   -webkit-box-shadow: none!important;
 }
+
+.authing-header-tabs-container {
+  margin: 0px 0px 20px;
+  height: 40px;
+}
+
+.authing-header-tabs {
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.7px;
+  box-shadow: 0 1px 0 0 rgba(92,102,111,0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+.authing-header-tabs li {
+  width: 50%;
+  display: block;
+  list-style: none;
+  float: left;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;  
+}
+
+.authing-header-tabs li a {
+  padding: 11px 10px;
+  display: block;
+  text-decoration: none;
+  color: rgba(92,102,111,0.6);
+  font-weight: 500;  
+}
+
+.authing-header-tabs li.authing-header-tabs-current {
+  box-shadow: 0 1px 0 0 #5c666f;
+  cursor: default;  
+}
+
+.authing-header-tabs li.authing-header-tabs-current a {
+  color: #5c666f;
+}

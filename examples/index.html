@@ -119,6 +119,21 @@
             </div>
           </div>
 
+          <div class="authing-header-tabs-container">
+            <ul class="authing-header-tabs">
+              <li v-bind:class="{
+                'authing-header-tabs-current': loginVisible
+              }">
+                <a href="javascript:void(0)" @click="gotoLogin">登录</a>
+              </li>
+              <li v-bind:class="{
+                'authing-header-tabs-current': signUpVisible
+              }">
+                <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
+              </li>
+            </ul>
+          </div>            
+
           <div class="authing-oauth-form" v-show="!forgetPasswordVisible">
             <div v-show="githubOAuthVisible" class="form-group">
                 <div class="logmod__alter">
@@ -191,7 +206,6 @@
                     <label for="login-remember" style="width:100%">
                       <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"><span
                       style="vertical-align: middle"> 记住我</span>
-                      <a href="#" @click="gotoSignUp">注册</a>
                     </label>
                   </div>
                 </div>
@@ -240,9 +254,6 @@
               <label for="sign-up-remember"><input type="checkbox" id="sign-up-remember"
                                                   style="vertical-align: middle; margin: 0"><span
                 style="vertical-align: middle"> 记住我</span></label>
-            </div>
-            <div class="form-group">
-              <p>已经注册？ <a href="#" @click="gotoLogin">登录</a></p>
             </div>
           </form>     
           
