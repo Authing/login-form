@@ -13,6 +13,12 @@
     .hide {
       display: none;
     }
+    .verify-code {
+      display: flex;
+    }
+    .err-hint {
+      border-bottom: 1px solid red !important;
+    }
     @media screen and (max-width: 768px) {
 
       body {
@@ -79,7 +85,7 @@
 </head>
 
 <body>
-<div id="app">
+<div id="app" class="hide">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
@@ -101,7 +107,9 @@
                 faster: loginVisible,
                 'authing-form': true
               }">
-
+              <div class="form-group">
+              <div v-show="errVisible" class="alert alert-danger" role="alert">{{errMsg}}</div>
+              </div>
               <div class="form-group">
                   <div class="logmod__alter">
                     <div class="logmod__alter-container">
@@ -120,12 +128,16 @@
               <P class="form-tip">或者</P>
 
               <div class="form-group">
-                <label for="login-username" class="sr-only">用户名</label>
-                <input type="text" class="form-control" id="login-username" placeholder="用户名" autocomplete="off">
+                <label for="login-username" class="sr-only">邮箱</label>
+                <input type="text" class="form-control" id="login-username" v-model="loginForm.email" placeholder="邮箱" autocomplete="off">
               </div>
               <div class="form-group">
                 <label for="login-password" class="sr-only">密码</label>
-                <input type="password" class="form-control" id="login-password" placeholder="密码" autocomplete="off">
+                <input type="password" class="form-control" id="login-password" v-model="loginForm.password" placeholder="密码" autocomplete="off">
+              </div>
+              <div v-show="verifyCodeVisible" class="form-group verify-code">
+                <input type="text" class="form-control" id="verify-code" v-model="verifyCode" placeholder="请输入验证码" autocomplete="off">
+                <img :src="verifyCodeUrl">
               </div>
               <div class="row">
               <div class="col-md-6">
@@ -187,20 +199,20 @@
             <!--<div class="alert alert-success" role="alert">Your info has been saved.</div>-->
           <!--</div>-->
           <div class="form-group">
-            <label for="sign-up-name" class="sr-only">昵称</label>
-            <input type="text" class="form-control" id="sign-up-name" placeholder="昵称" autocomplete="off">
+            <label for="sign-up-name" class="sr-only">用户名</label>
+            <input type="text" class="form-control" id="sign-up-name" v-model="signUpForm.username" placeholder="用户名" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="sign-up-email" class="sr-only">邮箱地址</label>
-            <input type="email" class="form-control" id="sign-up-email" placeholder="邮箱地址" autocomplete="off">
+            <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email" placeholder="邮箱地址" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="sign-up-password" class="sr-only">密码</label>
-            <input type="password" class="form-control" id="sign-up-password" placeholder="密码" autocomplete="off">
+            <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password" placeholder="密码" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="sign-up-re-password" class="sr-only">确认密码</label>
-            <input type="password" class="form-control" id="sign-up-re-password" placeholder="确认密码" autocomplete="off">
+            <input type="password" class="form-control" id="sign-up-re-password" v-model="signUpForm.rePassword" @change="checkRetype" placeholder="确认密码" autocomplete="off">
           </div>
           <div class="form-group">
             <label for="sign-up-remember"><input type="checkbox" id="sign-up-remember" style="vertical-align: middle; margin: 0"><span style="vertical-align: middle"> 记住我</span></label>
