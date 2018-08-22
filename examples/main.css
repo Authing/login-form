@@ -836,3 +836,15 @@ body {
   padding: 0 10px;
   line-height: 30px;
 }
+
+.authing-oauth-form {
+  padding: 22px;
+  background: #FFFFFF;
+  padding-bottom: 0px;
+  padding-top: 11px;
+}
+
+.authing-form.no-shadow {
+  box-shadow: none!important;
+  -webkit-box-shadow: none!important;
+}

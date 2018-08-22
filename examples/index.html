@@ -119,19 +119,8 @@
             </div>
           </div>
 
-          <div class="form-body">
-            <!-- 登录对话框 -->
-            <form v-show="loginVisible" action="#" class="authing-form animate-box" :class="{
-                animated: loginVisible,
-                fadeIn: loginVisible,
-                faster: loginVisible,
-                'authing-form': true
-              }">
-              <div v-show="errVisible" class="form-group">
-                <div class="alert alert-danger" role="alert">{{errMsg}}</div>
-              </div>
-
-              <div v-show="githubOAuthVisible" class="form-group">
+          <div class="authing-oauth-form" v-show="!forgetPasswordVisible">
+            <div v-show="githubOAuthVisible" class="form-group">
                 <div class="logmod__alter">
                   <div class="logmod__alter-container">
                     <a
@@ -147,7 +136,7 @@
                   </div>
                 </div>
               </div>
-
+  
               <div v-show="wechatQRCodeOAuthVisible" class="form-group">
                 <div class="logmod__alter">
                   <div class="logmod__alter-container">
@@ -166,6 +155,20 @@
               </div>
 
               <P class="form-tip">或者</P>
+          </div>         
+
+          <div class="form-body">
+            <!-- 登录对话框 -->
+            <form v-show="loginVisible" action="#" class="authing-form animate-box no-shadow" :class="{
+                animated: loginVisible,
+                fadeIn: loginVisible,
+                faster: loginVisible,
+                'authing-form': true,
+                'no-shadow': loginVisible
+              }">
+              <div v-show="errVisible" class="form-group">
+                <div class="alert alert-danger" role="alert">{{errMsg}}</div>
+              </div>
 
               <div class="form-group">
                 <label for="login-username" class="sr-only">邮箱</label>
@@ -206,7 +209,8 @@
               animated: signUpVisible,
               fadeIn: signUpVisible,
               faster: signUpVisible,
-              'authing-form': true
+              'authing-form': true,
+              'no-shadow': signUpVisible
             }" data-animate-effect="fadeIn">
             <h2>注册</h2>
             <div v-show="signUpErrVisible" class="form-group">
@@ -240,55 +244,6 @@
             <div class="form-group">
               <p>已经注册？ <a href="#" @click="gotoLogin">登录</a></p>
             </div>
-
-            <div class="form-group">
-              <div class="logmod__alter">
-                <div class="logmod__alter-container">
-                  <a
-                    href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c"
-                    class="connect facebook">
-                    <div class="connect__icon">
-                      <i class="fa fa-github"></i>
-                    </div>
-                    <div class="connect__context">
-                      <span>使用 <strong>Github</strong> 登录</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div v-show="wechatQRCodeOAuthVisible" class="form-group">
-              <div class="logmod__alter">
-                <div class="logmod__alter-container">
-                  <a
-                    href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c"
-                    class="connect facebook">
-                    <div class="connect__icon">
-                      <i class="fa fa-weixin"></i>
-                    </div>
-                    <div class="connect__context">
-                      <span>使用 <strong>微信二维码</strong> 登录</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div v-show="githubOAuthVisible" class="form-group">
-              <div class="logmod__alter">
-                <div class="logmod__alter-container">
-                  <a
-                    :href="githubOAuthUrl"
-                    class="connect facebook">
-                    <div class="connect__icon">
-                      <i class="iconfont">&#xe619;</i>
-                    </div>
-                    <div class="connect__context">
-                      <span>使用 <strong>微信小程序码</strong> 登录</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
           </form>     
           
           <!-- 忘记密码对话框 -->
@@ -296,8 +251,8 @@
               animated: forgetPasswordVisible,
               fadeIn: forgetPasswordVisible,
               faster: forgetPasswordVisible,
-              'authing-form': true
-
+              'authing-form': true,
+              'no-shadow': forgetPasswordVisible
             }" data-animate-effect="fadeIn">
             <h2>忘记密码</h2>
             <div v-show="errVisible" class="form-group">
