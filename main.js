@@ -80,10 +80,7 @@
             signUpVisible: false,
             verifyCodeVisible: false,
 
-            wechatQRCodeOAuthVisible: false,
-            githubOAuthVisible: false,
-
-            githubOAuthUrl: '',
+            OAuthList: [],
 
             verifyCodeUrl: '',
 
@@ -107,18 +104,10 @@
             validAuth.readOAuthList()
               .then(function (data) {
                 console.log('oauth', data)
-                data.map(function (item) {
-                  if(item.enabled) {
-                    switch (item.name) {
-                      case 'Github':
-                        that.githubOAuthVisible = true
-                        that.githubOAuthUrl = item.url
-                        break
-                      case '小程序扫码登录':
-                        break
-                    }
-                  }
+                var OAuthList = data.filter(function (item) {
+                  return item.enabled === true && item.name !== '小程序扫码登录'
                 })
+                that.OAuthList = OAuthList
               })
               .catch(function (err) {
                 console.log(err)

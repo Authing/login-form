@@ -133,45 +133,28 @@
                 <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
               </li>
             </ul>
-          </div>            
+          </div>
 
           <div class="authing-oauth-form" v-show="!forgetPasswordVisible">
-            <div v-show="githubOAuthVisible" class="form-group">
-                <div class="logmod__alter">
-                  <div class="logmod__alter-container">
-                    <a
-                      href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c"
-                      class="connect facebook">
-                      <div class="connect__icon">
-                        <i class="fa fa-github"></i>
-                      </div>
-                      <div class="connect__context">
-                        <span>使用 <strong>Github</strong> 登录</span>
-                      </div>
-                    </a>
-                  </div>
+            <div v-for="(item, index) in OAuthList" class="form-group">
+              <div class="logmod__alter">
+                <div class="logmod__alter-container">
+                  <a
+                    :href="item.url"
+                    :class="{'connect': true, 'facebook': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
+                    <div class="connect__icon">
+                      <i class="fa"
+                         :class="{'fa-github': item.name === 'Github', 'fa-wechat': item.name === '微信电脑网页版'}"></i>
+                    </div>
+                    <div class="connect__context">
+                      <span>{{item.description}}</span>
+                    </div>
+                  </a>
                 </div>
               </div>
-  
-              <div v-show="wechatQRCodeOAuthVisible" class="form-group">
-                <div class="logmod__alter">
-                  <div class="logmod__alter-container">
-                    <a
-                      href="https://github.com/login/oauth/authorize/?client_id=efb1ad067703bf49a871&amp;state=5a9fa26cf8635a000185528c"
-                      class="connect wechat">
-                      <div class="connect__icon">
-                        <i class="fa fa-weixin"></i>
-                      </div>
-                      <div class="connect__context">
-                        <span>使用 <strong>微信二维码</strong> 登录</span>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <P class="form-tip">或者</P>
-          </div>         
+            </div>
+            <P class="form-tip">或者</P>
+          </div>
 
           <div class="form-body">
             <!-- 登录对话框 -->
