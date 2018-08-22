@@ -40,6 +40,7 @@
     document.getElementById(className).classList.add('err-hint')
   }
 
+
   window.onload = function () {
     var loadBasicHTML = function () {
       var html = ''
