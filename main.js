@@ -19,12 +19,16 @@
     global.AuthingLock = global.AuthingLock || factory()
   }
 }(this, function () {
+  var emailExp =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/
   function removeAnimation(className) {
     document.getElementById(className).classList.remove('animated')
     document.getElementById(className).classList.remove('shake')
   }
   function removeRedLine(className) {
     document.getElementById(className).classList.remove('err-hint')
+  }
+  function addRedLine(className) {
+    document.getElementById(className).classList.add('err-hint')
   }
   function addAnimation(className) {
     document.getElementById(className).classList.add('animated')
@@ -60,7 +64,9 @@
           data: {
             message: 'Hello Vue!',
             errMsg: '',
+            signUpErrMsg: '',
 
+            signUpErrVisible: false,
             errVisible: false,
             forgetPasswordVisible: false,
             loginVisible: false,
@@ -110,9 +116,64 @@
               this.signUpVisible = false
               this.forgetPasswordVisible = true
             },
-
+            checkEmail: function checkEmail() {
+              if(!emailExp.test(this.signUpForm.email)) {
+                this.signUpErrVisible = true
+                this.signUpErrMsg = '请输入正确格式的邮箱'
+                addAnimation('sign-up-email')
+                removeRedLine('sign-up-username')
+                removeRedLine('sign-up-password')
+                removeRedLine('sign-up-re-password')
+                setTimeout(function(){removeAnimation('sign-up-email')}, 500)
+              } else {
+                removeRedLine('sign-up-email')
+              }
+            },
             handleSignUp: function handleSignUp() {
               console.log('handleSignUp')
+              var that = this
+              if(!this.signUpForm.username) {
+                this.signUpErrVisible = true
+                this.signUpErrMsg = '请输入用户名'
+                addAnimation('sign-up-username')
+                removeRedLine('sign-up-email')
+                removeRedLine('sign-up-password')
+                removeRedLine('sign-up-re-password')
+                setTimeout(function(){removeAnimation('sign-up-username')}, 500)
+                return false
+              }
+              if(!emailExp.test(this.signUpForm.email)) {
+                this.signUpErrVisible = true
+                this.signUpErrMsg = '请输入正确格式的邮箱'
+                addAnimation('sign-up-email')
+                removeRedLine('sign-up-username')
+                removeRedLine('sign-up-password')
+                removeRedLine('sign-up-re-password')
+                setTimeout(function(){removeAnimation('sign-up-email')}, 500)
+                return false
+              }
+              if(!this.signUpForm.password) {
+                this.signUpErrVisible = true
+                this.signUpErrMsg = '请输入密码'
+                addAnimation('sign-up-password')
+                removeRedLine('sign-up-username')
+                removeRedLine('sign-up-email')
+                removeRedLine('sign-up-re-password')
+                setTimeout(function(){removeAnimation('sign-up-password')}, 500)
+                return false
+
+              }
+              if(this.signUpForm.password!==this.signUpForm.rePassword) {
+                this.signUpErrVisible = true
+                this.signUpErrMsg = '两次密码不一致'
+                addAnimation('sign-up-re-password')
+                removeRedLine('sign-up-username')
+                removeRedLine('sign-up-email')
+                removeRedLine('sign-up-password')
+                setTimeout(function(){removeAnimation('sign-up-re-password')}, 500)
+                return false
+
+              }
               validAuth.register({
                 email: this.signUpForm.email,
                 username: this.signUpForm.username,
@@ -120,18 +181,21 @@
               })
                 .then(function (data) {
                   console.log(data)
+                  that.signUpErrVisible = false
                 })
                 .catch(function (err) {
                   console.log(err)
+                  that.signUpErrVisible = true
+                  that.signUpErrMsg = err.message.message
                 })
             },
             handleLogin: function handleLogin() {
               var that = this
               console.log(this.loginForm.email, this.loginForm.password)
               var info
-              if(!this.loginForm.email) {
+              if(!emailExp.test(this.loginForm.email)) {
                 this.errVisible = true
-                this.errMsg = '请输入邮箱'
+                this.errMsg = '请输入正确格式的邮箱'
                 addAnimation('login-username')
                 removeRedLine('login-password')
                 removeRedLine('verify-code')
@@ -176,7 +240,7 @@
                     removeRedLine('login-password')
                     setTimeout(function(){removeAnimation('verify-code')}, 500)
                   }
-                  if (err.message.message.indexOf('邮箱') >= 0) {
+                  if (err.message.message.indexOf('邮箱') >= 0||err.message.message.indexOf('用户') >= 0) {
                     addAnimation('login-username')
                     removeRedLine('login-password')
                     removeRedLine('verify-code')
@@ -200,9 +264,13 @@
             handleForgetPassword: function handleForgetPassword() {
               console.log('handleForgetPassword')
             },
-            checkRetype: function () {
-
-            }
+            // checkRetype: function () {
+            //   if(this.signUpForm.password!==this.signUpForm.rePassword) {
+            //     addRedLine('sign-re-password')
+            //   } else {
+            //     removeRedLine()
+            //   }
+            // }
           }
         })
         console.log(document.getElementById('app').classList)
