@@ -79,6 +79,12 @@
             scanCodeVisible: false,
             signUpVisible: false,
             verifyCodeVisible: false,
+
+            wechatQRCodeOAuthVisible: false,
+            githubOAuthVisible: false,
+
+            githubOAuthUrl: '',
+
             verifyCodeUrl: '',
 
             signUpForm: {
@@ -95,6 +101,28 @@
             forgetPasswordForm: {}
 
 
+          },
+          created: function () {
+            var that = this
+            validAuth.readOAuthList()
+              .then(function (data) {
+                console.log('oauth', data)
+                data.map(function (item) {
+                  if(item.enabled) {
+                    switch (item.name) {
+                      case 'Github':
+                        that.githubOAuthVisible = true
+                        that.githubOAuthUrl = item.url
+                        break
+                      case '小程序扫码登录':
+                        break
+                    }
+                  }
+                })
+              })
+              .catch(function (err) {
+                console.log(err)
+              })
           },
           mounted: function () {
             this.loginVisible = true

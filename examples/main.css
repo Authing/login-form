@@ -174,11 +174,17 @@ html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:1
   background: #0099CC;
   color: #FFF;
 }
+.connect.wechat {
+  background: #009900;
+}
 .connect.facebook a {
   color: #FFF;
 }
 .connect.facebook .connect__icon {
   background: #006699;
+}
+.connect.wechat .connect__icon {
+  background: #006600;
 }
 .connect.googleplus {
   background: #dd4b39;
