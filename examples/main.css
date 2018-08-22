@@ -907,3 +907,20 @@ body {
 .authing-header-tabs li.authing-header-tabs-current a {
   color: #5c666f;
 }
+
+.auth0-lock-back-button {
+  box-sizing: content-box !important;
+  background: #fff;
+  border-radius: 100px;
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  color: #333;
+  z-index: 100;
+  border: 6px solid #fff;
+  cursor: pointer;
+  line-height: 0;
+}
