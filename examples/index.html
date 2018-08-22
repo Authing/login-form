@@ -120,6 +120,16 @@
             </div>
           </div>
 
+          <div v-show="errVisible">
+            <div>
+              <div class="authing-global-message authing-global-message-error">
+                <span class="animated fadeInUp">
+                  <span>{{errMsg}}</span>
+                </span>
+              </div>
+            </div>
+          </div>          
+
           <div class="authing-header-tabs-container">
             <ul class="authing-header-tabs">
               <li v-bind:class="{
@@ -165,9 +175,6 @@
                 'authing-form': true,
                 'no-shadow': loginVisible
               }">
-              <div v-show="errVisible" class="form-group">
-                <div class="alert alert-danger" role="alert">{{errMsg}}</div>
-              </div>
 
               <div class="form-group">
                 <label for="login-username" class="sr-only">邮箱</label>
@@ -210,9 +217,6 @@
               'authing-form': true,
               'no-shadow': signUpVisible
             }" data-animate-effect="fadeIn">
-            <div v-show="signUpErrVisible" class="form-group">
-              <div class="alert alert-danger" role="alert">{{signUpErrMsg}}</div>
-            </div>
             <div class="form-group">
               <label for="sign-up-username" class="sr-only">用户名</label>
               <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username" placeholder="用户名"
@@ -248,9 +252,6 @@
               'authing-form': true,
               'no-shadow': forgetPasswordVisible
             }" data-animate-effect="fadeIn">
-            <div v-show="errVisible" class="form-group">
-              <div class="alert alert-danger" role="alert">{{errMsg}}</div>
-            </div>
             <div class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">邮箱地址</label>
               <input type="email" class="form-control" id="forget-password-email" placeholder="邮箱地址" autocomplete="off">

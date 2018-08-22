@@ -69,9 +69,7 @@
           data: {
             message: 'Hello Vue!',
             errMsg: '',
-            signUpErrMsg: '',
 
-            signUpErrVisible: false,
             errVisible: false,
             forgetPasswordVisible: false,
             loginVisible: false,
@@ -140,8 +138,8 @@
             },
             checkEmail: function checkEmail() {
               if (!emailExp.test(this.signUpForm.email)) {
-                this.signUpErrVisible = true
-                this.signUpErrMsg = '请输入正确格式的邮箱'
+                this.errVisible = true;
+                this.errMsg = '请输入正确格式的邮箱'
                 addAnimation('sign-up-email')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-password')
@@ -157,8 +155,8 @@
               console.log('handleSignUp')
               var that = this
               if (!this.signUpForm.username) {
-                this.signUpErrVisible = true
-                this.signUpErrMsg = '请输入用户名'
+                this.errVisible = true
+                this.errMsg = '请输入用户名'
                 addAnimation('sign-up-username')
                 removeRedLine('sign-up-email')
                 removeRedLine('sign-up-password')
@@ -169,8 +167,8 @@
                 return false
               }
               if (!emailExp.test(this.signUpForm.email)) {
-                this.signUpErrVisible = true
-                this.signUpErrMsg = '请输入正确格式的邮箱'
+                this.errVisible = true
+                this.errMsg = '请输入正确格式的邮箱'
                 addAnimation('sign-up-email')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-password')
@@ -181,8 +179,8 @@
                 return false
               }
               if (!this.signUpForm.password) {
-                this.signUpErrVisible = true
-                this.signUpErrMsg = '请输入密码'
+                this.errVisible = true
+                this.errMsg = '请输入密码'
                 addAnimation('sign-up-password')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-email')
@@ -194,8 +192,8 @@
 
               }
               if (this.signUpForm.password !== this.signUpForm.rePassword) {
-                this.signUpErrVisible = true
-                this.signUpErrMsg = '两次密码不一致'
+                this.errVisible = true
+                this.errMsg = '两次密码不一致'
                 addAnimation('sign-up-re-password')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-email')
@@ -213,12 +211,12 @@
               })
                 .then(function (data) {
                   console.log(data)
-                  that.signUpErrVisible = false
+                  that.errVisible = false
                 })
                 .catch(function (err) {
                   console.log(err)
-                  that.signUpErrVisible = true
-                  that.signUpErrMsg = err.message.message
+                  that.errVisible = true
+                  that.errMsg = err.message.message
                 })
             },
             handleLogin: function handleLogin() {

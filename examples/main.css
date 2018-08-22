@@ -928,3 +928,17 @@ body {
   cursor: pointer;
   line-height: 0;
 }
+
+.authing-global-message {
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  line-height: 1.8;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.authing-global-message.authing-global-message-error {
+  background: #ff3e00;
+}
