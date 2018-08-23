@@ -68,14 +68,14 @@
         var authingLockApp = new Vue({
           el: '#app',
           data: {
-            message: 'Hello Vue!',
             errMsg: '',
 
             errVisible: false,
+
+            wxQRCodeVisible: false,
             forgetPasswordVisible: false,
             loginVisible: false,
             oauthVisible: false,
-            scanCodeVisible: false,
             signUpVisible: false,
             verifyCodeVisible: false,
 
@@ -95,8 +95,6 @@
             },
             verifyCode: '',
             forgetPasswordForm: {}
-
-
           },
           created: function () {
             var that = this
@@ -119,7 +117,7 @@
             gotoLogin: function gotoLogin() {
               this.forgetPasswordVisible = false
               this.oauthVisible = false
-              this.scanCodeVisible = false
+              this.wxQRCodeVisible = false
               this.signUpVisible = false
               this.loginVisible = true
             },
@@ -127,13 +125,13 @@
               this.loginVisible = false
               this.forgetPasswordVisible = false
               this.oauthVisible = false
-              this.scanCodeVisible = false
+              this.wxQRCodeVisible = false
               this.signUpVisible = true
             },
             gotoForgetPassword: function gotoForgetPassword() {
               this.loginVisible = false
               this.oauthVisible = false
-              this.scanCodeVisible = false
+              this.wxQRCodeVisible = false
               this.signUpVisible = false
               this.forgetPasswordVisible = true
             },
@@ -305,6 +303,16 @@
             handleForgetPassword: function handleForgetPassword() {
               console.log('handleForgetPassword')
             },
+            gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
+              this.wxQRCodeVisible = true;
+              this.loginVisible = false;
+              this.signUpVisible = false;
+              this.errVisible = false;
+              this.verifyCodeVisible = false;
+              validAuth.startWXAppScaning({
+                mount: 'qrcode-node'
+              });
+            }
             // checkRetype: function () {
             //   if(this.signUpForm.password!==this.signUpForm.rePassword) {
             //     addRedLine('sign-re-password')
