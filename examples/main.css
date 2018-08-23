@@ -787,6 +787,10 @@ body {
    height: 60px;
  }
 
+ .form-footer.no-height {
+  height: 0px;
+}
+
 .form-footer .btn {
  	width: 100%;
 }

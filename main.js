@@ -152,7 +152,7 @@
               this.warnVisible = true
               this.warnMsg = msg
             },
-            loading: function loading() {
+            setLoading: function loading() {
               this.loading = true;
             },
             unLoading: function unLoading() {
@@ -208,7 +208,7 @@
             handleSignUp: function handleSignUp() {
               console.log('handleSignUp')
               var that = this;
-              that.loading();
+              that.setLoading();
               if (!this.signUpForm.username) {
                 this.showGlobalErr('请输入用户名')
                 addAnimation('sign-up-username')
@@ -287,7 +287,7 @@
             },
             handleLogin: function handleLogin() {
               var that = this;
-              that.loading();
+              that.setLoading();
               var info;
               if (!emailExp.test(this.loginForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
@@ -371,7 +371,7 @@
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
               console.log('handleForgetPassword')
               var that = this
-              that.loading();
+              that.setLoading();
               if(!emailExp.test(this.forgetPasswordForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('forget-password-email')
@@ -397,7 +397,7 @@
             },
             handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
               var that = this
-              that.loading();
+              that.setLoading();
               validAuth.verifyResetPasswordVerifyCode({
                 email: that.forgetPasswordForm.email,
                 verifyCode: that.forgetPasswordForm.verifyCode
@@ -419,7 +419,7 @@
             },
             handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
               var that = this
-              that.loading();
+              that.setLoading();
               validAuth.changePassword({
                 email: that.forgetPasswordForm.email,
                 password: that.forgetPasswordForm.password,

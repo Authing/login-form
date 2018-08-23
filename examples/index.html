@@ -325,7 +325,9 @@
 
           </div>
 
-          <div class="form-footer">
+          <div class="form-footer" :class="{
+            'no-height': pageVisible.wxQRCodeVisible
+          }">
             <div class="authing-loading-circle" v-show="loading"></div>
             <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录" class="btn btn-primary">
             <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册" class="btn btn-primary">
