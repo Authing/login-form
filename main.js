@@ -59,6 +59,8 @@
 
     loadBasicHTML()
 
+
+
     var clientId = '5a9fa26cf8635a000185528c'
     var auth = new Authing({
       clientId: '5a9fa26cf8635a000185528c',
@@ -116,6 +118,7 @@
 
             loading: false,
             oAuthloading: false,
+            verifyCodeLoading: true,
 
             isWxQRCodeGenerated: false
           },
@@ -145,6 +148,10 @@
             this.pageVisible.loginVisible = true
           },
           methods: {
+            verifyCodeLoad: function () {
+              this.verifyCodeLoading = false
+              console.log('verifyCode loaded')
+            },
             encrypt: function encrypt(str, key) {
               while (str.length > key.length) {
                 key += key
@@ -393,8 +400,10 @@
                   that.unLoading()
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
+                    that.verifyCodeLoading = true
                     that.pageVisible.verifyCodeVisible = true
                     that.verifyCodeUrl = err.message.data.url
+
                     addAnimation('verify-code')
                     removeRedLine('login-username')
                     removeRedLine('login-password')
