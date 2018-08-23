@@ -110,7 +110,7 @@
 <div id="app" class="hide">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
+      <div class="authing-login-form-wrapper">
 
         <div class="form-wrapper" :class="{
           'authing-loading-wrapper': loading,
@@ -262,8 +262,6 @@
             <!-- 忘记密码填写邮箱对话框 -->
             <form v-show="pageVisible.forgetPasswordSendEmailVisible" action="#" class="authing-form" :class="{
               animated: pageVisible.forgetPasswordSendEmailVisible,
-              'slide-enter': pageVisible.forgetPasswordSendEmailVisible,
-              'slide-enter-active': pageVisible.forgetPasswordSendEmailVisible,
               faster: pageVisible.forgetPasswordSendEmailVisible,
               'authing-form': true,
               'no-shadow': pageVisible.forgetPasswordSendEmailVisible
@@ -277,7 +275,6 @@
             <!-- 忘记密码填写验证码对话框 -->
             <form v-show="pageVisible.forgetPasswordVerifyCodeVisible" action="#" class="authing-form" :class="{
               animated: pageVisible.forgetPasswordVerifyCodeVisible,
-              fadeIn: pageVisible.forgetPasswordVerifyCodeVisible,
               faster: pageVisible.forgetPasswordVerifyCodeVisible,
               'authing-form': true,
               'no-shadow': pageVisible.forgetPasswordVerifyCodeVisible
@@ -291,7 +288,6 @@
             <!-- 忘记密码填写新密码对话框 -->
             <form v-show="pageVisible.forgetPasswordNewPasswordVisible" action="#" class="authing-form" :class="{
               animated: pageVisible.forgetPasswordNewPasswordVisible,
-              fadeIn: pageVisible.forgetPasswordNewPasswordVisible,
               faster: pageVisible.forgetPasswordNewPasswordVisible,
               'authing-form': true,
               'no-shadow': pageVisible.forgetPasswordNewPasswordVisible
@@ -305,7 +301,6 @@
             <!-- 小程序扫码 -->
             <form v-show="pageVisible.wxQRCodeVisible" action="#" style="height:300px" class="authing-form" :class="{
               animated: pageVisible.wxQRCodeVisible,
-              fadeIn: pageVisible.wxQRCodeVisible,
               faster: pageVisible.wxQRCodeVisible,
               'authing-form': true,
               'no-shadow': pageVisible.wxQRCodeVisible
