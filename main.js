@@ -268,11 +268,21 @@
                   console.log(data)
                   that.unLoading();
                   that.errVisible = false;
+                  that.showGlobalSuccess('注册成功');
                 })
                 .catch(function (err) {
                   console.log(err)
                   that.unLoading();
                   that.showGlobalErr(err.message.message)
+                  if(err.message.code === 2026) {
+                    addAnimation('sign-up-email')
+                    setTimeout(function () {
+                      removeAnimation('sign-up-email')
+                    }, 500)
+                    removeRedLine('sign-up-re-password')
+                    removeRedLine('sign-up-username')
+                    removeRedLine('sign-up-password')
+                  }
                 })
             },
             handleLogin: function handleLogin() {
@@ -301,7 +311,7 @@
                 that.unLoading();
                 return false
               }
-              if (this.verifyCodeVisible) {
+              if (this.pageVisible.verifyCodeVisible) {
                 info = {
                   email: this.loginForm.email,
                   password: this.loginForm.password,
@@ -324,7 +334,7 @@
                   that.unLoading();
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
-                    that.verifyCodeVisible = true
+                    that.pageVisible.verifyCodeVisible = true
                     that.verifyCodeUrl = err.message.data.url
                     addAnimation('verify-code')
                     removeRedLine('login-username')
