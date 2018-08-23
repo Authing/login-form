@@ -783,7 +783,8 @@ body {
 }
 
 .form-footer {
- 	margin-bottom: 0px;
+   margin-bottom: 0px;
+   height: 60px;
  }
 
 .form-footer .btn {
@@ -974,6 +975,21 @@ body {
 .authing-loading-wrapper .form-body, .authing-loading-wrapper .authing-oauth-form, .authing-loading-wrapper .authing-header-tabs-container {
 	opacity: 0.3;
 	pointer-events: none;
+}
+
+.authing-loading-circle {
+	position: absolute;
+	margin-top: 15px;
+	left: calc(50% - 15px);
+	width: 30px;
+	height: 30px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgba(0,0,0,0.4) rgba(0,0,0,0.4) rgba(0,0,0,0.2) rgba(0,0,0,0.2);
+	opacity: 0.9;
+	border-radius: 20px;
+	-webkit-animation: rotate 1s linear infinite;
+	animation: rotate 1s linear infinite;
 }
 
 

@@ -326,15 +326,15 @@
           </div>
 
           <div class="form-footer">
-            <input v-show="pageVisible.loginVisible" @click="handleLogin" type="button" value="登录" class="btn btn-primary">
-            <input v-show="pageVisible.signUpVisible" @click="handleSignUp" type="button" value="注册" class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordSendEmailVisible" @click="handleForgetPasswordSendEmail" type="button" value="发送邮件"
+            <div class="authing-loading-circle" v-show="loading"></div>
+            <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录" class="btn btn-primary">
+            <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册" class="btn btn-primary">
+            <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading" @click="handleForgetPasswordSendEmail" type="button" value="发送邮件"
                    class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordVerifyCodeVisible" @click="handleSubmitForgetPasswordVerifyCode" type="button"
+            <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading" @click="handleSubmitForgetPasswordVerifyCode" type="button"
                    value="提交验证码" class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordNewPasswordVisible" @click="handleSubmitForgetPasswordNewPassword"
+            <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading" @click="handleSubmitForgetPasswordNewPassword"
                    type="button" value="提交新密码" class="btn btn-primary">
-
           </div>
         </div>
 
