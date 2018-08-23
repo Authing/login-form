@@ -110,18 +110,24 @@
               password: ''
             },
 
-            loading: false
+            loading: false,
+            oAuthloading: false,
+
+            isWxQRCodeGenerated: false
           },
           created: function () {
             var that = this
+            that.oAuthloading = true;
             validAuth.readOAuthList()
               .then(function (data) {
+                that.oAuthloading = false;
                 var OAuthList = data.filter(function (item) {
                   return item.enabled === true && item.name !== '小程序扫码登录'
                 })
                 that.OAuthList = OAuthList
               })
               .catch(function (err) {
+                that.oAuthloading = true;
                 console.log(err)
               })
           },
@@ -438,9 +444,12 @@
               this.pageStack.push(this.getPageState())
               this.turnOnPage('wxQRCodeVisible')
 
-              validAuth.startWXAppScaning({
-                mount: 'qrcode-node'
-              })
+              if(!this.isWxQRCodeGenerated) {
+                validAuth.startWXAppScaning({
+                  mount: 'qrcode-node'
+                });
+                this.isWxQRCodeGenerated = true;
+              }
             }
             // checkRetype: function () {
             //   if(this.signUpForm.password!==this.signUpForm.rePassword) {

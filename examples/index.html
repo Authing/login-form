@@ -166,6 +166,7 @@
           </div>
 
           <div class="authing-oauth-form" v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible">
+            <div class="authing-loading-circle" v-show="oAuthloading"></div>
             <div v-for="(item, index) in OAuthList" class="form-group">
               <div class="logmod__alter">
                 <div class="logmod__alter-container">
@@ -260,11 +261,6 @@
                        :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
                        v-model="signUpForm.rePassword"
                        placeholder="确认密码" autocomplete="off" @keyup.enter="handleSignUp">
-              </div>
-              <div class="form-group">
-                <label for="sign-up-remember"><input type="checkbox" id="sign-up-remember"
-                                                     style="vertical-align: middle; margin: 0"><span
-                  style="vertical-align: middle"> 记住我</span></label>
               </div>
             </form>
 
