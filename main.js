@@ -16,9 +16,10 @@
   }
   // Support browser
   else {
-    global.AuthingLock = global.AuthingLock || factory()
+    global.AuthingForm = global.AuthingForm || factory()
   }
 }(this, function () {
+
   var emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/
 
   function removeAnimation(className) {
@@ -62,8 +63,7 @@
     var auth = new Authing({
       clientId: '5a9fa26cf8635a000185528c',
       secret: '427e24d3b7e289ae9469ab6724dc7ff0'
-    })
-
+    });
 
     auth.then(function (validAuth) {
       loadVue(function () {
@@ -126,9 +126,7 @@
               this.loginForm.email = localStorage.getItem('username')
             }
             if (localStorage.getItem('password')) {
-              console.log(localStorage.getItem('password'))
               this.loginForm.password = this.decrypt(localStorage.getItem('password'), clientId)
-              console.log(this.loginForm)
             }
             that.oAuthloading = true
             validAuth.readOAuthList()
@@ -141,7 +139,6 @@
               })
               .catch(function (err) {
                 that.oAuthloading = true
-                console.log(err)
               })
           },
           mounted: function () {
@@ -159,12 +156,10 @@
               for (i = 0; i < str.length; i++) {
                 arr.push(str.charCodeAt(i) ^ r.charCodeAt(i))
               }
-              console.log(arr)
               var uglyStr = ''
               arr.map(function (char) {
                 uglyStr += String.fromCharCode(char)
               })
-              console.log(uglyStr)
               var out = window.btoa(uglyStr)
               return out
             },
@@ -180,7 +175,6 @@
               for (i = 0; i < str.length; i++) {
                 arr.push(str.charCodeAt(i) ^ r.charCodeAt(i))
               }
-              console.log(arr)
               var uglyStr = ''
               arr.map(function (char) {
                 uglyStr += String.fromCharCode(char)
@@ -267,7 +261,6 @@
               }
             },
             handleSignUp: function handleSignUp() {
-              console.log('handleSignUp')
               var that = this
               that.setLoading()
               if (!this.signUpForm.username) {
@@ -326,13 +319,11 @@
                 password: this.signUpForm.password
               })
                 .then(function (data) {
-                  console.log(data)
                   that.unLoading()
                   that.errVisible = false
                   that.showGlobalSuccess('注册成功')
                 })
                 .catch(function (err) {
-                  console.log(err)
                   that.unLoading()
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2026) {
@@ -387,8 +378,6 @@
               }
               validAuth.login(info)
                 .then(function (data) {
-                  console.log('data', data)
-                  console.log(that.rememberMe)
                   if (that.rememberMe) {
                     localStorage.setItem('username', that.loginForm.email)
                     localStorage.setItem('password', that.encrypt(that.loginForm.password, clientId))
@@ -401,7 +390,6 @@
                   that.unLoading()
                 })
                 .catch(function (err) {
-                  console.log('err', err)
                   that.unLoading()
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
@@ -440,7 +428,6 @@
 
             },
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
-              console.log('handleForgetPassword')
               var that = this
               that.setLoading()
               if (!emailExp.test(this.forgetPasswordForm.email)) {
@@ -525,17 +512,9 @@
                 this.isWxQRCodeGenerated = true
               }
             }
-            // checkRetype: function () {
-            //   if(this.signUpForm.password!==this.signUpForm.rePassword) {
-            //     addRedLine('sign-re-password')
-            //   } else {
-            //     removeRedLine()
-            //   }
-            // }
           },
           watch: {
             rememberMe: function (newVal, oldVal) {
-              console.log('watcher', newVal)
               if(newVal === false) {
                 localStorage.removeItem('username')
                 localStorage.removeItem('password')
@@ -543,7 +522,6 @@
             }
           }
         })
-        console.log(document.getElementById('app').classList)
         document.getElementById('app').classList.remove('hide')
       })
 
@@ -552,10 +530,25 @@
       console.log(error)
     })
 
+  }
+
+  var AuthingForm = function(opts) {
 
   }
 
-  return {
-    hello: 'Authing Lock'
+  AuthingForm.prototype = {
+    show: function() {
+
+    },
+
+    hide: function() {
+
+    },
+
+    on: function() {
+      
+    }
   }
-}))
+
+  return AuthingForm;
+}));
