@@ -257,10 +257,20 @@
                 .then(function (data) {
                   console.log(data)
                   that.errVisible = false
+                  that.showGlobalSuccess('注册成功，正在登陆...')
                 })
                 .catch(function (err) {
                   console.log(err)
                   that.showGlobalErr(err.message.message)
+                  if(err.message.code === 2026) {
+                    addAnimation('sign-up-email')
+                    setTimeout(function () {
+                      removeAnimation('sign-up-email')
+                    }, 500)
+                    removeRedLine('sign-up-re-password')
+                    removeRedLine('sign-up-username')
+                    removeRedLine('sign-up-password')
+                  }
                 })
             },
             handleLogin: function handleLogin() {
@@ -289,7 +299,7 @@
                 this.loading = false;
                 return false
               }
-              if (this.verifyCodeVisible) {
+              if (this.pageVisible.verifyCodeVisible) {
                 info = {
                   email: this.loginForm.email,
                   password: this.loginForm.password,
