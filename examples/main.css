@@ -1067,6 +1067,7 @@ animation-name: fadeInDownBig;
 .fadeInUp {
 -webkit-animation-name: fadeInUp;
 animation-name: fadeInUp;
+transition: 0.1s;
 }
 
 @-webkit-keyframes fadeOut {

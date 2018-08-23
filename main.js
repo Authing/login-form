@@ -183,6 +183,9 @@
               if (lastState) {
                 this.pageVisible = Object.assign({}, lastState)
               }
+              if(this.loading) {
+                this.unLoading();
+              }
             },
             gotoLogin: function gotoLogin() {
               this.pageStack.push(this.getPageState())
