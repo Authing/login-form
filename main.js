@@ -388,6 +388,7 @@
               validAuth.login(info)
                 .then(function (data) {
                   console.log('data', data)
+                  console.log(that.rememberMe)
                   if (that.rememberMe) {
                     localStorage.setItem('username', that.loginForm.email)
                     localStorage.setItem('password', that.encrypt(that.loginForm.password, clientId))
@@ -534,6 +535,7 @@
           },
           watch: {
             rememberMe: function (newVal, oldVal) {
+              console.log('watcher', newVal)
               if(newVal === false) {
                 localStorage.removeItem('username')
                 localStorage.removeItem('password')
