@@ -951,6 +951,31 @@ body {
 	background: #44c7f4;
 }
 
+.authing-loading-container {
+	-webkit-animation: fadeIn 0.75s ease-in-out !important;
+	animation: fadeIn 0.75s ease-in-out !important;
+	position: absolute;
+	width: 54px;
+	height: 54px;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.authing-loading-wrapper .form-footer .btn {
+	background-color: #eee !important;
+	-webkit-transition: background 0.5s ease;
+	transition: background 0.5s ease;
+	cursor: initial;
+	pointer-events: none;
+}
+
+.authing-loading-wrapper .form-body, .authing-loading-wrapper .authing-oauth-form, .authing-loading-wrapper .authing-header-tabs-container {
+	opacity: 0.3;
+	pointer-events: none;
+}
+
 
 @-webkit-keyframes fadeIn {
 0% {
