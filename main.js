@@ -79,6 +79,8 @@
             signUpVisible: false,
             verifyCodeVisible: false,
 
+            pageStack: [],
+
             OAuthList: [],
 
             verifyCodeUrl: '',
@@ -114,7 +116,27 @@
             this.loginVisible = true
           },
           methods: {
+            getPageState: function getPageState() {
+              return {
+                forgetPasswordVisible: this.forgetPasswordVisible,
+                oauthVisible: this.oauthVisible,
+                wxQRCodeVisible: this.wxQRCodeVisible,
+                signUpVisible: this.signUpVisible,
+                loginVisible: this.loginVisible,
+              }
+            },
+            handleGoBack: function handleGoBack() {
+              var lastState = this.pageStack.pop()
+              if (lastState) {
+                this.forgetPasswordVisible = lastState.forgetPasswordVisible
+                this.oauthVisible = lastState.oauthVisible
+                this.wxQRCodeVisible = lastState.wxQRCodeVisible
+                this.signUpVisible = lastState.signUpVisible
+                this.loginVisible = lastState.loginVisible
+              }
+            },
             gotoLogin: function gotoLogin() {
+              this.pageStack.push(this.getPageState())
               this.forgetPasswordVisible = false
               this.oauthVisible = false
               this.wxQRCodeVisible = false
@@ -122,6 +144,7 @@
               this.loginVisible = true
             },
             gotoSignUp: function gotoSignUp() {
+              this.pageStack.push(this.getPageState())
               this.loginVisible = false
               this.forgetPasswordVisible = false
               this.oauthVisible = false
@@ -129,6 +152,7 @@
               this.signUpVisible = true
             },
             gotoForgetPassword: function gotoForgetPassword() {
+              this.pageStack.push(this.getPageState())
               this.loginVisible = false
               this.oauthVisible = false
               this.wxQRCodeVisible = false
@@ -137,7 +161,7 @@
             },
             checkEmail: function checkEmail() {
               if (!emailExp.test(this.signUpForm.email)) {
-                this.errVisible = true;
+                this.errVisible = true
                 this.errMsg = '请输入正确格式的邮箱'
                 addAnimation('sign-up-email')
                 removeRedLine('sign-up-username')
@@ -304,14 +328,15 @@
               console.log('handleForgetPassword')
             },
             gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
-              this.wxQRCodeVisible = true;
-              this.loginVisible = false;
-              this.signUpVisible = false;
-              this.errVisible = false;
-              this.verifyCodeVisible = false;
+              this.pageStack.push(this.getPageState())
+              this.wxQRCodeVisible = true
+              this.loginVisible = false
+              this.signUpVisible = false
+              this.errVisible = false
+              this.verifyCodeVisible = false
               validAuth.startWXAppScaning({
                 mount: 'qrcode-node'
-              });
+              })
             }
             // checkRetype: function () {
             //   if(this.signUpForm.password!==this.signUpForm.rePassword) {
