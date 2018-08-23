@@ -292,7 +292,7 @@
             }" data-animate-effect="fadeIn">
               <div class="form-group" style="margin-top: -15px;">
                 <label for="forget-password-email" class="sr-only">验证码</label>
-                <input type="email" class="form-control" id="forget-password-verify-code" placeholder="验证码"
+                <input type="text" class="form-control" id="forget-password-verify-code" placeholder="验证码"
                        autocomplete="off" v-model="forgetPasswordForm.verifyCode" @keyup.enter="handleSubmitForgetPasswordVerifyCode">
               </div>
             </form>
@@ -306,7 +306,7 @@
             }" data-animate-effect="fadeIn">
               <div class="form-group" style="margin-top: -15px;">
                 <label for="forget-password-email" class="sr-only">新密码</label>
-                <input type="email" class="form-control" id="forget-password-new-password" placeholder="新密码"
+                <input type="password" class="form-control" id="forget-password-new-password" placeholder="新密码"
                        autocomplete="off" v-model="forgetPasswordForm.password" @keyup.enter="handleSubmitForgetPasswordNewPassword">
               </div>
             </form>

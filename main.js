@@ -130,6 +130,11 @@
             this.pageVisible.loginVisible = true
           },
           methods: {
+            removeGlobalMsg: function removeGlobalMsg() {
+              this.warnVisible = false
+              this.errVisible = false
+              this.successVisible = false
+            },
             showGlobalSuccess: function showGlobalSuccess(msg) {
               this.warnVisible = false
               this.errVisible = false
@@ -152,6 +157,7 @@
               return Object.assign({}, this.pageVisible)
             },
             turnOnPage: function turnOnPage(visible) {
+              this.removeGlobalMsg()
               var i
               for (i in this.pageVisible) {
                 if (i === visible) {
@@ -343,6 +349,14 @@
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
               console.log('handleForgetPassword')
               var that = this
+              if(!emailExp.test(this.forgetPasswordForm.email)) {
+                this.showGlobalErr('请输入正确格式的邮箱')
+                addAnimation('forget-password-email')
+                setTimeout(function () {
+                  removeAnimation('forget-password-email')
+                }, 500)
+                return false
+              }
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
@@ -367,6 +381,10 @@
                   that.pageVisible.forgetPasswordNewPasswordVisible = true
                 })
                 .catch(function (err) {
+                  addAnimation('forget-password-verify-code')
+                  setTimeout(function () {
+                    removeAnimation('forget-password-verify-code')
+                  }, 500)
                   that.showGlobalErr(err.message.message)
                 })
             },
