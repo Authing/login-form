@@ -116,7 +116,6 @@
             var that = this
             validAuth.readOAuthList()
               .then(function (data) {
-                console.log('oauth', data)
                 var OAuthList = data.filter(function (item) {
                   return item.enabled === true && item.name !== '小程序扫码登录'
                 })
@@ -314,7 +313,7 @@
               validAuth.login(info)
                 .then(function (data) {
                   console.log('data', data)
-                  that.showGlobalSuccess('正在登陆...')
+                  that.showGlobalSuccess('验证通过')
                   that.loading = false;
                 })
                 .catch(function (err) {
@@ -406,7 +405,7 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
-                  that.showGlobalSuccess('修改密码成功，正在登陆...')
+                  that.showGlobalSuccess('修改密码成功')
                 })
                 .catch(function (err) {
                   that.showGlobalErr(err.message.message)
