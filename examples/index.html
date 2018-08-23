@@ -64,7 +64,7 @@
     <div class="authing-login-form-wrapper">
 
       <div class="form-wrapper" :class="{
-        'authing-loading-wrapper': loading,
+        'authing-loading-wrapper': loading || oAuthloading,
         animated: true,
         fadeInUp: true
       }">
