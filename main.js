@@ -407,6 +407,15 @@
             handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
               var that = this
               that.setLoading();
+              if(!this.forgetPasswordForm.verifyCode) {
+                that.unLoading();
+                addAnimation('forget-password-verify-code')
+                setTimeout(function () {
+                  removeAnimation('forget-password-verify-code')
+                }, 500)
+                that.showGlobalErr('请输入验证码')
+                return false
+              }
               validAuth.verifyResetPasswordVerifyCode({
                 email: that.forgetPasswordForm.email,
                 verifyCode: that.forgetPasswordForm.verifyCode
