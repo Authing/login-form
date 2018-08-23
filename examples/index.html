@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
   <link rel="stylesheet" type="text/css" media="screen"
-        href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css"/>
   <link href=https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css rel=stylesheet>
 
   <style type="text/css">
@@ -41,54 +40,6 @@
       border-bottom: 1px solid red !important;
     }
 
-    @media screen and (max-width: 768px) {
-
-      body {
-        height: 100vh;
-      }
-
-      #app, .container, .row, .col-md-4 {
-        height: 100%;
-      }
-
-      .form-footer {
-        margin-bottom: 0px !important;
-        width: calc(100% + 30px);
-        position: absolute;
-        padding-left: -15px;
-        padding-right: 44px;
-        left: 0px;
-        bottom: 0px;
-      }
-
-      .authing-form {
-        padding-bottom: 0px;
-        margin-top: 0px !important;
-        height: 100%;
-      }
-
-      .container {
-        padding-left: 0px;
-        padding-right: 0px;
-      }
-    }
-
-    .form-footer .btn {
-      width: 100%;
-      border-radius: 0px;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-      height: 60px;
-      font-size: 16px;
-      background: #00a1ea;
-      box-shadow: none;
-      font-weight: 200;
-    }
-
-    .form-footer .btn:hover, .form-footer .btn:focus, .form-footer .btn:active {
-      background: #0184bf !important;
-    }
-
     .full-width {
       width: 100%;
     }
@@ -109,229 +60,234 @@
 <body>
 <div id="app" class="hide">
   <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
+    <div class="authing-login-form-wrapper">
 
-        <div class="form-wrapper" :class="{
-          'authing-loading-wrapper': loading,
-          animated: true,
-          fadeInUp: true
-        }">
-          <div class="form-header">
-            <span v-if="pageStack.length > 0" @click="handleGoBack" class="auth0-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
-            <div class="form-header-bg"></div>
-            <div class="form-header-welcome">
-              <img class="form-header-logo"
-                   src="https://usercontents.authing.cn/user-avatars/FvchPXRB9aRMzrwej_JTQodyyG5U">
-              <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : 'Authing'}}</div>
+      <div class="form-wrapper" :class="{
+        'authing-loading-wrapper': loading,
+        animated: true,
+        fadeInUp: true
+      }">
+        <div class="form-header">
+          <span v-if="pageStack.length > 0" @click="handleGoBack" class="auth0-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
+          <div class="form-header-bg"></div>
+          <div class="form-header-welcome">
+            <img class="form-header-logo"
+                 src="https://usercontents.authing.cn/user-avatars/FvchPXRB9aRMzrwej_JTQodyyG5U">
+            <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : 'Authing'}}
             </div>
-          </div>
-
-          <div v-show="errVisible" class="authing-global-message authing-global-message-error">
-                <span class="animated fadeInUp">
-                  <span>{{errMsg}}</span>
-                </span>
-          </div>
-
-          <div v-show="successVisible" class="authing-global-message authing-global-message-success">
-                <span class="animated fadeInUp">
-                  <span>{{successMsg}}</span>
-                </span>
-          </div>
-
-          <div v-show="warnVisible" class="authing-global-message authing-global-message-info">
-                  <span class="animated fadeInUp">
-                    <span>{{warnMsg}}</span>
-                  </span>
-          </div>
-
-          <div class="authing-header-tabs-container">
-            <ul class="authing-header-tabs">
-              <li v-bind:class="{
-                'authing-header-tabs-current': pageVisible.wxQRCodeVisible
-              }">
-                <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
-              </li>
-              <li v-bind:class="{
-                'authing-header-tabs-current': pageVisible.loginVisible
-              }">
-                <a href="javascript:void(0)" @click="gotoLogin">登录</a>
-              </li>
-              <li v-bind:class="{
-                'authing-header-tabs-current': pageVisible.signUpVisible
-              }">
-                <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="authing-oauth-form" v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible">
-            <div class="authing-loading-circle" v-show="oAuthloading"></div>
-            <div v-for="(item, index) in OAuthList" class="form-group">
-              <div class="logmod__alter">
-                <div class="logmod__alter-container">
-                  <a
-                    :href="item.url"
-                    :class="{'connect': true, 'facebook': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
-                    <div class="connect__icon">
-                      <i class="fa"
-                         :class="{'fa-github': item.name === 'Github', 'fa-wechat': item.name === '微信电脑网页版'}"></i>
-                    </div>
-                    <div class="connect__context">
-                      <span>{{item.description}}</span>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <P class="form-tip">或者</P>
-          </div>
-
-          <div class="form-body">
-            <!-- 登录对话框 -->
-            <form v-show="pageVisible.loginVisible" action="#" class="authing-form animate-box no-shadow" :class="{
-                faster: pageVisible.loginVisible,
-                'authing-form': true,
-                'no-shadow': pageVisible.loginVisible
-              }">
-
-              <div class="form-group">
-                <label for="login-username" class="sr-only">邮箱</label>
-                <input type="text" class="form-control" id="login-username" v-model="loginForm.email" placeholder="邮箱"
-                       autocomplete="off" @keyup.enter="handleLogin">
-              </div>
-              <div class="form-group">
-                <label for="login-password" class="sr-only">密码</label>
-                <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
-                       placeholder="密码" autocomplete="off" @keyup.enter="handleLogin">
-              </div>
-              <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
-                <input type="text" class="form-control" id="verify-code" v-model="verifyCode" placeholder="请输入验证码"
-                       autocomplete="off" @keyup.enter="handleLogin">
-                <img :src="verifyCodeUrl">
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group" style="margin-bottom:0px;">
-                    <label for="login-remember" style="width:100%">
-                      <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0" v-model="rememberMe"><span
-                      style="vertical-align: middle" :checked="rememberMe"> 记住我</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div style="display:inline-block;text-align:right;width:100%;font-size:14px">
-                    <a href="#" @click="gotoForgetPassword">忘记密码？</a>
-                  </div>
-                </div>
-              </div>
-
-            </form>
-
-            <!-- 注册对话框 -->
-            <form v-show="pageVisible.signUpVisible" action="#" class="authing-form" :class="{
-              'authing-form': true,
-              'no-shadow': pageVisible.signUpVisible
-            }" data-animate-effect="fadeIn">
-              <div class="form-group">
-                <label for="sign-up-username" class="sr-only">用户名</label>
-                <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
-                       placeholder="用户名"
-                       autocomplete="off" @keyup.enter="handleSignUp">
-              </div>
-              <div class="form-group">
-                <label for="sign-up-email" class="sr-only">邮箱地址</label>
-                <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email"
-                       @blur="checkEmail" placeholder="邮箱地址"
-                       autocomplete="off" @keyup.enter="handleSignUp">
-              </div>
-              <div class="form-group">
-                <label for="sign-up-password" class="sr-only">密码</label>
-                <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password"
-                       placeholder="密码" autocomplete="off" @keyup.enter="handleSignUp">
-              </div>
-              <div class="form-group">
-                <label for="sign-up-re-password" class="sr-only">确认密码</label>
-                <input type="password" class="form-control"
-                       :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
-                       v-model="signUpForm.rePassword"
-                       placeholder="确认密码" autocomplete="off" @keyup.enter="handleSignUp">
-              </div>
-            </form>
-
-            <!-- 忘记密码填写邮箱对话框 -->
-            <form v-show="pageVisible.forgetPasswordSendEmailVisible" action="#" class="authing-form" :class="{
-              animated: pageVisible.forgetPasswordSendEmailVisible,
-              'slide-enter': pageVisible.forgetPasswordSendEmailVisible,
-              'slide-enter-active': pageVisible.forgetPasswordSendEmailVisible,
-              faster: pageVisible.forgetPasswordSendEmailVisible,
-              'authing-form': true,
-              'no-shadow': pageVisible.forgetPasswordSendEmailVisible
-            }" data-animate-effect="fadeIn">
-              <div class="form-group" style="margin-top: -15px;">
-                <label for="forget-password-email" class="sr-only">邮箱地址</label>
-                <input v-show="pageVisible.forgetPasswordSendEmailVisible" type="email" class="form-control" id="forget-password-email" placeholder="邮箱地址"
-                       autocomplete="off" v-model="forgetPasswordForm.email" @keyup.enter="handleForgetPasswordSendEmail">
-              </div>
-            </form>
-            <!-- 忘记密码填写验证码对话框 -->
-            <form v-show="pageVisible.forgetPasswordVerifyCodeVisible" action="#" class="authing-form" :class="{
-              animated: pageVisible.forgetPasswordVerifyCodeVisible,
-              fadeIn: pageVisible.forgetPasswordVerifyCodeVisible,
-              faster: pageVisible.forgetPasswordVerifyCodeVisible,
-              'authing-form': true,
-              'no-shadow': pageVisible.forgetPasswordVerifyCodeVisible
-            }" data-animate-effect="fadeIn">
-              <div class="form-group" style="margin-top: -15px;">
-                <label for="forget-password-email" class="sr-only">验证码</label>
-                <input type="text" class="form-control" id="forget-password-verify-code" placeholder="请输入验证码"
-                       autocomplete="off" v-model="forgetPasswordForm.verifyCode" @keyup.enter="handleSubmitForgetPasswordVerifyCode">
-              </div>
-            </form>
-            <!-- 忘记密码填写新密码对话框 -->
-            <form v-show="pageVisible.forgetPasswordNewPasswordVisible" action="#" class="authing-form" :class="{
-              animated: pageVisible.forgetPasswordNewPasswordVisible,
-              fadeIn: pageVisible.forgetPasswordNewPasswordVisible,
-              faster: pageVisible.forgetPasswordNewPasswordVisible,
-              'authing-form': true,
-              'no-shadow': pageVisible.forgetPasswordNewPasswordVisible
-            }" data-animate-effect="fadeIn">
-              <div class="form-group" style="margin-top: -15px;">
-                <label for="forget-password-email" class="sr-only">新密码</label>
-                <input type="password" class="form-control" id="forget-password-new-password" placeholder="请输入新密码"
-                       autocomplete="off" v-model="forgetPasswordForm.password" @keyup.enter="handleSubmitForgetPasswordNewPassword">
-              </div>
-            </form>
-            <!-- 小程序扫码 -->
-            <form v-show="pageVisible.wxQRCodeVisible" action="#" style="height:300px" class="authing-form" :class="{
-              animated: pageVisible.wxQRCodeVisible,
-              fadeIn: pageVisible.wxQRCodeVisible,
-              faster: pageVisible.wxQRCodeVisible,
-              'authing-form': true,
-              'no-shadow': pageVisible.wxQRCodeVisible
-            }" data-animate-effect="fadeIn">
-              <div class="form-group" style="margin-top: -15px;">
-                <div id="qrcode-node"></div>
-              </div>
-            </form>
-
-          </div>
-
-          <div class="form-footer" :class="{
-            'no-height': pageVisible.wxQRCodeVisible
-          }">
-            <div class="authing-loading-circle" v-show="loading"></div>
-            <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录" class="btn btn-primary">
-            <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册" class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading" @click="handleForgetPasswordSendEmail" type="button" value="发送邮件"
-                   class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading" @click="handleSubmitForgetPasswordVerifyCode" type="button"
-                   value="提交验证码" class="btn btn-primary">
-            <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading" @click="handleSubmitForgetPasswordNewPassword"
-                   type="button" value="提交新密码" class="btn btn-primary">
           </div>
         </div>
 
+        <div v-show="errVisible" class="authing-global-message authing-global-message-error">
+              <span class="animated fadeInUp">
+                <span>{{errMsg}}</span>
+              </span>
+        </div>
+
+        <div v-show="successVisible" class="authing-global-message authing-global-message-success">
+              <span class="animated fadeInUp">
+                <span>{{successMsg}}</span>
+              </span>
+        </div>
+
+        <div v-show="warnVisible" class="authing-global-message authing-global-message-info">
+                <span class="animated fadeInUp">
+                  <span>{{warnMsg}}</span>
+                </span>
+        </div>
+
+        <div class="authing-header-tabs-container">
+          <ul class="authing-header-tabs">
+            <li v-bind:class="{
+              'authing-header-tabs-current': pageVisible.wxQRCodeVisible
+            }">
+              <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
+            </li>
+            <li v-bind:class="{
+              'authing-header-tabs-current': pageVisible.loginVisible
+            }">
+              <a href="javascript:void(0)" @click="gotoLogin">登录</a>
+            </li>
+            <li v-bind:class="{
+              'authing-header-tabs-current': pageVisible.signUpVisible
+            }">
+              <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="authing-oauth-form" v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible">
+          <div style="height: 60px;" v-show="oAuthloading">
+            <div class="authing-loading-circle margin-top-11"></div>
+          </div>
+
+          <div v-for="(item, index) in OAuthList" class="form-group">
+            <div class="logmod__alter">
+              <div class="logmod__alter-container">
+                <a
+                  :href="item.url"
+                  :class="{'connect': true, 'facebook': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
+                  <div class="connect__icon">
+                    <i class="fa"
+                       :class="{'fa-github': item.name === 'Github', 'fa-wechat': item.name === '微信电脑网页版'}"></i>
+                  </div>
+                  <div class="connect__context">
+                    <span>{{item.description}}</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <P class="form-tip" v-show="!oAuthloading">或者</P>
+        </div>
+
+        <div class="form-body" v-show="!oAuthloading">
+          <!-- 登录对话框 -->
+          <form v-show="pageVisible.loginVisible" action="#" class="authing-form animate-box no-shadow" :class="{
+              faster: pageVisible.loginVisible,
+              'authing-form': true,
+              'no-shadow': pageVisible.loginVisible
+            }">
+
+            <div class="form-group">
+              <label for="login-username" class="sr-only">邮箱</label>
+              <input type="text" class="form-control" id="login-username" v-model="loginForm.email" placeholder="邮箱"
+                     autocomplete="off" @keyup.enter="handleLogin">
+            </div>
+            <div class="form-group">
+              <label for="login-password" class="sr-only">密码</label>
+              <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
+                     placeholder="密码" autocomplete="off" @keyup.enter="handleLogin">
+            </div>
+            <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
+              <input type="text" class="form-control" id="verify-code" v-model="verifyCode" placeholder="请输入验证码"
+                     autocomplete="off" @keyup.enter="handleLogin">
+              <img :src="verifyCodeUrl">
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" style="margin-bottom:0px;">
+                  <label for="login-remember" style="width:100%">
+                    <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
+                           :checked="rememberMe"><span
+                    style="vertical-align: middle"> 记住我</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div style="display:inline-block;text-align:right;width:100%;font-size:14px">
+                  <a href="#" @click="gotoForgetPassword">忘记密码？</a>
+                </div>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- 注册对话框 -->
+          <form v-show="pageVisible.signUpVisible" action="#" class="authing-form" :class="{
+            'authing-form': true,
+            'no-shadow': pageVisible.signUpVisible
+          }" data-animate-effect="fadeIn">
+            <div class="form-group">
+              <label for="sign-up-username" class="sr-only">用户名</label>
+              <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
+                     placeholder="用户名"
+                     autocomplete="off" @keyup.enter="handleSignUp">
+            </div>
+            <div class="form-group">
+              <label for="sign-up-email" class="sr-only">邮箱地址</label>
+              <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email"
+                     @blur="checkEmail" placeholder="邮箱地址"
+                     autocomplete="off" @keyup.enter="handleSignUp">
+            </div>
+            <div class="form-group">
+              <label for="sign-up-password" class="sr-only">密码</label>
+              <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password"
+                     placeholder="密码" autocomplete="off" @keyup.enter="handleSignUp">
+            </div>
+            <div class="form-group">
+              <label for="sign-up-re-password" class="sr-only">确认密码</label>
+              <input type="password" class="form-control"
+                     :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
+                     v-model="signUpForm.rePassword"
+                     placeholder="确认密码" autocomplete="off" @keyup.enter="handleSignUp">
+            </div>
+          </form>
+
+          <!-- 忘记密码填写邮箱对话框 -->
+          <form v-show="pageVisible.forgetPasswordSendEmailVisible" action="#" class="authing-form" :class="{
+            animated: pageVisible.forgetPasswordSendEmailVisible,
+            faster: pageVisible.forgetPasswordSendEmailVisible,
+            'authing-form': true,
+            'no-shadow': pageVisible.forgetPasswordSendEmailVisible
+          }" data-animate-effect="fadeIn">
+            <div class="form-group" style="margin-top: -15px;">
+              <label for="forget-password-email" class="sr-only">邮箱地址</label>
+              <input v-show="pageVisible.forgetPasswordSendEmailVisible" type="email" class="form-control"
+                     id="forget-password-email" placeholder="邮箱地址"
+                     autocomplete="off" v-model="forgetPasswordForm.email" @keyup.enter="handleForgetPasswordSendEmail">
+            </div>
+          </form>
+          <!-- 忘记密码填写验证码对话框 -->
+          <form v-show="pageVisible.forgetPasswordVerifyCodeVisible" action="#" class="authing-form" :class="{
+            animated: pageVisible.forgetPasswordVerifyCodeVisible,
+            faster: pageVisible.forgetPasswordVerifyCodeVisible,
+            'authing-form': true,
+            'no-shadow': pageVisible.forgetPasswordVerifyCodeVisible
+          }" data-animate-effect="fadeIn">
+            <div class="form-group" style="margin-top: -15px;">
+              <label for="forget-password-email" class="sr-only">验证码</label>
+              <input type="text" class="form-control" id="forget-password-verify-code" placeholder="请输入验证码"
+                     autocomplete="off" v-model="forgetPasswordForm.verifyCode"
+                     @keyup.enter="handleSubmitForgetPasswordVerifyCode">
+            </div>
+          </form>
+          <!-- 忘记密码填写新密码对话框 -->
+          <form v-show="pageVisible.forgetPasswordNewPasswordVisible" action="#" class="authing-form" :class="{
+            animated: pageVisible.forgetPasswordNewPasswordVisible,
+            faster: pageVisible.forgetPasswordNewPasswordVisible,
+            'authing-form': true,
+            'no-shadow': pageVisible.forgetPasswordNewPasswordVisible
+          }" data-animate-effect="fadeIn">
+            <div class="form-group" style="margin-top: -15px;">
+              <label for="forget-password-email" class="sr-only">新密码</label>
+              <input type="password" class="form-control" id="forget-password-new-password" placeholder="请输入新密码"
+                     autocomplete="off" v-model="forgetPasswordForm.password"
+                     @keyup.enter="handleSubmitForgetPasswordNewPassword">
+            </div>
+          </form>
+          <!-- 小程序扫码 -->
+          <form v-show="pageVisible.wxQRCodeVisible" action="#" style="height:300px" class="authing-form" :class="{
+            animated: pageVisible.wxQRCodeVisible,
+            faster: pageVisible.wxQRCodeVisible,
+            'authing-form': true,
+            'no-shadow': pageVisible.wxQRCodeVisible
+          }" data-animate-effect="fadeIn">
+            <div class="form-group" style="margin-top: -15px;">
+              <div id="qrcode-node"></div>
+            </div>
+          </form>
+
+        </div>
+
+        <div class="form-footer" :class="{
+          'no-height': pageVisible.wxQRCodeVisible
+        }">
+          <div class="authing-loading-circle" v-show="loading"></div>
+          <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
+                 class="btn btn-primary">
+          <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册"
+                 class="btn btn-primary">
+          <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading" @click="handleForgetPasswordSendEmail"
+                 type="button" value="发送邮件"
+                 class="btn btn-primary">
+          <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading"
+                 @click="handleSubmitForgetPasswordVerifyCode" type="button"
+                 value="提交验证码" class="btn btn-primary">
+          <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading"
+                 @click="handleSubmitForgetPasswordNewPassword"
+                 type="button" value="提交新密码" class="btn btn-primary">
+        </div>
       </div>
     </div>
   </div>
