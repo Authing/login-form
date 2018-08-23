@@ -343,16 +343,16 @@
               console.log('handleOauthLogin')
 
             },
-            handleForgetPassword: function handleForgetPassword() {
+            handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
               console.log('handleForgetPassword')
               var that = this
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
                 .then(function (data) {
-                  that.showGlobalSuccess('验证码已发送至您的邮箱')
-                  that.forgetPasswordSendEmailVisible = false
-                  that.forgetPasswordVerifyCodeVisible = true
+                  that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email)
+                  that.pageVisible.forgetPasswordSendEmailVisible = false
+                  that.pageVisible.forgetPasswordVerifyCodeVisible = true
                 })
                 .catch(function (err) {
                   that.showGlobalErr(err.message)
@@ -366,8 +366,8 @@
               })
                 .then(function (data) {
                   that.showGlobalSuccess(data.message)
-                  that.forgetPasswordVerifyCodeVisible = false
-                  that.forgetPasswordNewPasswordVisible = true
+                  that.pageVisible.forgetPasswordVerifyCodeVisible = false
+                  that.pageVisible.forgetPasswordNewPasswordVisible = true
                 })
                 .catch(function (err) {
                   that.showGlobalErr(err.message.message)
@@ -381,6 +381,7 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
+                  console.log(data)
                   that.showGlobalSuccess(data.message)
                   that.gotoLogin()
 
