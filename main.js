@@ -78,6 +78,9 @@
             oauthVisible: false,
             signUpVisible: false,
             verifyCodeVisible: false,
+            forgetPasswordVerifyCodeVisible: false,
+            forgetPasswordNewPasswordVisible: false,
+
 
             pageStack: [],
 
@@ -96,7 +99,9 @@
               password: ''
             },
             verifyCode: '',
-            forgetPasswordForm: {}
+            forgetPasswordForm: {
+              email: ''
+            }
           },
           created: function () {
             var that = this
@@ -326,6 +331,22 @@
             },
             handleForgetPassword: function handleForgetPassword() {
               console.log('handleForgetPassword')
+              validAuth.sendResetPasswordEmail({
+                email: this.forgetPasswordForm.email
+              })
+                .then(function (data) {
+
+              })
+                .catch(function (err) {
+                  this.errVisible = true
+                  this.errMsg = err.message
+                })
+            },
+            handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
+
+            },
+            handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
+
             },
             gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
               this.pageStack.push(this.getPageState())
