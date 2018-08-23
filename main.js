@@ -69,18 +69,23 @@
           el: '#app',
           data: {
             errMsg: '',
-
+            successMsg: '',
+            warnMsg: '',
+            successVisible: false,
             errVisible: false,
+            warnVisible: false,
 
-            wxQRCodeVisible: false,
-            forgetPasswordVisible: false,
-            loginVisible: false,
-            oauthVisible: false,
-            signUpVisible: false,
-            verifyCodeVisible: false,
-            forgetPasswordVerifyCodeVisible: false,
-            forgetPasswordNewPasswordVisible: false,
-
+            pageVisible: {
+              wxQRCodeVisible: false,
+              forgetPasswordVisible: false,
+              loginVisible: false,
+              oauthVisible: false,
+              signUpVisible: false,
+              verifyCodeVisible: false,
+              forgetPasswordVerifyCodeVisible: false,
+              forgetPasswordNewPasswordVisible: false,
+              forgetPasswordSendEmailVisible: false,
+            },
 
             pageStack: [],
 
@@ -100,7 +105,9 @@
             },
             verifyCode: '',
             forgetPasswordForm: {
-              email: ''
+              email: '',
+              verifyCode: '',
+              password: ''
             }
           },
           created: function () {
@@ -118,51 +125,58 @@
               })
           },
           mounted: function () {
-            this.loginVisible = true
+            this.pageVisible.loginVisible = true
           },
           methods: {
+            showGlobalSuccess: function showGlobalSuccess(msg) {
+              this.warnVisible = false
+              this.errVisible = false
+              this.successVisible = true
+              this.successMsg = msg
+            },
+            showGlobalErr: function showGlobalErr(msg) {
+              this.successVisible = false
+              this.warnVisible = false
+              this.errVisible = true
+              this.errMsg = msg
+            },
+            showGlobalWarn: function showGlobalWarn(msg) {
+              this.successVisible = false
+              this.errVisible = false
+              this.warnVisible = true
+              this.warnMsg = msg
+            },
             getPageState: function getPageState() {
-              return {
-                forgetPasswordVisible: this.forgetPasswordVisible,
-                oauthVisible: this.oauthVisible,
-                wxQRCodeVisible: this.wxQRCodeVisible,
-                signUpVisible: this.signUpVisible,
-                loginVisible: this.loginVisible,
+              return Object.assign({}, this.pageVisible)
+            },
+            turnOnPage: function turnOnPage(visible) {
+              var i
+              for (i in this.pageVisible) {
+                if (i === visible) {
+                  this.pageVisible[i] = true
+                } else {
+                  this.pageVisible[i] = false
+                }
               }
             },
             handleGoBack: function handleGoBack() {
               var lastState = this.pageStack.pop()
               if (lastState) {
-                this.forgetPasswordVisible = lastState.forgetPasswordVisible
-                this.oauthVisible = lastState.oauthVisible
-                this.wxQRCodeVisible = lastState.wxQRCodeVisible
-                this.signUpVisible = lastState.signUpVisible
-                this.loginVisible = lastState.loginVisible
+                this.pageVisible = Object.assign({}, lastState)
               }
             },
             gotoLogin: function gotoLogin() {
               this.pageStack.push(this.getPageState())
-              this.forgetPasswordVisible = false
-              this.oauthVisible = false
-              this.wxQRCodeVisible = false
-              this.signUpVisible = false
-              this.loginVisible = true
+              this.turnOnPage('loginVisible')
             },
             gotoSignUp: function gotoSignUp() {
               this.pageStack.push(this.getPageState())
-              this.loginVisible = false
-              this.forgetPasswordVisible = false
-              this.oauthVisible = false
-              this.wxQRCodeVisible = false
-              this.signUpVisible = true
+              this.turnOnPage('signUpVisible')
             },
             gotoForgetPassword: function gotoForgetPassword() {
               this.pageStack.push(this.getPageState())
-              this.loginVisible = false
-              this.oauthVisible = false
-              this.wxQRCodeVisible = false
-              this.signUpVisible = false
-              this.forgetPasswordVisible = true
+              this.turnOnPage('forgetPasswordVisible')
+              this.pageVisible.forgetPasswordSendEmailVisible = true
             },
             checkEmail: function checkEmail() {
               if (!emailExp.test(this.signUpForm.email)) {
@@ -331,30 +345,54 @@
             },
             handleForgetPassword: function handleForgetPassword() {
               console.log('handleForgetPassword')
+              var that = this
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
                 .then(function (data) {
-
-              })
+                  that.showGlobalSuccess('验证码已发送至您的邮箱')
+                  that.forgetPasswordSendEmailVisible = false
+                  that.forgetPasswordVerifyCodeVisible = true
+                })
                 .catch(function (err) {
-                  this.errVisible = true
-                  this.errMsg = err.message
+                  that.showGlobalErr(err.message)
                 })
             },
             handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
-
+              var that = this
+              validAuth.verifyResetPasswordVerifyCode({
+                email: that.forgetPasswordForm.email,
+                verifyCode: that.forgetPasswordForm.verifyCode
+              })
+                .then(function (data) {
+                  that.showGlobalSuccess(data.message)
+                  that.forgetPasswordVerifyCodeVisible = false
+                  that.forgetPasswordNewPasswordVisible = true
+                })
+                .catch(function (err) {
+                  that.showGlobalErr(err.message.message)
+                })
             },
             handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
+              var that = this
+              validAuth.changePassword({
+                email: that.forgetPasswordForm.email,
+                password: that.forgetPasswordForm.password,
+                verifyCode: that.forgetPasswordForm.verifyCode
+              })
+                .then(function (data) {
+                  that.showGlobalSuccess(data.message)
+                  that.gotoLogin()
 
+                })
+                .catch(function (err) {
+                  that.showGlobalErr(err.message.message)
+                })
             },
             gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
               this.pageStack.push(this.getPageState())
-              this.wxQRCodeVisible = true
-              this.loginVisible = false
-              this.signUpVisible = false
-              this.errVisible = false
-              this.verifyCodeVisible = false
+              this.turnOnPage('wxQRCodeVisible')
+
               validAuth.startWXAppScaning({
                 mount: 'qrcode-node'
               })
