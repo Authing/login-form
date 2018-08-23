@@ -58,10 +58,12 @@
 
     loadBasicHTML()
 
+    var clientId = '5a9fa26cf8635a000185528c'
     var auth = new Authing({
       clientId: '5a9fa26cf8635a000185528c',
       secret: '427e24d3b7e289ae9469ab6724dc7ff0'
     })
+
 
     auth.then(function (validAuth) {
       loadVue(function () {
@@ -74,6 +76,8 @@
             successVisible: false,
             errVisible: false,
             warnVisible: false,
+
+            rememberMe: false,
 
             pageVisible: {
               wxQRCodeVisible: false,
@@ -101,7 +105,7 @@
             },
             loginForm: {
               email: '',
-              password: ''
+              password: '',
             },
             verifyCode: '',
             forgetPasswordForm: {
@@ -117,17 +121,26 @@
           },
           created: function () {
             var that = this
-            that.oAuthloading = true;
+            if (localStorage.getItem('username')) {
+              this.rememberMe = true
+              this.loginForm.email = localStorage.getItem('username')
+            }
+            if (localStorage.getItem('password')) {
+              console.log(localStorage.getItem('password'))
+              this.loginForm.password = this.decrypt(localStorage.getItem('password'), clientId)
+              console.log(this.loginForm)
+            }
+            that.oAuthloading = true
             validAuth.readOAuthList()
               .then(function (data) {
-                that.oAuthloading = false;
+                that.oAuthloading = false
                 var OAuthList = data.filter(function (item) {
                   return item.enabled === true && item.name !== '小程序扫码登录'
                 })
                 that.OAuthList = OAuthList
               })
               .catch(function (err) {
-                that.oAuthloading = true;
+                that.oAuthloading = true
                 console.log(err)
               })
           },
@@ -135,6 +148,45 @@
             this.pageVisible.loginVisible = true
           },
           methods: {
+            encrypt: function encrypt(str, key) {
+              while (str.length > key.length) {
+                key += key
+              }
+              var r = key.substr(0, str.length)
+
+              var i = 0
+              var arr = []
+              for (i = 0; i < str.length; i++) {
+                arr.push(str.charCodeAt(i) ^ r.charCodeAt(i))
+              }
+              console.log(arr)
+              var uglyStr = ''
+              arr.map(function (char) {
+                uglyStr += String.fromCharCode(char)
+              })
+              console.log(uglyStr)
+              var out = window.btoa(uglyStr)
+              return out
+            },
+            decrypt: function decrypt(str, key) {
+              str = window.atob(str)
+              while (str.length > key.length) {
+                key += key
+              }
+              var r = key.substr(0, str.length)
+
+              var i = 0
+              var arr = []
+              for (i = 0; i < str.length; i++) {
+                arr.push(str.charCodeAt(i) ^ r.charCodeAt(i))
+              }
+              console.log(arr)
+              var uglyStr = ''
+              arr.map(function (char) {
+                uglyStr += String.fromCharCode(char)
+              })
+              return uglyStr
+            },
             removeGlobalMsg: function removeGlobalMsg() {
               this.warnVisible = false
               this.errVisible = false
@@ -159,10 +211,10 @@
               this.warnMsg = msg
             },
             setLoading: function loading() {
-              this.loading = true;
+              this.loading = true
             },
             unLoading: function unLoading() {
-              this.loading = false;
+              this.loading = false
             },
             getPageState: function getPageState() {
               return Object.assign({}, this.pageVisible)
@@ -183,8 +235,8 @@
               if (lastState) {
                 this.pageVisible = Object.assign({}, lastState)
               }
-              if(this.loading) {
-                this.unLoading();
+              if (this.loading) {
+                this.unLoading()
               }
             },
             gotoLogin: function gotoLogin() {
@@ -216,8 +268,8 @@
             },
             handleSignUp: function handleSignUp() {
               console.log('handleSignUp')
-              var that = this;
-              that.setLoading();
+              var that = this
+              that.setLoading()
               if (!this.signUpForm.username) {
                 this.showGlobalErr('请输入用户名')
                 addAnimation('sign-up-username')
@@ -227,7 +279,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-username')
                 }, 500)
-                that.unLoading();
+                that.unLoading()
                 return false
               }
               if (!emailExp.test(this.signUpForm.email)) {
@@ -239,7 +291,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-email')
                 }, 500)
-                that.unLoading();
+                that.unLoading()
                 return false
               }
               if (!this.signUpForm.password) {
@@ -251,7 +303,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-password')
                 }, 500)
-                that.unLoading();
+                that.unLoading()
                 return false
 
               }
@@ -264,7 +316,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-re-password')
                 }, 500)
-                that.unLoading();
+                that.unLoading()
                 return false
 
               }
@@ -275,15 +327,15 @@
               })
                 .then(function (data) {
                   console.log(data)
-                  that.unLoading();
-                  that.errVisible = false;
-                  that.showGlobalSuccess('注册成功');
+                  that.unLoading()
+                  that.errVisible = false
+                  that.showGlobalSuccess('注册成功')
                 })
                 .catch(function (err) {
                   console.log(err)
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalErr(err.message.message)
-                  if(err.message.code === 2026) {
+                  if (err.message.code === 2026) {
                     addAnimation('sign-up-email')
                     setTimeout(function () {
                       removeAnimation('sign-up-email')
@@ -295,9 +347,10 @@
                 })
             },
             handleLogin: function handleLogin() {
-              var that = this;
-              that.setLoading();
-              var info;
+              var that = this
+              that.setLoading()
+              var info
+
               if (!emailExp.test(this.loginForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('login-username')
@@ -305,8 +358,8 @@
                 removeRedLine('verify-code')
                 setTimeout(function () {
                   removeAnimation('login-username')
-                }, 500);
-                that.unLoading();
+                }, 500)
+                that.unLoading()
                 return false
               }
               if (!this.loginForm.password) {
@@ -316,8 +369,8 @@
                 removeRedLine('login-username')
                 setTimeout(function () {
                   removeAnimation('login-password')
-                }, 500);
-                that.unLoading();
+                }, 500)
+                that.unLoading()
                 return false
               }
               if (this.pageVisible.verifyCodeVisible) {
@@ -335,12 +388,20 @@
               validAuth.login(info)
                 .then(function (data) {
                   console.log('data', data)
+                  if (that.rememberMe) {
+                    localStorage.setItem('username', that.loginForm.email)
+                    localStorage.setItem('password', that.encrypt(that.loginForm.password, clientId))
+                  } else {
+                    localStorage.removeItem('username')
+                    localStorage.removeItem('password')
+                  }
+
                   that.showGlobalSuccess('验证通过')
-                  that.unLoading();
+                  that.unLoading()
                 })
                 .catch(function (err) {
                   console.log('err', err)
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
                     that.pageVisible.verifyCodeVisible = true
@@ -380,35 +441,35 @@
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
               console.log('handleForgetPassword')
               var that = this
-              that.setLoading();
-              if(!emailExp.test(this.forgetPasswordForm.email)) {
+              that.setLoading()
+              if (!emailExp.test(this.forgetPasswordForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('forget-password-email')
                 setTimeout(function () {
                   removeAnimation('forget-password-email')
                 }, 500)
-                that.unLoading();
-                return false;
+                that.unLoading()
+                return false
               }
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
                 .then(function (data) {
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email)
                   that.pageVisible.forgetPasswordSendEmailVisible = false
                   that.pageVisible.forgetPasswordVerifyCodeVisible = true
                 })
                 .catch(function (err) {
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalErr(err.message)
                 })
             },
             handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
               var that = this
-              that.setLoading();
-              if(!this.forgetPasswordForm.verifyCode) {
-                that.unLoading();
+              that.setLoading()
+              if (!this.forgetPasswordForm.verifyCode) {
+                that.unLoading()
                 addAnimation('forget-password-verify-code')
                 setTimeout(function () {
                   removeAnimation('forget-password-verify-code')
@@ -421,13 +482,13 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalSuccess(data.message)
                   that.pageVisible.forgetPasswordVerifyCodeVisible = false
                   that.pageVisible.forgetPasswordNewPasswordVisible = true
                 })
                 .catch(function (err) {
-                  that.unLoading();
+                  that.unLoading()
                   addAnimation('forget-password-verify-code')
                   setTimeout(function () {
                     removeAnimation('forget-password-verify-code')
@@ -437,18 +498,18 @@
             },
             handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
               var that = this
-              that.setLoading();
+              that.setLoading()
               validAuth.changePassword({
                 email: that.forgetPasswordForm.email,
                 password: that.forgetPasswordForm.password,
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalSuccess('修改密码成功')
                 })
                 .catch(function (err) {
-                  that.unLoading();
+                  that.unLoading()
                   that.showGlobalErr(err.message.message)
                 })
             },
@@ -456,11 +517,11 @@
               this.pageStack.push(this.getPageState())
               this.turnOnPage('wxQRCodeVisible')
 
-              if(!this.isWxQRCodeGenerated) {
+              if (!this.isWxQRCodeGenerated) {
                 validAuth.startWXAppScaning({
                   mount: 'qrcode-node'
-                });
-                this.isWxQRCodeGenerated = true;
+                })
+                this.isWxQRCodeGenerated = true
               }
             }
             // checkRetype: function () {
@@ -470,6 +531,14 @@
             //     removeRedLine()
             //   }
             // }
+          },
+          watch: {
+            rememberMe: function (newVal, oldVal) {
+              if(newVal === false) {
+                localStorage.removeItem('username')
+                localStorage.removeItem('password')
+              }
+            }
           }
         })
         console.log(document.getElementById('app').classList)
