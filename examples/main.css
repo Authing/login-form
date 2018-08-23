@@ -996,6 +996,10 @@ body {
 	animation: rotate 1s linear infinite;
 }
 
+.authing-loading-circle.margin-top-11 {
+  margin-top: 0px!important;
+}
+
 .authing-login-form-wrapper {
   width: 320px;
   margin: 0 auto;

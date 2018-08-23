@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
   <link rel="stylesheet" type="text/css" media="screen"
-        href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css"/>
   <link href=https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css rel=stylesheet>
 
   <style type="text/css">
@@ -117,7 +116,9 @@
         </div>
 
         <div class="authing-oauth-form" v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible">
-          <div class="authing-loading-circle" v-show="oAuthloading"></div>
+          <div style="height: 60px;" v-show="oAuthloading">
+              <div class="authing-loading-circle margin-top-11"></div>
+          </div>
           <div v-for="(item, index) in OAuthList" class="form-group">
             <div class="logmod__alter">
               <div class="logmod__alter-container">
@@ -135,10 +136,10 @@
               </div>
             </div>
           </div>
-          <P class="form-tip">或者</P>
+          <P class="form-tip" v-show="!oAuthloading">或者</P>
         </div>
 
-        <div class="form-body">
+        <div class="form-body" v-show="!oAuthloading">
           <!-- 登录对话框 -->
           <form v-show="pageVisible.loginVisible" action="#" class="authing-form animate-box no-shadow" :class="{
               faster: pageVisible.loginVisible,
