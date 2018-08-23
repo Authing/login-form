@@ -113,7 +113,9 @@
       <div class="col-md-4 col-md-offset-4">
 
         <div class="form-wrapper" :class="{
-          'authing-loading-wrapper': loading
+          'authing-loading-wrapper': loading,
+          animated: true,
+          fadeInUp: true
         }">
           <div class="form-header">
             <span v-if="pageStack.length > 0" @click="handleGoBack" class="auth0-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
@@ -124,7 +126,6 @@
               <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : 'Authing'}}</div>
             </div>
           </div>
-
 
           <div v-show="errVisible" class="authing-global-message authing-global-message-error">
                 <span class="animated fadeInUp">
@@ -143,7 +144,6 @@
                     <span>{{warnMsg}}</span>
                   </span>
           </div>
-
 
           <div class="authing-header-tabs-container">
             <ul class="authing-header-tabs">
@@ -190,8 +190,6 @@
           <div class="form-body">
             <!-- 登录对话框 -->
             <form v-show="pageVisible.loginVisible" action="#" class="authing-form animate-box no-shadow" :class="{
-                animated: pageVisible.loginVisible,
-                fadeIn: pageVisible.loginVisible,
                 faster: pageVisible.loginVisible,
                 'authing-form': true,
                 'no-shadow': pageVisible.loginVisible
@@ -232,9 +230,6 @@
 
             <!-- 注册对话框 -->
             <form v-show="pageVisible.signUpVisible" action="#" class="authing-form" :class="{
-              animated: pageVisible.signUpVisible,
-              fadeIn: pageVisible.signUpVisible,
-              faster: pageVisible.signUpVisible,
               'authing-form': true,
               'no-shadow': pageVisible.signUpVisible
             }" data-animate-effect="fadeIn">
@@ -267,7 +262,8 @@
             <!-- 忘记密码填写邮箱对话框 -->
             <form v-show="pageVisible.forgetPasswordSendEmailVisible" action="#" class="authing-form" :class="{
               animated: pageVisible.forgetPasswordSendEmailVisible,
-              fadeIn: pageVisible.forgetPasswordSendEmailVisible,
+              'slide-enter': pageVisible.forgetPasswordSendEmailVisible,
+              'slide-enter-active': pageVisible.forgetPasswordSendEmailVisible,
               faster: pageVisible.forgetPasswordSendEmailVisible,
               'authing-form': true,
               'no-shadow': pageVisible.forgetPasswordSendEmailVisible
@@ -288,7 +284,7 @@
             }" data-animate-effect="fadeIn">
               <div class="form-group" style="margin-top: -15px;">
                 <label for="forget-password-email" class="sr-only">验证码</label>
-                <input type="text" class="form-control" id="forget-password-verify-code" placeholder="验证码"
+                <input type="text" class="form-control" id="forget-password-verify-code" placeholder="请输入验证码"
                        autocomplete="off" v-model="forgetPasswordForm.verifyCode" @keyup.enter="handleSubmitForgetPasswordVerifyCode">
               </div>
             </form>
@@ -302,7 +298,7 @@
             }" data-animate-effect="fadeIn">
               <div class="form-group" style="margin-top: -15px;">
                 <label for="forget-password-email" class="sr-only">新密码</label>
-                <input type="password" class="form-control" id="forget-password-new-password" placeholder="新密码"
+                <input type="password" class="form-control" id="forget-password-new-password" placeholder="请输入新密码"
                        autocomplete="off" v-model="forgetPasswordForm.password" @keyup.enter="handleSubmitForgetPasswordNewPassword">
               </div>
             </form>
