@@ -321,7 +321,7 @@
                   that.loading = false;
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
-                    that.verifyCodeVisible = true
+                    that.pageVisible.verifyCodeVisible = true
                     that.verifyCodeUrl = err.message.data.url
                     addAnimation('verify-code')
                     removeRedLine('login-username')
