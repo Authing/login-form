@@ -152,6 +152,12 @@
               this.warnVisible = true
               this.warnMsg = msg
             },
+            loading: function loading() {
+              this.loading = true;
+            },
+            unLoading: function unLoading() {
+              this.loading = false;
+            },
             getPageState: function getPageState() {
               return Object.assign({}, this.pageVisible)
             },
@@ -202,6 +208,7 @@
             handleSignUp: function handleSignUp() {
               console.log('handleSignUp')
               var that = this;
+              that.loading();
               if (!this.signUpForm.username) {
                 this.showGlobalErr('请输入用户名')
                 addAnimation('sign-up-username')
@@ -211,6 +218,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-username')
                 }, 500)
+                that.unLoading();
                 return false
               }
               if (!emailExp.test(this.signUpForm.email)) {
@@ -222,6 +230,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-email')
                 }, 500)
+                that.unLoading();
                 return false
               }
               if (!this.signUpForm.password) {
@@ -233,6 +242,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-password')
                 }, 500)
+                that.unLoading();
                 return false
 
               }
@@ -245,6 +255,7 @@
                 setTimeout(function () {
                   removeAnimation('sign-up-re-password')
                 }, 500)
+                that.unLoading();
                 return false
 
               }
@@ -255,16 +266,18 @@
               })
                 .then(function (data) {
                   console.log(data)
-                  that.errVisible = false
+                  that.unLoading();
+                  that.errVisible = false;
                 })
                 .catch(function (err) {
                   console.log(err)
+                  that.unLoading();
                   that.showGlobalErr(err.message.message)
                 })
             },
             handleLogin: function handleLogin() {
               var that = this;
-              this.loading = true;
+              that.loading();
               var info;
               if (!emailExp.test(this.loginForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
@@ -274,7 +287,7 @@
                 setTimeout(function () {
                   removeAnimation('login-username')
                 }, 500);
-                this.loading = false;
+                that.unLoading();
                 return false
               }
               if (!this.loginForm.password) {
@@ -285,7 +298,7 @@
                 setTimeout(function () {
                   removeAnimation('login-password')
                 }, 500);
-                this.loading = false;
+                that.unLoading();
                 return false
               }
               if (this.verifyCodeVisible) {
@@ -304,11 +317,11 @@
                 .then(function (data) {
                   console.log('data', data)
                   that.showGlobalSuccess('验证通过')
-                  that.loading = false;
+                  that.unLoading();
                 })
                 .catch(function (err) {
                   console.log('err', err)
-                  that.loading = false;
+                  that.unLoading();
                   that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
                     that.verifyCodeVisible = true
@@ -348,38 +361,45 @@
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
               console.log('handleForgetPassword')
               var that = this
+              that.loading();
               if(!emailExp.test(this.forgetPasswordForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('forget-password-email')
                 setTimeout(function () {
                   removeAnimation('forget-password-email')
                 }, 500)
-                return false
+                that.unLoading();
+                return false;
               }
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
                 .then(function (data) {
+                  that.unLoading();
                   that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email)
                   that.pageVisible.forgetPasswordSendEmailVisible = false
                   that.pageVisible.forgetPasswordVerifyCodeVisible = true
                 })
                 .catch(function (err) {
+                  that.unLoading();
                   that.showGlobalErr(err.message)
                 })
             },
             handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
               var that = this
+              that.loading();
               validAuth.verifyResetPasswordVerifyCode({
                 email: that.forgetPasswordForm.email,
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
+                  that.unLoading();
                   that.showGlobalSuccess(data.message)
                   that.pageVisible.forgetPasswordVerifyCodeVisible = false
                   that.pageVisible.forgetPasswordNewPasswordVisible = true
                 })
                 .catch(function (err) {
+                  that.unLoading();
                   addAnimation('forget-password-verify-code')
                   setTimeout(function () {
                     removeAnimation('forget-password-verify-code')
@@ -389,15 +409,18 @@
             },
             handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
               var that = this
+              that.loading();
               validAuth.changePassword({
                 email: that.forgetPasswordForm.email,
                 password: that.forgetPasswordForm.password,
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
+                  that.unLoading();
                   that.showGlobalSuccess('修改密码成功')
                 })
                 .catch(function (err) {
+                  that.unLoading();
                   that.showGlobalErr(err.message.message)
                 })
             },
