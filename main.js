@@ -182,8 +182,7 @@
             },
             checkEmail: function checkEmail() {
               if (!emailExp.test(this.signUpForm.email)) {
-                this.errVisible = true
-                this.errMsg = '请输入正确格式的邮箱'
+                this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('sign-up-email')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-password')
@@ -199,8 +198,7 @@
               console.log('handleSignUp')
               var that = this;
               if (!this.signUpForm.username) {
-                this.errVisible = true
-                this.errMsg = '请输入用户名'
+                this.showGlobalErr('请输入用户名')
                 addAnimation('sign-up-username')
                 removeRedLine('sign-up-email')
                 removeRedLine('sign-up-password')
@@ -211,8 +209,7 @@
                 return false
               }
               if (!emailExp.test(this.signUpForm.email)) {
-                this.errVisible = true
-                this.errMsg = '请输入正确格式的邮箱'
+                this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('sign-up-email')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-password')
@@ -223,8 +220,7 @@
                 return false
               }
               if (!this.signUpForm.password) {
-                this.errVisible = true
-                this.errMsg = '请输入密码'
+                this.showGlobalErr('请输入密码')
                 addAnimation('sign-up-password')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-email')
@@ -236,8 +232,7 @@
 
               }
               if (this.signUpForm.password !== this.signUpForm.rePassword) {
-                this.errVisible = true
-                this.errMsg = '两次密码不一致'
+                this.showGlobalErr('两次密码不一致')
                 addAnimation('sign-up-re-password')
                 removeRedLine('sign-up-username')
                 removeRedLine('sign-up-email')
@@ -259,8 +254,7 @@
                 })
                 .catch(function (err) {
                   console.log(err)
-                  that.errVisible = true
-                  that.errMsg = err.message.message
+                  that.showGlobalErr(err.message.message)
                 })
             },
             handleLogin: function handleLogin() {
@@ -268,8 +262,7 @@
               this.loading = true;
               var info;
               if (!emailExp.test(this.loginForm.email)) {
-                this.errVisible = true
-                this.errMsg = '请输入正确格式的邮箱'
+                this.showGlobalErr('请输入正确格式的邮箱')
                 addAnimation('login-username')
                 removeRedLine('login-password')
                 removeRedLine('verify-code')
@@ -280,8 +273,7 @@
                 return false
               }
               if (!this.loginForm.password) {
-                this.errVisible = true
-                this.errMsg = '请输入密码'
+                this.showGlobalErr('请输入密码')
                 addAnimation('login-password')
                 removeRedLine('verify-code')
                 removeRedLine('login-username')
@@ -306,14 +298,13 @@
               validAuth.login(info)
                 .then(function (data) {
                   console.log('data', data)
-                  that.errVisible = false;
+                  that.showGlobalSuccess('正在登陆...')
                   that.loading = false;
                 })
                 .catch(function (err) {
                   console.log('err', err)
-                  that.errVisible = true;
                   that.loading = false;
-                  that.errMsg = err.message.message
+                  that.showGlobalErr(err.message.message)
                   if (err.message.code === 2000 || err.message.code === 2001) {
                     that.verifyCodeVisible = true
                     that.verifyCodeUrl = err.message.data.url
@@ -387,10 +378,7 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
                 .then(function (data) {
-                  console.log(data)
-                  that.showGlobalSuccess(data.message)
-                  that.gotoLogin()
-
+                  that.showGlobalSuccess('修改密码成功，正在登陆...')
                 })
                 .catch(function (err) {
                   that.showGlobalErr(err.message.message)
