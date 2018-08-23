@@ -96,7 +96,9 @@
               password: ''
             },
             verifyCode: '',
-            forgetPasswordForm: {}
+            forgetPasswordForm: {},
+
+            loading: false,
           },
           created: function () {
             var that = this
@@ -176,7 +178,7 @@
             },
             handleSignUp: function handleSignUp() {
               console.log('handleSignUp')
-              var that = this
+              var that = this;
               if (!this.signUpForm.username) {
                 this.errVisible = true
                 this.errMsg = '请输入用户名'
@@ -243,9 +245,9 @@
                 })
             },
             handleLogin: function handleLogin() {
-              var that = this
-              console.log(this.loginForm.email, this.loginForm.password)
-              var info
+              var that = this;
+              this.loading = true;
+              var info;
               if (!emailExp.test(this.loginForm.email)) {
                 this.errVisible = true
                 this.errMsg = '请输入正确格式的邮箱'
@@ -254,7 +256,8 @@
                 removeRedLine('verify-code')
                 setTimeout(function () {
                   removeAnimation('login-username')
-                }, 500)
+                }, 500);
+                this.loading = false;
                 return false
               }
               if (!this.loginForm.password) {
@@ -265,7 +268,8 @@
                 removeRedLine('login-username')
                 setTimeout(function () {
                   removeAnimation('login-password')
-                }, 500)
+                }, 500);
+                this.loading = false;
                 return false
               }
               if (this.verifyCodeVisible) {
@@ -283,11 +287,13 @@
               validAuth.login(info)
                 .then(function (data) {
                   console.log('data', data)
-                  that.errVisible = false
+                  that.errVisible = false;
+                  that.loading = false;
                 })
                 .catch(function (err) {
                   console.log('err', err)
-                  that.errVisible = true
+                  that.errVisible = true;
+                  that.loading = false;
                   that.errMsg = err.message.message
                   if (err.message.code === 2000 || err.message.code === 2001) {
                     that.verifyCodeVisible = true
