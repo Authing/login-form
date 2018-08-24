@@ -101,7 +101,7 @@
           <ul class="authing-header-tabs">
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.wxQRCodeVisible
-            }">
+            }" v-if="scanCode">
               <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
             </li>
             <li v-bind:class="{
@@ -298,7 +298,7 @@
 </div>
 </body>
 
-<script src="https://cdn.authing.cn/sdk/javascript/authing-0.1.23.js"></script>
+<script src="https://cdn.authing.cn/sdk/javascript/authing-0.1.28.js"></script>
 <script src="../main.js"></script>
 <script>
 

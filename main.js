@@ -60,10 +60,10 @@
     loadBasicHTML();
 
 
-    var clientId = '5a9fa26cf8635a000185528c';
+    var clientId = '5b7f79f519915500015f18ac';
     var auth = new Authing({
-      clientId: '5a9fa26cf8635a000185528c',
-      secret: '427e24d3b7e289ae9469ab6724dc7ff0'
+      clientId: '5b7f79f519915500015f18ac',
+      secret: '82f36cba243e13f81f06675193732af7'
     });
 
     auth.then(function (validAuth) {
@@ -119,7 +119,9 @@
             oAuthloading: false,
             verifyCodeLoading: true,
 
-            isWxQRCodeGenerated: false
+            isWxQRCodeGenerated: false,
+
+            scanCode: false
           },
           created: function () {
             var that = this;
@@ -133,9 +135,13 @@
             that.oAuthloading = true;
             validAuth.readOAuthList()
               .then(function (data) {
+                console.log(data)
                 that.oAuthloading = false;
                 var OAuthList = data.filter(function (item) {
-                  return item.enabled === true && item.name !== '小程序扫码登录';
+                  if(item.alias==='wxapp') {
+                    that.scanCode = true
+                  }
+                  return item.enabled === true && item.alias !== 'wxapp';
                 });
                 that.OAuthList = OAuthList;
               })
@@ -504,6 +510,7 @@
                 .then(function (data) {
                   that.unLoading();
                   that.showGlobalSuccess('修改密码成功');
+                  that.gotoLogin()
                 })
                 .catch(function (err) {
                   that.unLoading();
