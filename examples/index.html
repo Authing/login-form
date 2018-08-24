@@ -12,11 +12,11 @@
   <style type="text/css">
     @font-face {
       font-family: 'iconfont';  /* project id 803924 */
-      src: url('//at.alicdn.com/t/font_803924_xwk4pru9if.eot');
-      src: url('//at.alicdn.com/t/font_803924_xwk4pru9if.eot?#iefix') format('embedded-opentype'),
-      url('//at.alicdn.com/t/font_803924_xwk4pru9if.woff') format('woff'),
-      url('//at.alicdn.com/t/font_803924_xwk4pru9if.ttf') format('truetype'),
-      url('//at.alicdn.com/t/font_803924_xwk4pru9if.svg#iconfont') format('svg');
+      src: url('//at.alicdn.com/t/font_803924_073p7nal4zk.eot');
+      src: url('//at.alicdn.com/t/font_803924_073p7nal4zk.eot?#iefix') format('embedded-opentype'),
+      url('//at.alicdn.com/t/font_803924_073p7nal4zk.woff') format('woff'),
+      url('//at.alicdn.com/t/font_803924_073p7nal4zk.ttf') format('truetype'),
+      url('//at.alicdn.com/t/font_803924_073p7nal4zk.svg#iconfont') format('svg');
     }
 
     .iconfont {
@@ -129,8 +129,8 @@
                   :href="item.url"
                   :class="{'connect': true, 'facebook': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
                   <div class="connect__icon">
-                    <i class="fa"
-                       :class="{'fa-github': item.name === 'Github', 'fa-wechat': item.name === '微信电脑网页版'}"></i>
+                    <i class="iconfont" v-if="item.name === 'Github'">&#xea0a;</i>
+                    <i class="iconfont" v-if="item.name === '微信电脑网页版'">&#xf262;</i>
                   </div>
                   <div class="connect__context">
                     <span>{{item.description}}</span>
