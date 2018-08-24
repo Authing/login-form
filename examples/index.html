@@ -102,18 +102,18 @@
           <ul class="authing-header-tabs">
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.wxQRCodeVisible
-            }" v-if="scanCode">
+            }" v-if="isScanCodeEnable">
               <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
             </li>
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.loginVisible,
-              'width-55': !scanCode
+              'width-55': !isScanCodeEnable
             }">
               <a href="javascript:void(0)" @click="gotoLogin">登录</a>
             </li>
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.signUpVisible,
-              'width-55': !scanCode
+              'width-55': !isScanCodeEnable
             }">
               <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
             </li>
