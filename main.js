@@ -39,6 +39,9 @@
     document.getElementById(className).classList.add('animated');
     document.getElementById(className).classList.add('shake');
     document.getElementById(className).classList.add('err-hint');
+    setTimeout(function () {
+      removeAnimation(className);
+    }, 500);
   }
 
 
@@ -135,11 +138,11 @@
             that.oAuthloading = true;
             validAuth.readOAuthList()
               .then(function (data) {
-                console.log(data)
+                console.log(data);
                 that.oAuthloading = false;
                 var OAuthList = data.filter(function (item) {
-                  if(item.alias==='wxapp') {
-                    that.scanCode = true
+                  if (item.alias === 'wxapp') {
+                    that.scanCode = true;
                   }
                   return item.enabled === true && item.alias !== 'wxapp';
                 });
@@ -256,7 +259,7 @@
             gotoForgetPassword: function gotoForgetPassword() {
               this.pageStack.push(this.getPageState());
               this.turnOnPage('forgetPasswordVisible');
-              this.forgetPasswordForm.email = this.loginForm.email
+              this.forgetPasswordForm.email = this.loginForm.email;
               this.pageVisible.forgetPasswordSendEmailVisible = true;
             },
             checkEmail: function checkEmail() {
@@ -266,9 +269,6 @@
                 removeRedLine('sign-up-username');
                 removeRedLine('sign-up-password');
                 removeRedLine('sign-up-re-password');
-                setTimeout(function () {
-                  removeAnimation('sign-up-email');
-                }, 500);
               } else {
                 removeRedLine('sign-up-email');
               }
@@ -282,9 +282,6 @@
                 removeRedLine('sign-up-email');
                 removeRedLine('sign-up-password');
                 removeRedLine('sign-up-re-password');
-                setTimeout(function () {
-                  removeAnimation('sign-up-username');
-                }, 500);
                 that.unLoading();
                 return false;
               }
@@ -294,9 +291,6 @@
                 removeRedLine('sign-up-username');
                 removeRedLine('sign-up-password');
                 removeRedLine('sign-up-re-password');
-                setTimeout(function () {
-                  removeAnimation('sign-up-email');
-                }, 500);
                 that.unLoading();
                 return false;
               }
@@ -306,9 +300,6 @@
                 removeRedLine('sign-up-username');
                 removeRedLine('sign-up-email');
                 removeRedLine('sign-up-re-password');
-                setTimeout(function () {
-                  removeAnimation('sign-up-password');
-                }, 500);
                 that.unLoading();
                 return false;
 
@@ -319,9 +310,6 @@
                 removeRedLine('sign-up-username');
                 removeRedLine('sign-up-email');
                 removeRedLine('sign-up-password');
-                setTimeout(function () {
-                  removeAnimation('sign-up-re-password');
-                }, 500);
                 that.unLoading();
                 return false;
 
@@ -341,9 +329,6 @@
                   that.showGlobalErr(err.message.message);
                   if (err.message.code === 2026) {
                     addAnimation('sign-up-email');
-                    setTimeout(function () {
-                      removeAnimation('sign-up-email');
-                    }, 500);
                     removeRedLine('sign-up-re-password');
                     removeRedLine('sign-up-username');
                     removeRedLine('sign-up-password');
@@ -360,9 +345,6 @@
                 addAnimation('login-username');
                 removeRedLine('login-password');
                 removeRedLine('verify-code');
-                setTimeout(function () {
-                  removeAnimation('login-username');
-                }, 500);
                 that.unLoading();
                 return false;
               }
@@ -371,9 +353,6 @@
                 addAnimation('login-password');
                 removeRedLine('verify-code');
                 removeRedLine('login-username');
-                setTimeout(function () {
-                  removeAnimation('login-password');
-                }, 500);
                 that.unLoading();
                 return false;
               }
@@ -413,26 +392,16 @@
                     addAnimation('verify-code');
                     removeRedLine('login-username');
                     removeRedLine('login-password');
-                    setTimeout(function () {
-                      removeAnimation('verify-code');
-                    }, 500);
                   }
                   if (err.message.code === 2003 || err.message.code === 2204 || err.message.code === 2208) {
                     addAnimation('login-username');
                     removeRedLine('login-password');
                     removeRedLine('verify-code');
-
-                    setTimeout(function () {
-                      removeAnimation('login-username');
-                    }, 500);
                   }
                   if (err.message.code === 2006 || err.message.code === 2016 || err.message.code === 2027) {
                     addAnimation('login-password');
                     removeRedLine('verify-code');
                     removeRedLine('login-username');
-                    setTimeout(function () {
-                      removeAnimation('login-password');
-                    }, 500);
                   }
 
                 });
@@ -448,9 +417,6 @@
               if (!emailExp.test(this.forgetPasswordForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱');
                 addAnimation('forget-password-email');
-                setTimeout(function () {
-                  removeAnimation('forget-password-email');
-                }, 500);
                 that.unLoading();
                 return false;
               }
@@ -473,10 +439,7 @@
               that.setLoading();
               if (!this.forgetPasswordForm.verifyCode) {
                 that.unLoading();
-                addAnimation('forget-password-verify-code');
-                setTimeout(function () {
-                  removeAnimation('forget-password-verify-code');
-                }, 500);
+                addAnimation('forget-password-verify-code');;
                 that.showGlobalErr('请输入验证码');
                 return false;
               }
@@ -493,9 +456,6 @@
                 .catch(function (err) {
                   that.unLoading();
                   addAnimation('forget-password-verify-code');
-                  setTimeout(function () {
-                    removeAnimation('forget-password-verify-code');
-                  }, 500);
                   that.showGlobalErr(err.message.message);
                 });
             },
@@ -510,7 +470,7 @@
                 .then(function (data) {
                   that.unLoading();
                   that.showGlobalSuccess('修改密码成功');
-                  that.gotoLogin()
+                  that.gotoLogin();
                 })
                 .catch(function (err) {
                   that.unLoading();
