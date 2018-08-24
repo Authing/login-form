@@ -546,7 +546,7 @@
   
               if (!this.isWxQRCodeGenerated) {
                 validAuth.startWXAppScaning({
-                  mount: 'qrcode-node',
+                  mount: 'qrcode-node'
 
                   onSuccess: function(res) {
                     $authing.pub('scanning', res);

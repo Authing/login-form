@@ -348,35 +348,35 @@
   form.show();
 
   form.on('authingLoad', function(authing) {
-    console.log('on authing load');
+    console.log('on authing load', authing);
   });
 
   form.on('authingUnload', function(error) {
-    console.log('on authing load error');
+    console.log('on authing load error', error);
   });
 
   form.on('oauthLoad', function (oauthList) {
-    console.log('on oauth load');
+    console.log('on oauth load', oauthList);
   });
 
   form.on('oauthUnload', function (error) {
-    console.log('on oauth unload');
+    console.log('on oauth unload', error);
   });
 
   form.on('login', function (user) {
-    console.log('on login');
+    console.log('on login', user);
   });
 
   form.on('loginError', function (error) {
-    console.log('on login error');
+    console.log('on login error', error);
   });
 
   form.on('register', function (user) {
-    console.log('on register');
+    console.log('on register', user);
   });
 
   form.on('registerError', function (error) {
-    console.log('on register error');
+    console.log('on register error', error);
   });
 
   form.on('emailSent', function (data) {
@@ -391,20 +391,20 @@
     console.log('on reset password');
   });
 
-  form.on('resetPasswordError', function () {
-    console.log('on reset password error');
+  form.on('resetPasswordError', function (error) {
+    console.log('on reset password error', error);
   });
 
-  form.on('scanning', function () {
-    console.log('on scanning success');
+  form.on('scanning', function (data) {
+    console.log('on scanning success', data);
   });
 
-  form.on('scanningError', function () {
-    console.log('on scanning error');
+  form.on('scanningError', function (error) {
+    console.log('on scanning error', error);
   });
 
-  form.on('scanningIntervalStarting', function () {
-    console.log('on scanning interval starting');
+  form.on('scanningIntervalStarting', function (interval) {
+    console.log('on scanning interval starting', interval);
   });
 
 </script>
