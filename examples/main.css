@@ -900,6 +900,10 @@ body {
   cursor: pointer;  
 }
 
+.authing-header-tabs li.width-55 {
+  width: 50%;
+}
+
 .authing-header-tabs li a {
   padding: 11px 10px;
   display: block;
