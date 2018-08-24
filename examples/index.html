@@ -58,7 +58,7 @@
 
 <body>
 <div class="authing-loading-circle screen-center" id="page-loading"></div>
-<div id="app" class="hide">
+<div id="_authing_login_form" class="hide">
   <div class="container">
     <div class="authing-login-form-wrapper">
 
@@ -341,58 +341,70 @@
       onIntervalStarting: function (intervalNum) {
       }, // 可选，轮询时的回调函数，intervalNum 为 setInterval 返回的数值，可使用 clearInterval 停止轮询
       interval: 1500, // 可选，每隔多少秒检查一次，默认1500
-      tips: '搜索小程序 <strong>身份管家</strong> 扫码登录', // 可选，提示信息，可写HTML
+      tips: '使用 微信 或小程序 身份管家 扫码登录', // 可选，提示信息，可写HTML
     }
   });
 
   form.show();
 
-  form.on('oauth-load-success', function () {
-
+  form.on('authingLoad', function(authing) {
+    console.log('on authing load');
   });
 
-  form.on('oauth-load-error', function () {
-
+  form.on('authingUnload', function(error) {
+    console.log('on authing load error');
   });
 
-  form.on('login-success', function () {
-
+  form.on('oauthLoad', function (oauthList) {
+    console.log('on oauth load');
   });
 
-  form.on('login-error', function () {
-
+  form.on('oauthUnload', function (error) {
+    console.log('on oauth unload');
   });
 
-  form.on('register-success', function () {
-
+  form.on('login', function (user) {
+    console.log('on login');
   });
 
-  form.on('register-error', function () {
-
+  form.on('loginError', function (error) {
+    console.log('on login error');
   });
 
-  form.on('email-sent', function () {
-
+  form.on('register', function (user) {
+    console.log('on register');
   });
 
-  form.on('reset-password-success', function () {
-
+  form.on('registerError', function (error) {
+    console.log('on register error');
   });
 
-  form.on('reset-password-error', function () {
-
+  form.on('emailSent', function (data) {
+    console.log('on email sent', data);
   });
 
-  form.on('qrcode-success', function () {
-
+  form.on('emailSentError', function (error) {
+    console.log('on email sent error');
   });
 
-  form.on('qrcode-error', function () {
-
+  form.on('resetPassword', function (result) {
+    console.log('on reset password');
   });
 
-  form.on('qrcode-interval-starting', function () {
+  form.on('resetPasswordError', function () {
+    console.log('on reset password error');
+  });
 
+  form.on('scanning', function () {
+    console.log('on scanning success');
+  });
+
+  form.on('scanningError', function () {
+    console.log('on scanning error');
+  });
+
+  form.on('scanningIntervalStarting', function () {
+    console.log('on scanning interval starting');
   });
 
 </script>

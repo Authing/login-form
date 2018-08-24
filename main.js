@@ -20,8 +20,6 @@
   }
 }(this, function () {
 
-  var emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
-
   function removeAnimation(className) {
     document.getElementById(className).classList.remove('animated');
     document.getElementById(className).classList.remove('shake');
@@ -46,26 +44,58 @@
 
   var AuthingForm = function (opts) {
 
-    window.onload = function () {
-      var loadBasicHTML = function () {
-        var html = '';
-        if (html) {
-          document.body.innerHTML = html;
-        }
-      };
-  
-      var loadVue = function (onload) {
+    var 
+    
+      loadVue = function (onload) {
         var vueScript = document.createElement('script');
         vueScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/vue');
         vueScript.onload = onload;
         document.body.appendChild(vueScript);
+      },
+
+      loadBasicHTML = function () {
+        var html = '';
+        if (html) {
+          document.body.innerHTML = html;
+        }
+      },
+
+      emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/,
+
+      appMountId = '_authing_login_form',
+
+      $authing = this;
+
+      $authing.eventsList = {
+        'authingload': [],
+        'authingunload': [],
+
+        'oauthload': [],
+        'oauthunload': [],
+
+        'login': [],
+        'loginerror': [],
+        'register': [],
+        'registererror': [],
+
+        'emailsent': [],
+        'resetpassword': [],
+        'resetpassworderror': [],
+
+        'scanning': [],
+        'scanningerror': [],
+        'scanningintervalstarting': []
       };
-  
+
+      $authing.opts = opts;
+
+    window.onload = function () {
+    
       loadBasicHTML();
     
       loadVue(function () {
-        var authingLockApp = new Vue({
-          el: '#app',
+        $authing.authingLockApp = new Vue({
+          el: '#' + appMountId,
           data: {
             validAuth: null,
   
@@ -119,9 +149,7 @@
   
             isWxQRCodeGenerated: false,
   
-            isScanCodeEnable: false,
-
-            opts: opts
+            isScanCodeEnable: false
           },
           created: function () {
             var that = this;
@@ -132,6 +160,9 @@
             auth.then(function (validAuth) {
               document.getElementById('page-loading').remove();
               window.validAuth = validAuth;
+
+              $authing.pub('authingLoad', validAuth);
+
               if (localStorage.getItem('_authing_username')) {
                 this.rememberMe = true;
                 this.loginForm.email = localStorage.getItem('_authing_username');
@@ -139,26 +170,32 @@
               if (localStorage.getItem('_authing_password')) {
                 this.loginForm.password = this.decrypt(localStorage.getItem('_authing_password'), opts.clientId);
               }
+
               that.oAuthloading = true;
+
               validAuth.readOAuthList()
                 .then(function (data) {
-                  console.log(data);
+                  $authing.pub('oauthLoad', data);
                   that.oAuthloading = false;
+
                   var OAuthList = data.filter(function (item) {
                     if (item.alias === 'wxapp') {
                       that.isScanCodeEnable = true;
                     }
                     return item.enabled === true && item.alias !== 'wxapp';
                   });
+
                   that.OAuthList = OAuthList;
+
                 })
                 .catch(function (err) {
+                  $authing.pub('oauthUnload', err);
                   that.oAuthloading = true;
                 });
             })
-              .catch(function (err) {
-                console.log(err);
-              });
+            .catch(function (err) {
+              $authing.pub('authingUnload', err);
+            });
           },
           mounted: function () {
             this.pageVisible.loginVisible = true;
@@ -291,6 +328,7 @@
                 removeRedLine('sign-up-password');
                 removeRedLine('sign-up-re-password');
                 that.unLoading();
+                $authing.pub('registerError', '请输入用户名');
                 return false;
               }
               if (!emailExp.test(this.signUpForm.email)) {
@@ -300,6 +338,7 @@
                 removeRedLine('sign-up-password');
                 removeRedLine('sign-up-re-password');
                 that.unLoading();
+                $authing.pub('registerError', '请输入正确格式的邮箱');
                 return false;
               }
               if (!this.signUpForm.password) {
@@ -309,8 +348,8 @@
                 removeRedLine('sign-up-email');
                 removeRedLine('sign-up-re-password');
                 that.unLoading();
+                $authing.pub('registerError', '请输入密码');
                 return false;
-  
               }
               if (this.signUpForm.password !== this.signUpForm.rePassword) {
                 this.showGlobalErr('两次密码不一致');
@@ -319,6 +358,7 @@
                 removeRedLine('sign-up-email');
                 removeRedLine('sign-up-password');
                 that.unLoading();
+                $authing.pub('registerError', '两次密码不一致');
                 return false;
               }
               validAuth.register({
@@ -330,10 +370,13 @@
                 that.unLoading();
                 that.errVisible = false;
                 that.showGlobalSuccess('注册成功');
+                that.gotoLogin();
+                $authing.pub('register', data);
               })
               .catch(function (err) {
                 that.unLoading();
                 that.showGlobalErr(err.message.message);
+                $authing.pub('registerError', err);
                 if (err.message.code === 2026) {
                   addAnimation('sign-up-email');
                   removeRedLine('sign-up-re-password');
@@ -352,7 +395,8 @@
                 addAnimation('login-username');
                 removeRedLine('login-password');
                 removeRedLine('verify-code');
-                that.unLoading();
+                that.unLoading();                
+                $authing.pub('loginError', '请输入正确格式的邮箱');
                 return false;
               }
               if (!this.loginForm.password) {
@@ -361,6 +405,7 @@
                 removeRedLine('verify-code');
                 removeRedLine('login-username');
                 that.unLoading();
+                $authing.pub('loginError', '请输入密码');
                 return false;
               }
               if (this.pageVisible.verifyCodeVisible) {
@@ -386,10 +431,12 @@
                 }
   
                 that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
+                $authing.pub('login', data);
                 that.unLoading();
               })
               .catch(function (err) {
                 that.unLoading();
+                $authing.pub('loginError', err);
                 that.showGlobalErr(err.message.message);
                 if (err.message.code === 2000 || err.message.code === 2001) {
                   that.verifyCodeLoading = true;
@@ -419,18 +466,21 @@
                 this.showGlobalErr('请输入正确格式的邮箱');
                 addAnimation('forget-password-email');
                 that.unLoading();
+                $authing.pub('emailSentError', '请输入正确格式的邮箱');
                 return false;
               }
               validAuth.sendResetPasswordEmail({
                 email: this.forgetPasswordForm.email
               })
               .then(function (data) {
+                $authing.pub('emailSent', data);
                 that.unLoading();
                 that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email);
                 that.pageVisible.forgetPasswordSendEmailVisible = false;
                 that.pageVisible.forgetPasswordVerifyCodeVisible = true;
               })
               .catch(function (err) {
+                $authing.pub('emailSentError', err);
                 that.unLoading();
                 that.showGlobalErr(err.message);
               });
@@ -443,6 +493,7 @@
                 addAnimation('forget-password-verify-code');
                 ;
                 that.showGlobalErr('请输入验证码');
+                $authing.pub('resetPasswordError', '请输入验证码');
                 return false;
               }
               validAuth.verifyResetPasswordVerifyCode({
@@ -450,12 +501,14 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
               .then(function (data) {
+                $authing.pub('resetPassword', data);
                 that.unLoading();
                 that.showGlobalSuccess(data.message);
                 that.pageVisible.forgetPasswordVerifyCodeVisible = false;
                 that.pageVisible.forgetPasswordNewPasswordVisible = true;
               })
               .catch(function (err) {
+                $authing.pub('resetPasswordError', err);
                 that.unLoading();
                 addAnimation('forget-password-verify-code');
                 that.showGlobalErr(err.message.message);
@@ -470,11 +523,13 @@
                 verifyCode: that.forgetPasswordForm.verifyCode
               })
               .then(function (data) {
+                $authing.pub('resetPassword', data);
                 that.unLoading();
                 that.showGlobalSuccess('修改密码成功');
                 that.gotoLogin();
               })
               .catch(function (err) {
+                $authing.pub('resetPasswordError', err);
                 that.unLoading();
                 that.showGlobalErr(err.message.message);
               });
@@ -482,10 +537,34 @@
             gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
               this.pageStack.push(this.getPageState());
               this.turnOnPage('wxQRCodeVisible');
+
+              var scanOpts = $authing.opts.qrcodeScanning || {
+                redirect: true,
+                interval: 1500,
+                tips: '使用 微信 或小程序 身份管家 扫码登录'
+              };
   
               if (!this.isWxQRCodeGenerated) {
                 validAuth.startWXAppScaning({
-                  mount: 'qrcode-node'
+                  mount: 'qrcode-node',
+
+                  onSuccess: function(res) {
+                    $authing.pub('scanning', res);
+                  },
+
+                  onError: function(err) {
+                    $authing.pub('scanningError', err);
+                  },
+
+                  onIntervalStarting: function(interval) {
+                    $authing.pub('scanningIntervalStarting', interval);
+                  },
+
+                  interval: scanOpts.interval,
+
+                  redirect: scanOpts.redirect,
+
+                  tips: scanOpts.tips
                 });
                 this.isWxQRCodeGenerated = true;
               }
@@ -501,7 +580,7 @@
           }
         });
   
-        document.getElementById('app').classList.remove('hide');
+        document.getElementById(appMountId).classList.remove('hide');
       });
   
     };    
@@ -517,8 +596,21 @@
 
     },
 
-    on: function () {
+    on: function (eventName, cb) {
+      eventName = eventName.toLowerCase();
+      if(cb && eventName && this.eventsList[eventName]) {
+        this.eventsList[eventName].push(cb);
+      }
+    },
 
+    pub: function (eventName, params) {
+      eventName = eventName.toLowerCase();
+      if(eventName && this.eventsList[eventName]) {
+        for(var i = 0; i < this.eventsList[eventName].length; i++) {
+          var cb = this.eventsList[eventName][i];
+          cb(params);
+        }
+      }
     }
   };
 

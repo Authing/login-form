@@ -770,6 +770,7 @@ label {
   font-weight: 200;
   color: #fff;
   outline: 0;
+  cursor: pointer;
 }
 
 .form-footer .btn:hover, .form-footer .btn:focus, .form-footer .btn:active {
