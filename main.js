@@ -44,7 +44,6 @@
     }, 500);
   }
 
-
   window.onload = function () {
     var loadBasicHTML = function () {
       var html = '';
@@ -62,13 +61,7 @@
 
     loadBasicHTML();
 
-
     var clientId = '5b7f79f519915500015f18ac';
-    // var auth = new Authing({
-    //   clientId: '5b7f79f519915500015f18ac',
-    //   secret: '82f36cba243e13f81f06675193732af7'
-    // });
-
 
     loadVue(function () {
       var authingLockApp = new Vue({
@@ -131,7 +124,7 @@
         created: function () {
           var that = this;
           var auth = new Authing({
-            clientId: '5b7f79f519915500015f18ac',
+            clientId: clientId,
             secret: '82f36cba243e13f81f06675193732af7'
           });
           auth.then(function (validAuth) {
@@ -325,28 +318,27 @@
               removeRedLine('sign-up-password');
               that.unLoading();
               return false;
-
             }
             validAuth.register({
               email: this.signUpForm.email,
               username: this.signUpForm.username,
               password: this.signUpForm.password
             })
-              .then(function (data) {
-                that.unLoading();
-                that.errVisible = false;
-                that.showGlobalSuccess('注册成功');
-              })
-              .catch(function (err) {
-                that.unLoading();
-                that.showGlobalErr(err.message.message);
-                if (err.message.code === 2026) {
-                  addAnimation('sign-up-email');
-                  removeRedLine('sign-up-re-password');
-                  removeRedLine('sign-up-username');
-                  removeRedLine('sign-up-password');
-                }
-              });
+            .then(function (data) {
+              that.unLoading();
+              that.errVisible = false;
+              that.showGlobalSuccess('注册成功');
+            })
+            .catch(function (err) {
+              that.unLoading();
+              that.showGlobalErr(err.message.message);
+              if (err.message.code === 2026) {
+                addAnimation('sign-up-email');
+                removeRedLine('sign-up-re-password');
+                removeRedLine('sign-up-username');
+                removeRedLine('sign-up-password');
+              }
+            });
           },
           handleLogin: function handleLogin() {
             var that = this;
@@ -382,47 +374,41 @@
               };
             }
             validAuth.login(info)
-              .then(function (data) {
-                if (that.rememberMe) {
-                  localStorage.setItem('_authing_username', that.loginForm.email);
-                  localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, clientId));
-                } else {
-                  localStorage.removeItem('_authing_username');
-                  localStorage.removeItem('_authing_password');
-                }
+            .then(function (data) {
+              if (that.rememberMe) {
+                localStorage.setItem('_authing_username', that.loginForm.email);
+                localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, clientId));
+              } else {
+                localStorage.removeItem('_authing_username');
+                localStorage.removeItem('_authing_password');
+              }
 
-                that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
-                that.unLoading();
-              })
-              .catch(function (err) {
-                that.unLoading();
-                that.showGlobalErr(err.message.message);
-                if (err.message.code === 2000 || err.message.code === 2001) {
-                  that.verifyCodeLoading = true;
-                  that.pageVisible.verifyCodeVisible = true;
-                  that.verifyCodeUrl = err.message.data.url;
+              that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
+              that.unLoading();
+            })
+            .catch(function (err) {
+              that.unLoading();
+              that.showGlobalErr(err.message.message);
+              if (err.message.code === 2000 || err.message.code === 2001) {
+                that.verifyCodeLoading = true;
+                that.pageVisible.verifyCodeVisible = true;
+                that.verifyCodeUrl = err.message.data.url;
 
-                  addAnimation('verify-code');
-                  removeRedLine('login-username');
-                  removeRedLine('login-password');
-                }
-                if (err.message.code === 2003 || err.message.code === 2204 || err.message.code === 2208) {
-                  addAnimation('login-username');
-                  removeRedLine('login-password');
-                  removeRedLine('verify-code');
-                }
-                if (err.message.code === 2006 || err.message.code === 2016 || err.message.code === 2027) {
-                  addAnimation('login-password');
-                  removeRedLine('verify-code');
-                  removeRedLine('login-username');
-                }
-
-              });
-
-          },
-          handleOauthLogin: function handleOauthLogin() {
-            console.log('handleOauthLogin');
-
+                addAnimation('verify-code');
+                removeRedLine('login-username');
+                removeRedLine('login-password');
+              }
+              if (err.message.code === 2003 || err.message.code === 2204 || err.message.code === 2208) {
+                addAnimation('login-username');
+                removeRedLine('login-password');
+                removeRedLine('verify-code');
+              }
+              if (err.message.code === 2006 || err.message.code === 2016 || err.message.code === 2027) {
+                addAnimation('login-password');
+                removeRedLine('verify-code');
+                removeRedLine('login-username');
+              }
+            });
           },
           handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
             var that = this;
@@ -436,16 +422,16 @@
             validAuth.sendResetPasswordEmail({
               email: this.forgetPasswordForm.email
             })
-              .then(function (data) {
-                that.unLoading();
-                that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email);
-                that.pageVisible.forgetPasswordSendEmailVisible = false;
-                that.pageVisible.forgetPasswordVerifyCodeVisible = true;
-              })
-              .catch(function (err) {
-                that.unLoading();
-                that.showGlobalErr(err.message);
-              });
+            .then(function (data) {
+              that.unLoading();
+              that.showGlobalSuccess('验证码已发送至您的邮箱：' + that.forgetPasswordForm.email);
+              that.pageVisible.forgetPasswordSendEmailVisible = false;
+              that.pageVisible.forgetPasswordVerifyCodeVisible = true;
+            })
+            .catch(function (err) {
+              that.unLoading();
+              that.showGlobalErr(err.message);
+            });
           },
           handleSubmitForgetPasswordVerifyCode: function handleSubmitForgetPasswordVerifyCode() {
             var that = this;
@@ -461,17 +447,17 @@
               email: that.forgetPasswordForm.email,
               verifyCode: that.forgetPasswordForm.verifyCode
             })
-              .then(function (data) {
-                that.unLoading();
-                that.showGlobalSuccess(data.message);
-                that.pageVisible.forgetPasswordVerifyCodeVisible = false;
-                that.pageVisible.forgetPasswordNewPasswordVisible = true;
-              })
-              .catch(function (err) {
-                that.unLoading();
-                addAnimation('forget-password-verify-code');
-                that.showGlobalErr(err.message.message);
-              });
+            .then(function (data) {
+              that.unLoading();
+              that.showGlobalSuccess(data.message);
+              that.pageVisible.forgetPasswordVerifyCodeVisible = false;
+              that.pageVisible.forgetPasswordNewPasswordVisible = true;
+            })
+            .catch(function (err) {
+              that.unLoading();
+              addAnimation('forget-password-verify-code');
+              that.showGlobalErr(err.message.message);
+            });
           },
           handleSubmitForgetPasswordNewPassword: function handleSubmitForgetPasswordNewPassword() {
             var that = this;
@@ -481,15 +467,15 @@
               password: that.forgetPasswordForm.password,
               verifyCode: that.forgetPasswordForm.verifyCode
             })
-              .then(function (data) {
-                that.unLoading();
-                that.showGlobalSuccess('修改密码成功');
-                that.gotoLogin();
-              })
-              .catch(function (err) {
-                that.unLoading();
-                that.showGlobalErr(err.message.message);
-              });
+            .then(function (data) {
+              that.unLoading();
+              that.showGlobalSuccess('修改密码成功');
+              that.gotoLogin();
+            })
+            .catch(function (err) {
+              that.unLoading();
+              that.showGlobalErr(err.message.message);
+            });
           },
           gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
             this.pageStack.push(this.getPageState());
@@ -512,11 +498,9 @@
           }
         }
       });
+
       document.getElementById('app').classList.remove('hide');
-
-
     });
-
 
   };
 
