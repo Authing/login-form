@@ -6,8 +6,6 @@
   <title>UI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css"/>
-  <link rel="stylesheet" type="text/css" media="screen" href="animate.css"/>
-
 
   <style type="text/css">
     @font-face {
@@ -130,7 +128,7 @@
               <div class="logmod__alter-container">
                 <a
                   :href="item.url"
-                  :class="{'connect': true, 'facebook': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
+                  :class="{'connect': true, 'github': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
                   <div class="connect__icon">
                     <i class="iconfont" v-if="item.name === 'Github'">&#xea0a;</i>
                     <i class="iconfont" v-if="item.name === '微信电脑网页版'">&#xf262;</i>
@@ -306,8 +304,8 @@
 <script>
 
   var form = new AuthingForm({
-    clientId: '5a9fa26cf8635a000185528c',
-    secret: '427e24d3b7e289ae9469ab6724dc7ff0',
+    clientId: '5b7f79f519915500015f18ac',
+    secret: '82f36cba243e13f81f06675193732af7',
 
     useQRCode: true,
     useUPMethod: true,

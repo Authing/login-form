@@ -62,9 +62,7 @@
       };
   
       loadBasicHTML();
-  
-      var clientId = '5b7f79f519915500015f18ac';
-  
+    
       loadVue(function () {
         var authingLockApp = new Vue({
           el: '#app',
@@ -121,13 +119,15 @@
   
             isWxQRCodeGenerated: false,
   
-            isScanCodeEnable: false
+            isScanCodeEnable: false,
+
+            opts: opts
           },
           created: function () {
             var that = this;
             var auth = new Authing({
-              clientId: clientId,
-              secret: '82f36cba243e13f81f06675193732af7'
+              clientId: opts.clientId,
+              secret: opts.secret
             });
             auth.then(function (validAuth) {
               document.getElementById('page-loading').remove();
@@ -137,7 +137,7 @@
                 this.loginForm.email = localStorage.getItem('_authing_username');
               }
               if (localStorage.getItem('_authing_password')) {
-                this.loginForm.password = this.decrypt(localStorage.getItem('_authing_password'), clientId);
+                this.loginForm.password = this.decrypt(localStorage.getItem('_authing_password'), opts.clientId);
               }
               that.oAuthloading = true;
               validAuth.readOAuthList()
@@ -379,7 +379,7 @@
               .then(function (data) {
                 if (that.rememberMe) {
                   localStorage.setItem('_authing_username', that.loginForm.email);
-                  localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, clientId));
+                  localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, opts.clientId));
                 } else {
                   localStorage.removeItem('_authing_username');
                   localStorage.removeItem('_authing_password');
