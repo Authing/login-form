@@ -250,6 +250,7 @@
             gotoForgetPassword: function gotoForgetPassword() {
               this.pageStack.push(this.getPageState());
               this.turnOnPage('forgetPasswordVisible');
+              this.forgetPasswordForm.email = this.loginForm.email
               this.pageVisible.forgetPasswordSendEmailVisible = true;
             },
             checkEmail: function checkEmail() {
