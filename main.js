@@ -391,7 +391,7 @@
                   localStorage.removeItem('_authing_password');
                 }
 
-                that.showGlobalSuccess('验证通过');
+                that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
                 that.unLoading();
               })
               .catch(function (err) {
