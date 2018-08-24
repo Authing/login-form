@@ -164,11 +164,11 @@
               $authing.pub('authingLoad', validAuth);
 
               if (localStorage.getItem('_authing_username')) {
-                this.rememberMe = true;
-                this.loginForm.email = localStorage.getItem('_authing_username');
+                that.rememberMe = true;
+                that.loginForm.email = localStorage.getItem('_authing_username');
               }
               if (localStorage.getItem('_authing_password')) {
-                this.loginForm.password = this.decrypt(localStorage.getItem('_authing_password'), opts.clientId);
+                that.loginForm.password = that.decrypt(localStorage.getItem('_authing_password'), opts.clientId);
               }
 
               that.oAuthloading = true;
