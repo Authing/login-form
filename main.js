@@ -63,7 +63,6 @@
     loadBasicHTML();
 
 
-
     var clientId = '5b7f79f519915500015f18ac';
     // var auth = new Authing({
     //   clientId: '5b7f79f519915500015f18ac',
@@ -136,8 +135,8 @@
             secret: '82f36cba243e13f81f06675193732af7'
           });
           auth.then(function (validAuth) {
-            document.getElementById('page-loading').remove()
-            window.validAuth = validAuth
+            document.getElementById('page-loading').remove();
+            window.validAuth = validAuth;
             if (localStorage.getItem('username')) {
               this.rememberMe = true;
               this.loginForm.email = localStorage.getItem('username');
@@ -163,8 +162,8 @@
               });
           })
             .catch(function (err) {
-              console.log(err)
-            })
+              console.log(err);
+            });
         },
         mounted: function () {
           this.pageVisible.loginVisible = true;
@@ -514,7 +513,6 @@
         }
       });
       document.getElementById('app').classList.remove('hide');
-
 
 
     });
