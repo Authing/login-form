@@ -1589,3 +1589,9 @@ transition: opacity 0.5s linear;
   transform: rotate(360deg);
 }
 }
+
+.screen-center {
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
+}
