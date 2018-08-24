@@ -815,3 +815,9 @@ label {
   top: calc(50% - 15px);
   left: calc(50% - 15px);
 }
+
+.form-footer-non-up {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 6px;
+}
