@@ -137,12 +137,12 @@
           auth.then(function (validAuth) {
             document.getElementById('page-loading').remove();
             window.validAuth = validAuth;
-            if (localStorage.getItem('username')) {
+            if (localStorage.getItem('_authing_username')) {
               this.rememberMe = true;
-              this.loginForm.email = localStorage.getItem('username');
+              this.loginForm.email = localStorage.getItem('_authing_username');
             }
-            if (localStorage.getItem('password')) {
-              this.loginForm.password = this.decrypt(localStorage.getItem('password'), clientId);
+            if (localStorage.getItem('_authing_password')) {
+              this.loginForm.password = this.decrypt(localStorage.getItem('_authing_password'), clientId);
             }
             that.oAuthloading = true;
             validAuth.readOAuthList()
@@ -384,11 +384,11 @@
             validAuth.login(info)
               .then(function (data) {
                 if (that.rememberMe) {
-                  localStorage.setItem('username', that.loginForm.email);
-                  localStorage.setItem('password', that.encrypt(that.loginForm.password, clientId));
+                  localStorage.setItem('_authing_username', that.loginForm.email);
+                  localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, clientId));
                 } else {
-                  localStorage.removeItem('username');
-                  localStorage.removeItem('password');
+                  localStorage.removeItem('_authing_username');
+                  localStorage.removeItem('_authing_password');
                 }
 
                 that.showGlobalSuccess('验证通过');
@@ -506,8 +506,8 @@
         watch: {
           rememberMe: function (newVal, oldVal) {
             if (newVal === false) {
-              localStorage.removeItem('username');
-              localStorage.removeItem('password');
+              localStorage.removeItem('_authing_username');
+              localStorage.removeItem('_authing_password');
             }
           }
         }
