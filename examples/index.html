@@ -170,20 +170,20 @@
 
             </div>
             <div class="row">
-              <div class="col-md-6">
-                <div class="form-group" style="margin-bottom:0px;">
-                  <label for="login-remember" style="width:100%">
-                    <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
-                           v-model="rememberMe"><span
-                    style="vertical-align: middle"> 记住我</span>
-                  </label>
-                </div>
+
+              <div class="form-group" style="margin-bottom:0px;">
+                <label for="login-remember" style="width:100%">
+                  <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
+                         v-model="rememberMe"><span
+                  style="vertical-align: middle"> 记住我</span>
+                </label>
               </div>
-              <div class="col-md-6">
-                <div style="display:inline-block;text-align:right;width:100%;font-size:14px">
-                  <a href="#" @click="gotoForgetPassword">忘记密码？</a>
-                </div>
+
+
+              <div style="font-size:14px">
+                <a href="#" @click="gotoForgetPassword">忘记密码？</a>
               </div>
+
             </div>
 
           </form>
@@ -230,7 +230,7 @@
                      :placeholder="opts.placeholder.verfiyCode"
                      autocomplete="off" v-model="forgetPasswordForm.verifyCode"
                      @keyup.enter="handleSubmitForgetPasswordVerifyCode"
-                     >
+              >
             </div>
             <div v-show="pageVisible.forgetPasswordNewPasswordVisible" class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">新密码</label>
@@ -243,7 +243,8 @@
           </form>
 
           <!-- 小程序扫码 -->
-          <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px" class="authing-form no-shadow">
+          <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
+                class="authing-form no-shadow">
             <div class="form-group" style="margin-top: -15px;">
               <div id="qrcode-node"></div>
             </div>

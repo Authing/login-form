@@ -821,3 +821,8 @@ label {
   border-bottom-right-radius: 5px;
   height: 6px;
 }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
