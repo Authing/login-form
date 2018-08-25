@@ -584,6 +584,23 @@ label {
   line-height: 30px;
 }
 
+.authing-protected {
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  border-radius: 2px;
+  background-color: #fff;
+  -webkit-box-shadow: 2px -2px 5px #eaeaea;
+  -moz-box-shadow: 2px -2px 5px #eaeaea;
+  box-shadow: 2px -2px 5px #eaeaea;
+  display: inline;
+  padding: 0 8px;
+  font-weight: 400;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
 .authing-oauth-form {
   padding: 22px;
   background: #FFFFFF;
