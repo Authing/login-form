@@ -443,7 +443,10 @@
             handleLogin: function handleLogin() {
               var that = this;
               that.setLoading();
-              var info;
+              var info = {
+                email: this.loginForm.email,
+                password: this.loginForm.password,
+              };
   
               if (!emailExp.test(this.loginForm.email)) {
                 this.showGlobalErr('请输入正确格式的邮箱');
@@ -464,16 +467,7 @@
                 return false;
               }
               if (this.pageVisible.verifyCodeVisible) {
-                info = {
-                  email: this.loginForm.email,
-                  password: this.loginForm.password,
-                  verifyCode: this.verifyCode
-                };
-              } else {
-                info = {
-                  email: this.loginForm.email,
-                  password: this.loginForm.password,
-                };
+                info.verifyCode = this.verifyCode
               }
               validAuth.login(info)
               .then(function (data) {
