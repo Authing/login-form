@@ -530,6 +530,7 @@ label {
 
 .form-footer .btn {
  	width: 100%;
+    border: none;
 }
 
 .form-wrapper {
