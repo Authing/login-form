@@ -102,6 +102,8 @@
       $authing.opts.hideUP = opts.hideUP || false;
       $authing.opts.hideOAuth = opts.hideOAuth || false;
 
+      $authing.opts.forceLogin = opts.forceLogin || false
+
       // 初始化小程序扫码登录配置 
       if(opts.qrcodeScanning) {
         opts.qrcodeScanning.redirect = opts.qrcodeScanning.redirect || true;
@@ -218,11 +220,12 @@
               }
 
               if(!that.opts.hideOAuth) {
-                that.oAuthloading = true;
+                // that.oAuthloading = true;
                 validAuth.readOAuthList()
                 .then(function (data) {
+                  document.getElementById(appMountId).classList.remove('hide');
                   $authing.pub('oauthLoad', data);
-                  that.oAuthloading = false;
+                  // that.oAuthloading = false;
   
                   var OAuthList = data.filter(function (item) {
                     if (item.alias === 'wxapp') {
@@ -235,8 +238,9 @@
   
                 })
                 .catch(function (err) {
+                  document.getElementById(appMountId).classList.remove('hide');
                   $authing.pub('oauthUnload', err);
-                  that.oAuthloading = true;
+                  // that.oAuthloading = true;
                 });                
               }else {
                 if(!that.opts.hideQRCode) {
@@ -489,25 +493,54 @@
                 that.unLoading();
                 $authing.pub('loginError', err);
                 that.showGlobalErr(err.message.message);
+                // 验证码错误
                 if (err.message.code === 2000 || err.message.code === 2001) {
-                  that.verifyCodeLoading = true;
-                  that.pageVisible.verifyCodeVisible = true;
-                  that.verifyCodeUrl = err.message.data.url;
-  
                   addAnimation('verify-code');
                   removeRedLine('login-username');
                   removeRedLine('login-password');
+
+                  that.verifyCodeLoading = true;
+                  that.pageVisible.verifyCodeVisible = true;
+                  that.verifyCodeUrl = err.message.data.url;
                 }
-                if (err.message.code === 2003 || err.message.code === 2204 || err.message.code === 2208) {
+                // 用户名错误
+                else if (err.message.code === 2003 || err.message.code === 2204 || err.message.code === 2208) {
                   addAnimation('login-username');
                   removeRedLine('login-password');
                   removeRedLine('verify-code');
                 }
-                if (err.message.code === 2006 || err.message.code === 2016 || err.message.code === 2027) {
+                // 用户名不存在
+                else if(err.message.code === 2004){
+                  // 如果开启登录时创建不存在的用户功能
+                  if($authing.opts.forceLogin) {
+                    that.setLoading()
+                    console.log('turn on forceLogin');
+                    validAuth.register({
+                      email: that.loginForm.email,
+                      password: that.loginForm.password,
+                    })
+                      .then(function (data) {
+                        that.unLoading()
+                        that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
+                      })
+                      .catch(function (err) {
+                        that.unLoading()
+                        that.showGlobalErr(err.message.message);
+                      });
+                    return false
+                  } else {
+                    addAnimation('login-username');
+                    removeRedLine('login-password');
+                    removeRedLine('verify-code');
+                  }
+                }
+                // 密码错误
+                else if (err.message.code === 2006 || err.message.code === 2016 || err.message.code === 2027) {
                   addAnimation('login-password');
                   removeRedLine('verify-code');
                   removeRedLine('login-username');
                 }
+
               });
             },
             handleForgetPasswordSendEmail: function handleForgetPasswordSendEmail() {
@@ -631,7 +664,6 @@
           }
         });
   
-        document.getElementById(appMountId).classList.remove('hide');
       });
   
     };    
