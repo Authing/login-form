@@ -119,7 +119,8 @@
           </ul>
         </div>
 
-        <div class="authing-oauth-form" v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
+        <div class="authing-oauth-form"
+             v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
           <div style="height: 60px;" v-show="oAuthloading">
             <div class="authing-loading-circle margin-top-11"></div>
           </div>
@@ -146,24 +147,22 @@
 
         <div class="form-body" v-show="!oAuthloading">
           <!-- 登录对话框 -->
-          <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow" :class="{
-              faster: pageVisible.loginVisible,
-              'authing-form': true,
-              'no-shadow': pageVisible.loginVisible
-            }">
+          <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow">
 
             <div class="form-group">
               <label for="login-username" class="sr-only">邮箱</label>
-              <input type="text" class="form-control" id="login-username" v-model="loginForm.email" :placeholder="opts.placeholder.email"
+              <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
+                     :placeholder="opts.placeholder.email"
                      autocomplete="off" @keyup.enter="handleLogin">
             </div>
             <div class="form-group">
               <label for="login-password" class="sr-only">密码</label>
               <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
-              :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
+                     :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
             </div>
             <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
-              <input type="text" class="form-control" id="verify-code" v-model="verifyCode" :placeholder="opts.placeholder.verfiyCode"
+              <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
+                     :placeholder="opts.placeholder.verfiyCode"
                      autocomplete="off" @keyup.enter="handleLogin">
 
               <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
@@ -190,10 +189,7 @@
           </form>
 
           <!-- 注册对话框 -->
-          <form v-show="pageVisible.signUpVisible" action="#" class="authing-form" :class="{
-            'authing-form': true,
-            'no-shadow': pageVisible.signUpVisible
-          }" data-animate-effect="fadeIn">
+          <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
             <div class="form-group">
               <label for="sign-up-username" class="sr-only">用户名</label>
               <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
@@ -220,58 +216,34 @@
             </div>
           </form>
 
-          <!-- 忘记密码填写邮箱对话框 -->
-          <form v-show="pageVisible.forgetPasswordSendEmailVisible" action="#" class="authing-form" :class="{
-            animated: pageVisible.forgetPasswordSendEmailVisible,
-            faster: pageVisible.forgetPasswordSendEmailVisible,
-            'authing-form': true,
-            'no-shadow': pageVisible.forgetPasswordSendEmailVisible
-          }" data-animate-effect="fadeIn">
-            <div class="form-group" style="margin-top: -15px;">
+          <!-- 忘记密码对话框 -->
+          <form v-show="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
+            <div v-show="pageVisible.forgetPasswordSendEmailVisible" class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">邮箱地址</label>
-              <input v-show="pageVisible.forgetPasswordSendEmailVisible" type="text" class="form-control"
+              <input type="text" class="form-control"
                      id="forget-password-email" :placeholder="opts.placeholder.email"
                      autocomplete="off" v-model="forgetPasswordForm.email" @keyup.enter="handleForgetPasswordSendEmail">
             </div>
-          </form>
-
-          <!-- 忘记密码填写验证码对话框 -->
-          <form v-show="pageVisible.forgetPasswordVerifyCodeVisible" action="#" class="authing-form" :class="{
-            animated: pageVisible.forgetPasswordVerifyCodeVisible,
-            faster: pageVisible.forgetPasswordVerifyCodeVisible,
-            'authing-form': true,
-            'no-shadow': pageVisible.forgetPasswordVerifyCodeVisible
-          }" data-animate-effect="fadeIn">
-            <div class="form-group" style="margin-top: -15px;">
+            <div v-show="pageVisible.forgetPasswordVerifyCodeVisible" class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">验证码</label>
-              <input type="text" class="form-control" id="forget-password-verify-code" :placeholder="opts.placeholder.verfiyCode"
+              <input type="text" class="form-control" id="forget-password-verify-code"
+                     :placeholder="opts.placeholder.verfiyCode"
                      autocomplete="off" v-model="forgetPasswordForm.verifyCode"
-                     @keyup.enter="handleSubmitForgetPasswordVerifyCode">
+                     @keyup.enter="handleSubmitForgetPasswordVerifyCode"
+                     >
             </div>
-          </form>
-
-          <!-- 忘记密码填写新密码对话框 -->
-          <form v-show="pageVisible.forgetPasswordNewPasswordVisible" action="#" class="authing-form" :class="{
-            animated: pageVisible.forgetPasswordNewPasswordVisible,
-            faster: pageVisible.forgetPasswordNewPasswordVisible,
-            'authing-form': true,
-            'no-shadow': pageVisible.forgetPasswordNewPasswordVisible
-          }" data-animate-effect="fadeIn">
-            <div class="form-group" style="margin-top: -15px;">
+            <div v-show="pageVisible.forgetPasswordNewPasswordVisible" class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">新密码</label>
-              <input type="password" class="form-control" id="forget-password-new-password" :placeholder="opts.placeholder.newPassword"
+              <input type="password" class="form-control" id="forget-password-new-password"
+                     :placeholder="opts.placeholder.newPassword"
                      autocomplete="off" v-model="forgetPasswordForm.password"
                      @keyup.enter="handleSubmitForgetPasswordNewPassword">
+
             </div>
           </form>
 
           <!-- 小程序扫码 -->
-          <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px" class="authing-form" :class="{
-            animated: pageVisible.wxQRCodeVisible,
-            faster: pageVisible.wxQRCodeVisible,
-            'authing-form': true,
-            'no-shadow': pageVisible.wxQRCodeVisible
-          }" data-animate-effect="fadeIn">
+          <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px" class="authing-form no-shadow">
             <div class="form-group" style="margin-top: -15px;">
               <div id="qrcode-node"></div>
             </div>
@@ -279,9 +251,7 @@
 
         </div>
 
-        <div class="form-footer" v-show="!opts.hideUP" :class="{
-          'no-height': pageVisible.wxQRCodeVisible
-        }">
+        <div class="form-footer" v-show="!opts.hideUP" class="no-height">
           <div class="authing-loading-circle" v-show="loading"></div>
           <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
                  class="btn btn-primary">
@@ -298,10 +268,11 @@
                  type="button" value="提交新密码" class="btn btn-primary">
         </div>
 
-        <div class="form-footer-non-up" v-show="opts.hideUP"></div></div>
+        <div class="form-footer-non-up" v-show="opts.hideUP"></div>
       </div>
     </div>
   </div>
+</div>
 </div>
 </body>
 
@@ -344,11 +315,11 @@
 
   form.show();
 
-  form.on('authingLoad', function(authing) {
+  form.on('authingLoad', function (authing) {
     console.log('on authing load', authing);
   });
 
-  form.on('authingUnload', function(error) {
+  form.on('authingUnload', function (error) {
     console.log('on authing load error', error);
   });
 
