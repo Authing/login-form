@@ -522,10 +522,12 @@
                       .then(function (data) {
                         that.unLoading()
                         that.showGlobalSuccess('验证通过，欢迎你：' + data.username || data.email);
+                        $authing.pub('login', data);
                       })
                       .catch(function (err) {
                         that.unLoading()
                         that.showGlobalErr(err.message.message);
+                        $authing.pub('loginError', err);
                       });
                     return false
                   } else {
