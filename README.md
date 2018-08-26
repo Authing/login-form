@@ -143,7 +143,7 @@ form.on('login', function(user) {
 完整的事件列表如下：
 
 事件名称          | 事件说明              | 事件参数 | 事件参数说明
---------------- | -------------------- | --------
+--------------- | -------------------- | --------| -------- 
 authingLoad     | Authing Client ID 和 Secret验证通过，加载完成   |      authing | authing 对象，可直接操作 ``login``,``register``等方法
 authingUnload     | Authing Client ID 和 Secret验证失败   |      ``error`` | 错误信息
 oauthLoad     | OAuth列表加载完成   |      oauthList | 完整的 OAuth 列表，若用户未在后台配置过则为空
