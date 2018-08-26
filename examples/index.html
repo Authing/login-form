@@ -63,7 +63,8 @@
             </li>
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.loginVisible,
-              'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP
+              'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP,
+              'width-100': opts.hideUP && opts.hideQRCode
             }">
               <a href="javascript:void(0)" @click="gotoLogin">登录</a>
             </li>
@@ -205,7 +206,9 @@
 
         </div>
 
-        <div class="form-footer" v-show="!opts.hideUP" class="no-height">
+        <div class="form-footer" v-show="!opts.hideUP" :class="{
+          'no-height': pageVisible.wxQRCodeVisible
+        }">
           <div class="authing-loading-circle" v-show="loading"></div>
           <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
                  class="btn btn-primary">
@@ -238,7 +241,7 @@
     clientId: '5b7f79f519915500015f18ac',
     secret: '82f36cba243e13f81f06675193732af7',
 
-    forceLogin: false,
+    forceLogin: true,
 
     hideQRCode: false,
     hideUP: false,
