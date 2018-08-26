@@ -146,7 +146,7 @@
           </form>
 
           <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
-            <div class="form-group">
+            <div v-show="!opts.hideUsername" class="form-group">
               <label for="sign-up-username" class="sr-only">用户名</label>
               <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
                      :placeholder="opts.placeholder.username"
@@ -246,6 +246,8 @@
     hideQRCode: false,
     hideUP: false,
     hideOAuth: false,
+
+    hideUsername: true,
 
     // 输入框的placeholder
     placeholder: {

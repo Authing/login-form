@@ -101,6 +101,7 @@
       $authing.opts.hideQRCode = opts.hideQRCode || false;
       $authing.opts.hideUP = opts.hideUP || false;
       $authing.opts.hideOAuth = opts.hideOAuth || false;
+      $authing.opts.hideUsername = opts.hideUsername || false;      
 
       $authing.opts.forceLogin = opts.forceLogin || false
 
@@ -365,7 +366,7 @@
             handleSignUp: function handleSignUp() {
               var that = this;
               that.setLoading();
-              if (!this.signUpForm.username) {
+              if (!$authing.opts.hideUsername && !this.signUpForm.username) {
                 this.showGlobalErr('请输入用户名');
                 addAnimation('sign-up-username');
                 removeRedLine('sign-up-email');
@@ -413,8 +414,8 @@
               .then(function (data) {
                 that.unLoading();
                 that.errVisible = false;
-                that.showGlobalSuccess('注册成功');
                 that.gotoLogin();
+                that.showGlobalSuccess('注册成功');                
                 $authing.pub('register', data);
               })
               .catch(function (err) {
