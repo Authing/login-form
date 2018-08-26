@@ -103,7 +103,6 @@
         </div>
 
         <div class="form-body" v-show="!oAuthloading">
-          <!-- 登录对话框 -->
           <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow">
 
             <div class="form-group">
@@ -145,7 +144,6 @@
 
           </form>
 
-          <!-- 注册对话框 -->
           <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
             <div class="form-group">
               <label for="sign-up-username" class="sr-only">用户名</label>
@@ -173,7 +171,6 @@
             </div>
           </form>
 
-          <!-- 忘记密码对话框 -->
           <form v-show="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
             <div v-show="pageVisible.forgetPasswordSendEmailVisible" class="form-group" style="margin-top: -15px;">
               <label for="forget-password-email" class="sr-only">邮箱地址</label>
@@ -199,7 +196,6 @@
             </div>
           </form>
 
-          <!-- 小程序扫码 -->
           <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
                 class="authing-form no-shadow">
             <div class="form-group" style="margin-top: -15px;">
