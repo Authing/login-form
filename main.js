@@ -366,6 +366,7 @@
             handleSignUp: function handleSignUp() {
               var that = this;
               that.setLoading();
+
               if (!$authing.opts.hideUsername && !this.signUpForm.username) {
                 this.showGlobalErr('请输入用户名');
                 addAnimation('sign-up-username');
@@ -415,6 +416,17 @@
                 that.unLoading();
                 that.errVisible = false;
                 that.gotoLogin();
+                that.loginForm = {
+                  email: that.signUpForm.email,
+                  password: that.signUpForm.password
+                };
+                that.signUpForm = {
+                  username: '',
+                  password: '',
+                  email: '',
+                  rePassword: ''
+                };
+                that.rememberMe = false;
                 that.showGlobalSuccess('注册成功');                
                 $authing.pub('register', data);
               })
