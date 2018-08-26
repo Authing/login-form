@@ -29,8 +29,8 @@
           <div class="form-header-bg"></div>
           <div class="form-header-welcome">
             <img class="form-header-logo"
-                 src="https://usercontents.authing.cn/user-avatars/FvchPXRB9aRMzrwej_JTQodyyG5U">
-            <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : 'Authing'}}
+                 :src="opts.logo">
+            <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : opts.title}}
             </div>
           </div>
         </div>
@@ -57,18 +57,18 @@
           <ul class="authing-header-tabs">
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.wxQRCodeVisible,
-              'width-55': !isScanCodeEnable || opts.hideUP
+              'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin
             }" v-if="isScanCodeEnable && !opts.hideQRCode">
               <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
             </li>
             <li v-bind:class="{
               'authing-header-tabs-current': pageVisible.loginVisible,
-              'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP,
+              'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
               'width-100': opts.hideUP && opts.hideQRCode
             }">
               <a href="javascript:void(0)" @click="gotoLogin">登录</a>
             </li>
-            <li v-show="!opts.hideUP" v-bind:class="{
+            <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
               'authing-header-tabs-current': pageVisible.signUpVisible,
               'width-55': !isScanCodeEnable || opts.hideQRCode
             }">
@@ -88,10 +88,10 @@
               <div class="logmod__alter-container">
                 <a
                   :href="item.url"
-                  :class="{'connect': true, 'github': item.name === 'Github', 'wechat': item.name === '微信电脑网页版'}">
+                  :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
                   <div class="connect__icon">
-                    <i class="iconfont" v-if="item.name === 'Github'">&#xea0a;</i>
-                    <i class="iconfont" v-if="item.name === '微信电脑网页版'">&#xf262;</i>
+                    <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
+                    <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
                   </div>
                   <div class="connect__context">
                     <span>{{item.description}}</span>
@@ -105,6 +105,11 @@
 
         <div class="form-body" v-show="!oAuthloading">
           <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow">
+
+            <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
+              <p>输入帐号密码登录</p>
+              <p>如果您没有帐号，我们会自动创建</p>
+            </div>
 
             <div class="form-group">
               <label for="login-username" class="sr-only">邮箱</label>
@@ -241,13 +246,16 @@
     clientId: '5b7f79f519915500015f18ac',
     secret: '82f36cba243e13f81f06675193732af7',
 
-    forceLogin: true,
+    title: 'Authing',
+    logo: 'https://cdn.authing.cn/authing-logo.png',
+
+    forceLogin: false,
 
     hideQRCode: false,
     hideUP: false,
     hideOAuth: false,
 
-    hideUsername: true,
+    hideUsername: false,
 
     // 输入框的placeholder
     placeholder: {

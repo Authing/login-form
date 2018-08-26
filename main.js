@@ -103,7 +103,9 @@
       $authing.opts.hideOAuth = opts.hideOAuth || false;
       $authing.opts.hideUsername = opts.hideUsername || false;      
 
-      $authing.opts.forceLogin = opts.forceLogin || false
+      $authing.opts.forceLogin = opts.forceLogin || false;
+      $authing.opts.title = opts.title || 'Authing';
+      $authing.opts.logo = opts.logo || 'https://cdn.authing.cn/authing-logo.png';      
 
       // 初始化小程序扫码登录配置 
       if(opts.qrcodeScanning) {
