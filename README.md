@@ -160,6 +160,8 @@ scanning     | 扫码登录成功   |      user | 用户数据
 scanningError     | 扫码登录失败  |      ``error`` | 错误信息
 scanningIntervalStarting     | 开始监听扫码事件   |      interval | 用户可使用 ``clearInterval`` 停止监听
 
+完整代码如下：
+
 ``` javascript
 form.on('authingLoad', function (authing) {
 	console.log('on authing load', authing);
