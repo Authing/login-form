@@ -68,9 +68,12 @@ Login-Form 的构造函数 ``AuthingForm`` 还提供了一些高级功能。
 --------------- | -------------------- | --------| --------|------------|------------
 **clientId**     |  **是**   |      无   | String   |Authing Client ID| -
 **secret**     |  **是**   |      无   | String   |Authing Client Secret| -
+title     |  否   |      Authing  | String   |**产品名称**| -
+logo     |  否   |     [Authing LOGO]  | String   |**产品logo**，默认为 Authing 的官方 Logo| -
 forceLogin     |  否   |      false  | Boolean   |**是否将注册和登录合并**，合并后如果用户不存在将自动注册| -
 hideQRCode     |  否   |      false  | Boolean   |**是否隐藏小程序扫码登录**，在开发者在 Authing 控制台开启小程序扫码登录后，若此项为 true 将不显示小程序扫码登录| -
 hideUP     |  否   |      false  | Boolean   |**是否隐藏用户名-密码登陆**，隐藏后将不显示用户名-密码登录框| -
+hideUsename     |  否   |      false  | Boolean   |**是否隐藏注册时的用户名填写**，隐藏后将不显示用户名输入框| -
 hideOAuth     |  否   |      false  | Boolean   |**是否隐藏第三方 OAuth 登录**，在开发者在 Authing 控制台开启 OAuth 登录后，若此项为 true 将隐藏全部 OAuth 登录| -
 **placeholder**     |  否   |      false  | Object   |**定制输入框的 paceholder**| -
 **placeholder**.username     |  否   |      请输入用户名  | String   |**定制输入框的 paceholder**| -
