@@ -1,5 +1,5 @@
 <template>
-  <div id="_authing_login_form" @keyup.esc="handleClose">
+  <div id="_authing_login_form" @keyup.esc="handleClose" v-if="!closeForm">
     <div class="authing-loading-circle screen-center" id="page-loading"></div>
     <div class="authing-cover-layer" v-if="$parent.isMountedInModal && !closeForm"></div>
     <div class="container hide" id="_authing_login_form_content">
