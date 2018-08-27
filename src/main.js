@@ -79,7 +79,6 @@ var AuthingForm = function(opts) {
 
   $authing.opts.placeholder = opts.placeholder;
 
-  console.log($authing.opts);
   window.$authing = $authing;
   window.appMountId = appMountId;
   window.emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
@@ -90,7 +89,6 @@ AuthingForm.prototype = {
   	var target = document.getElementById(appMountId);
   	var newMount = document.createElement('div');
   	newMount.setAttribute('id', '_authing_login_form');
-  	console.log(newMount);
   	target.appendChild(newMount);
     new Vue({
       el: '#_authing_login_form',
