@@ -585,8 +585,6 @@ label {
 }
 
 .authing-protected {
-  height: 24px;
-  line-height: 24px;
   font-size: 14px;
   border-radius: 2px;
   background-color: #fff;
@@ -892,4 +890,40 @@ label {
 .row {
     display: flex;
     justify-content: space-between;
+}
+
+.authing-form-badge-bottom {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  z-index: -1;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  -webkit-box-shadow: 2px -2px 5px #eaeaea;
+  -moz-box-shadow: 2px -2px 5px #eaeaea;
+  box-shadow: 2px -2px 5px #eaeaea;
+}
+
+.authing-form-badge-bottom a.authing-form-badge {
+  display: inline-block;
+  color: #2c2d33;
+  font-size: 14px;
+}
+
+.authing-form-badge-bottom a.authing-form-badge:hover {
+  outline: 0!important;
+}
+
+.authing-form-badge-bottom a.authing-form-badge:focus {
+  outline: none!important;
+}
+
+span.authing-form-badge-logo {
+  background-image:url('https://cdn.authing.cn/authing-logo.png');
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-size: cover;
 }
