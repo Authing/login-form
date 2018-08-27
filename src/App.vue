@@ -1,5 +1,5 @@
 <template>
-<div id="_authing_login_form" class="hide">
+<div id="_authing_login_form" @keyup.esc="handleClose" class="hide">
   <div class="authing-loading-circle screen-center" id="page-loading"></div>
   <div class="container" :class="{
     container: true
@@ -379,6 +379,12 @@ export default {
   },
   mounted: function() {
     this.pageVisible.loginVisible = true;
+    document.onkeydown = (event) => { 
+      var e = event || window.event || arguments.callee.caller.arguments[0]; 
+        if(e && e.keyCode === 27) {
+          this.handleClose();
+        }
+    };
   },
   methods: {
     verifyCodeLoad: function() {
@@ -798,6 +804,7 @@ export default {
     },
     handleClose: function handleClose() {
       this.closeForm = true;
+      $authing.pub('formClosed');
     }
   },
   watch: {

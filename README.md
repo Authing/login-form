@@ -97,9 +97,11 @@ hideOAuth     |  否   |      false  | Boolean   |**是否隐藏第三方 OAuth 
 
   	// 必选，client ID
     clientId: '5b7f79f519915500015f18ac',
-
     // 必选，secret
     secret: '82f36cba243e13f81f06675193732af7',
+
+    title: 'Authing',
+    logo: 'https://cdn.authing.cn/authing-logo.png',
 
     forceLogin: false,
 
@@ -162,6 +164,7 @@ resetPasswordError     | 重置密码失败  |      ``error`` | 错误信息
 scanning     | 扫码登录成功   |      user | 用户数据
 scanningError     | 扫码登录失败  |      ``error`` | 错误信息
 scanningIntervalStarting     | 开始监听扫码事件   |      interval | 用户可使用 ``clearInterval`` 停止监听
+formClosed     | Login Form 关闭事件   |      null | 用户按下 ESC 或点击右上方的关闭按钮后会触发此事件
 
 完整代码如下：
 
@@ -224,5 +227,9 @@ form.on('scanningError', function (error) {
 
 form.on('scanningIntervalStarting', function (interval) {
 	console.log('on scanning interval starting', interval);
+});
+
+form.on('formClosed', function () {
+	console.log('on form closed');
 });
 ```

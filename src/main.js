@@ -37,7 +37,9 @@ var AuthingForm = function(opts) {
 
     'scanning': [],
     'scanningerror': [],
-    'scanningintervalstarting': []
+    'scanningintervalstarting': [],
+
+    'formclosed': [],
   };
 
   $authing.opts = opts;
