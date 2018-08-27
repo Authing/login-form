@@ -201,7 +201,9 @@
 
             opts: $authing.opts,
 
-            authingOnError: false
+            authingOnError: false,
+
+            closeForm: false
 
           },
           created: function () {
@@ -672,6 +674,9 @@
                 });
                 this.isWxQRCodeGenerated = true;
               }
+            },
+            handleClose: function handleClose() {
+              this.closeForm = true;
             }
           },
           watch: {

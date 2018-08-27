@@ -4,6 +4,35 @@
 *
 * ======================================================= */
 
+@-webkit-keyframes fadeOutDown {
+  from {
+      opacity: 1;
+  }
+
+  to {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+      opacity: 1;
+  }
+
+  to {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
+  }
+}
+
+.fadeOutDown {
+  -webkit-animation-name: fadeOutDown;
+  animation-name: fadeOutDown;
+}
+
 @-webkit-keyframes fadeInUp {
   from {
       opacity: 0;
@@ -678,7 +707,7 @@ label {
   color: #5c666f;
 }
 
-.auth0-lock-back-button {
+.auth0-lock-back-button, .auth0-lock-close-button {
   box-sizing: content-box !important;
   background: #fff;
   border-radius: 100px;
@@ -686,13 +715,20 @@ label {
   width: 10px;
   position: absolute;
   top: 14px;
-  left: 14px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   color: #333;
   z-index: 100;
   border: 6px solid #fff;
   cursor: pointer;
   line-height: 0;
+}
+
+.auth0-lock-back-button {
+  left: 14px;
+}
+
+.auth0-lock-close-button {
+  right: 14px;
 }
 
 .authing-global-message {
