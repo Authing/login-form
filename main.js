@@ -199,17 +199,35 @@
   
             isScanCodeEnable: false,
 
-            opts: $authing.opts
+            opts: $authing.opts,
+
+            authingOnError: false
 
           },
           created: function () {
             var that = this;
-            var auth = new Authing({
-              clientId: opts.clientId,
-              secret: opts.secret
-            });
+            var auth = null;
+
+            try {
+              auth = new Authing({
+                clientId: opts.clientId,
+                secret: opts.secret
+              });  
+            }catch(err) {
+              document.getElementById('page-loading').remove();
+              document.getElementById(appMountId).classList.remove('hide');
+              that.authingOnError = true;
+              that.errMsg = 'Error: ' + err;
+              $authing.pub('authingUnload', err);
+            }
+
+            if(!auth) {
+              return;
+            }
+
             auth.then(function (validAuth) {
               document.getElementById('page-loading').remove();
+              document.getElementById(appMountId).classList.remove('hide');
               window.validAuth = validAuth;
 
               $authing.pub('authingLoad', validAuth);
@@ -223,12 +241,11 @@
               }
 
               if(!that.opts.hideOAuth) {
-                // that.oAuthloading = true;
+                that.oAuthloading = true;
                 validAuth.readOAuthList()
                 .then(function (data) {
-                  document.getElementById(appMountId).classList.remove('hide');
                   $authing.pub('oauthLoad', data);
-                  // that.oAuthloading = false;
+                  that.oAuthloading = false;
   
                   var OAuthList = data.filter(function (item) {
                     if (item.alias === 'wxapp') {
@@ -241,9 +258,8 @@
   
                 })
                 .catch(function (err) {
-                  document.getElementById(appMountId).classList.remove('hide');
                   $authing.pub('oauthUnload', err);
-                  // that.oAuthloading = true;
+                  that.oAuthloading = true;
                 });                
               }else {
                 if(!that.opts.hideQRCode) {
@@ -252,6 +268,10 @@
               }
             })
             .catch(function (err) {
+              document.getElementById('page-loading').remove();
+              document.getElementById(appMountId).classList.remove('hide');
+              that.authingOnError = true;
+              that.errMsg = '初始化出错，请检查 clientID 和 Secret 是否正确';
               $authing.pub('authingUnload', err);
             });
           },

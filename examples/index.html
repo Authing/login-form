@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div v-show="errVisible" class="authing-global-message authing-global-message-error">
+        <div v-show="errVisible || authingOnError" class="authing-global-message authing-global-message-error">
               <span class="animated fadeInUp">
                 <span>{{errMsg}}</span>
               </span>
@@ -53,184 +53,188 @@
                 </span>
         </div>
 
-        <div class="authing-header-tabs-container">
-          <ul class="authing-header-tabs">
-            <li v-bind:class="{
-              'authing-header-tabs-current': pageVisible.wxQRCodeVisible,
-              'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin
-            }" v-if="isScanCodeEnable && !opts.hideQRCode">
-              <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
-            </li>
-            <li v-bind:class="{
-              'authing-header-tabs-current': pageVisible.loginVisible,
-              'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
-              'width-100': opts.hideUP && opts.hideQRCode
-            }">
-              <a href="javascript:void(0)" @click="gotoLogin">登录</a>
-            </li>
-            <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
-              'authing-header-tabs-current': pageVisible.signUpVisible,
-              'width-55': !isScanCodeEnable || opts.hideQRCode
-            }">
-              <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="authing-oauth-form"
-             v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
-          <div style="height: 60px;" v-show="oAuthloading">
-            <div class="authing-loading-circle margin-top-11"></div>
-          </div>
-
-          <div v-for="(item, index) in OAuthList" class="form-group">
-            <div class="logmod__alter">
-              <div class="logmod__alter-container">
-                <a
-                  :href="item.url"
-                  :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
-                  <div class="connect__icon">
-                    <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
-                    <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
+        <div v-show="!authingOnError">
+          <div class="authing-header-tabs-container">
+              <ul class="authing-header-tabs">
+                <li v-bind:class="{
+                  'authing-header-tabs-current': pageVisible.wxQRCodeVisible,
+                  'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin
+                }" v-if="isScanCodeEnable && !opts.hideQRCode">
+                  <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
+                </li>
+                <li v-bind:class="{
+                  'authing-header-tabs-current': pageVisible.loginVisible,
+                  'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
+                  'width-100': opts.hideUP && opts.hideQRCode
+                }">
+                  <a href="javascript:void(0)" @click="gotoLogin">登录</a>
+                </li>
+                <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
+                  'authing-header-tabs-current': pageVisible.signUpVisible,
+                  'width-55': !isScanCodeEnable || opts.hideQRCode
+                }">
+                  <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="authing-oauth-form"
+                  v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
+              <div style="height: 60px;" v-show="oAuthloading">
+                <div class="authing-loading-circle margin-top-11"></div>
+              </div>
+    
+              <div v-for="(item, index) in OAuthList" class="form-group">
+                <div class="logmod__alter">
+                  <div class="logmod__alter-container">
+                    <a
+                      :href="item.url"
+                      :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
+                      <div class="connect__icon">
+                        <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
+                        <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
+                      </div>
+                      <div class="connect__context">
+                        <span>{{item.description}}</span>
+                      </div>
+                    </a>
                   </div>
-                  <div class="connect__context">
-                    <span>{{item.description}}</span>
+                </div>
+              </div>
+              <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
+            </div>
+    
+            <div class="form-body" v-show="!oAuthloading">
+              <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow">
+    
+                <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
+                  <p>输入帐号密码登录</p>
+                  <p>如果您没有帐号，我们会自动创建</p>
+                </div>
+    
+                <div class="form-group">
+                  <label for="login-username" class="sr-only">邮箱</label>
+                  <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
+                          :placeholder="opts.placeholder.email"
+                          autocomplete="off" @keyup.enter="handleLogin">
+                </div>
+                <div class="form-group">
+                  <label for="login-password" class="sr-only">密码</label>
+                  <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
+                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
+                </div>
+                <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
+                  <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
+                          :placeholder="opts.placeholder.verfiyCode"
+                          autocomplete="off" @keyup.enter="handleLogin">
+    
+                  <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
+                  <img :src="verifyCodeUrl" id="verify-code-img" v-show="!verifyCodeLoading" @load="verifyCodeLoad">
+    
+                </div>
+                <div class="row">
+    
+                  <div class="form-group" style="margin-bottom:0px;">
+                    <label for="login-remember" style="width:100%">
+                      <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
+                              v-model="rememberMe"><span
+                      style="vertical-align: middle"> 记住我</span>
+                    </label>
                   </div>
-                </a>
-              </div>
+    
+    
+                  <div style="font-size:14px">
+                    <a href="#" @click="gotoForgetPassword">忘记密码？</a>
+                  </div>
+    
+                </div>
+    
+              </form>
+    
+              <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
+                <div v-show="!opts.hideUsername" class="form-group">
+                  <label for="sign-up-username" class="sr-only">用户名</label>
+                  <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
+                          :placeholder="opts.placeholder.username"
+                          autocomplete="off" @keyup.enter="handleSignUp">
+                </div>
+                <div class="form-group">
+                  <label for="sign-up-email" class="sr-only">邮箱地址</label>
+                  <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email"
+                          @blur="checkEmail" :placeholder="opts.placeholder.email"
+                          autocomplete="off" @keyup.enter="handleSignUp">
+                </div>
+                <div class="form-group">
+                  <label for="sign-up-password" class="sr-only">密码</label>
+                  <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password"
+                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
+                </div>
+                <div class="form-group">
+                  <label for="sign-up-re-password" class="sr-only">确认密码</label>
+                  <input type="password" class="form-control"
+                          :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
+                          v-model="signUpForm.rePassword"
+                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
+                </div>
+              </form>
+    
+              <form v-show="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
+                <div v-show="pageVisible.forgetPasswordSendEmailVisible" class="form-group" style="margin-top: -15px;">
+                  <label for="forget-password-email" class="sr-only">邮箱地址</label>
+                  <input type="text" class="form-control"
+                          id="forget-password-email" :placeholder="opts.placeholder.email"
+                          autocomplete="off" v-model="forgetPasswordForm.email" @keyup.enter="handleForgetPasswordSendEmail">
+                </div>
+                <div v-show="pageVisible.forgetPasswordVerifyCodeVisible" class="form-group" style="margin-top: -15px;">
+                  <label for="forget-password-email" class="sr-only">验证码</label>
+                  <input type="text" class="form-control" id="forget-password-verify-code"
+                          :placeholder="opts.placeholder.verfiyCode"
+                          autocomplete="off" v-model="forgetPasswordForm.verifyCode"
+                          @keyup.enter="handleSubmitForgetPasswordVerifyCode"
+                  >
+                </div>
+                <div v-show="pageVisible.forgetPasswordNewPasswordVisible" class="form-group" style="margin-top: -15px;">
+                  <label for="forget-password-email" class="sr-only">新密码</label>
+                  <input type="password" class="form-control" id="forget-password-new-password"
+                          :placeholder="opts.placeholder.newPassword"
+                          autocomplete="off" v-model="forgetPasswordForm.password"
+                          @keyup.enter="handleSubmitForgetPasswordNewPassword">
+    
+                </div>
+              </form>
+    
+              <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
+                    class="authing-form no-shadow">
+                <div class="form-group" style="margin-top: -15px;">
+                  <div id="qrcode-node"></div>
+                </div>
+              </form>
+    
             </div>
-          </div>
-          <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
-        </div>
-
-        <div class="form-body" v-show="!oAuthloading">
-          <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#" class="authing-form animate-box no-shadow">
-
-            <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
-              <p>输入帐号密码登录</p>
-              <p>如果您没有帐号，我们会自动创建</p>
+    
+            <div class="form-footer" v-show="!opts.hideUP" :class="{
+              'no-height': pageVisible.wxQRCodeVisible
+            }">
+              <div class="authing-loading-circle" v-show="loading"></div>
+              <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
+                      class="btn btn-primary">
+              <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册"
+                      class="btn btn-primary">
+              <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading" @click="handleForgetPasswordSendEmail"
+                      type="button" value="发送邮件"
+                      class="btn btn-primary">
+              <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading"
+                      @click="handleSubmitForgetPasswordVerifyCode" type="button"
+                      value="提交验证码" class="btn btn-primary">
+              <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading"
+                      @click="handleSubmitForgetPasswordNewPassword"
+                      type="button" value="提交新密码" class="btn btn-primary">
             </div>
-
-            <div class="form-group">
-              <label for="login-username" class="sr-only">邮箱</label>
-              <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
-                     :placeholder="opts.placeholder.email"
-                     autocomplete="off" @keyup.enter="handleLogin">
-            </div>
-            <div class="form-group">
-              <label for="login-password" class="sr-only">密码</label>
-              <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
-                     :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
-            </div>
-            <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
-              <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
-                     :placeholder="opts.placeholder.verfiyCode"
-                     autocomplete="off" @keyup.enter="handleLogin">
-
-              <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
-              <img :src="verifyCodeUrl" id="verify-code-img" v-show="!verifyCodeLoading" @load="verifyCodeLoad">
-
-            </div>
-            <div class="row">
-
-              <div class="form-group" style="margin-bottom:0px;">
-                <label for="login-remember" style="width:100%">
-                  <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
-                         v-model="rememberMe"><span
-                  style="vertical-align: middle"> 记住我</span>
-                </label>
-              </div>
-
-
-              <div style="font-size:14px">
-                <a href="#" @click="gotoForgetPassword">忘记密码？</a>
-              </div>
-
-            </div>
-
-          </form>
-
-          <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
-            <div v-show="!opts.hideUsername" class="form-group">
-              <label for="sign-up-username" class="sr-only">用户名</label>
-              <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
-                     :placeholder="opts.placeholder.username"
-                     autocomplete="off" @keyup.enter="handleSignUp">
-            </div>
-            <div class="form-group">
-              <label for="sign-up-email" class="sr-only">邮箱地址</label>
-              <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email"
-                     @blur="checkEmail" :placeholder="opts.placeholder.email"
-                     autocomplete="off" @keyup.enter="handleSignUp">
-            </div>
-            <div class="form-group">
-              <label for="sign-up-password" class="sr-only">密码</label>
-              <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password"
-                     :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
-            </div>
-            <div class="form-group">
-              <label for="sign-up-re-password" class="sr-only">确认密码</label>
-              <input type="password" class="form-control"
-                     :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
-                     v-model="signUpForm.rePassword"
-                     :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
-            </div>
-          </form>
-
-          <form v-show="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
-            <div v-show="pageVisible.forgetPasswordSendEmailVisible" class="form-group" style="margin-top: -15px;">
-              <label for="forget-password-email" class="sr-only">邮箱地址</label>
-              <input type="text" class="form-control"
-                     id="forget-password-email" :placeholder="opts.placeholder.email"
-                     autocomplete="off" v-model="forgetPasswordForm.email" @keyup.enter="handleForgetPasswordSendEmail">
-            </div>
-            <div v-show="pageVisible.forgetPasswordVerifyCodeVisible" class="form-group" style="margin-top: -15px;">
-              <label for="forget-password-email" class="sr-only">验证码</label>
-              <input type="text" class="form-control" id="forget-password-verify-code"
-                     :placeholder="opts.placeholder.verfiyCode"
-                     autocomplete="off" v-model="forgetPasswordForm.verifyCode"
-                     @keyup.enter="handleSubmitForgetPasswordVerifyCode"
-              >
-            </div>
-            <div v-show="pageVisible.forgetPasswordNewPasswordVisible" class="form-group" style="margin-top: -15px;">
-              <label for="forget-password-email" class="sr-only">新密码</label>
-              <input type="password" class="form-control" id="forget-password-new-password"
-                     :placeholder="opts.placeholder.newPassword"
-                     autocomplete="off" v-model="forgetPasswordForm.password"
-                     @keyup.enter="handleSubmitForgetPasswordNewPassword">
-
-            </div>
-          </form>
-
-          <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
-                class="authing-form no-shadow">
-            <div class="form-group" style="margin-top: -15px;">
-              <div id="qrcode-node"></div>
-            </div>
-          </form>
+    
+            <div class="form-footer-non-up" v-show="opts.hideUP"></div>          
 
         </div>
 
-        <div class="form-footer" v-show="!opts.hideUP" :class="{
-          'no-height': pageVisible.wxQRCodeVisible
-        }">
-          <div class="authing-loading-circle" v-show="loading"></div>
-          <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
-                 class="btn btn-primary">
-          <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册"
-                 class="btn btn-primary">
-          <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading" @click="handleForgetPasswordSendEmail"
-                 type="button" value="发送邮件"
-                 class="btn btn-primary">
-          <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading"
-                 @click="handleSubmitForgetPasswordVerifyCode" type="button"
-                 value="提交验证码" class="btn btn-primary">
-          <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading"
-                 @click="handleSubmitForgetPasswordNewPassword"
-                 type="button" value="提交新密码" class="btn btn-primary">
-        </div>
-
-        <div class="form-footer-non-up" v-show="opts.hideUP"></div>
       </div>
     </div>
   </div>
@@ -244,7 +248,7 @@
 
   var form = new AuthingForm({
     clientId: '5b7f79f519915500015f18ac',
-    secret: '82f36cba243e13f81f06675193732af7',
+    secret: '82f36cba243e13f81f06675193732af72',
 
     title: 'Authing',
     logo: 'https://cdn.authing.cn/authing-logo.png',
