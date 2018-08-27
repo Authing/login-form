@@ -88,13 +88,20 @@ var AuthingForm = function(opts) {
 
 AuthingForm.prototype = {
   show: function(appMountId) {
-  	var target = document.getElementById(appMountId);
+  	var target = document.getElementById(appMountId)||document.body;
   	var newMount = document.createElement('div');
   	newMount.setAttribute('id', '_authing_login_form');
   	target.appendChild(newMount);
+  	var isMountedInModal = false;
+    if(!appMountId) {
+      isMountedInModal = true;
+    }
     new Vue({
       el: '#_authing_login_form',
-      render: h => h(App)
+      render: h => h(App),
+      data: {
+        isMountedInModal: isMountedInModal
+      }
     })
   },
 
