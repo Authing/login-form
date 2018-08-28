@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+import Authing from 'authing-js-sdk';
 
-var AuthingForm = function(opts) {
+var AuthingForm = function (opts) {
   var
 
     PLACEHOLDER_TEXT = {
@@ -76,7 +77,7 @@ var AuthingForm = function(opts) {
       confirmPassword: PLACEHOLDER_TEXT.CONFIRM_PASSWORD,
       verfiyCode: PLACEHOLDER_TEXT.VERIFY_CODE,
       newPassword: PLACEHOLDER_TEXT.NEW_PASSWORD
-    }
+    };
   }
 
   $authing.opts.placeholder = opts.placeholder;
@@ -84,16 +85,16 @@ var AuthingForm = function(opts) {
   window.$authing = $authing;
   window.appMountId = appMountId;
   window.emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
-}
+};
 
 AuthingForm.prototype = {
-  show: function(appMountId) {
-  	var target = document.getElementById(appMountId)||document.body;
-  	var newMount = document.createElement('div');
-  	newMount.setAttribute('id', '_authing_login_form');
-  	target.appendChild(newMount);
-  	var isMountedInModal = false;
-    if(!appMountId) {
+  show: function (appMountId) {
+    var target = document.getElementById(appMountId) || document.body;
+    var newMount = document.createElement('div');
+    newMount.setAttribute('id', '_authing_login_form');
+    target.appendChild(newMount);
+    var isMountedInModal = false;
+    if (!appMountId) {
       isMountedInModal = true;
     }
     new Vue({
@@ -102,21 +103,21 @@ AuthingForm.prototype = {
       data: {
         isMountedInModal: isMountedInModal
       }
-    })
+    });
   },
 
-  hide: function() {
+  hide: function () {
 
   },
 
-  on: function(eventName, cb) {
+  on: function (eventName, cb) {
     eventName = eventName.toLowerCase();
     if (cb && eventName && this.eventsList[eventName]) {
       this.eventsList[eventName].push(cb);
     }
   },
 
-  pub: function(eventName, params) {
+  pub: function (eventName, params) {
     eventName = eventName.toLowerCase();
     if (eventName && this.eventsList[eventName]) {
       for (var i = 0; i < this.eventsList[eventName].length; i++) {
@@ -126,4 +127,7 @@ AuthingForm.prototype = {
     }
   }
 };
-window.AuthingForm = AuthingForm;
+
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = AuthingForm :
+  typeof define === 'function' && define.amd ? define(AuthingForm) :
+    (window.AuthingForm = AuthingForm);
