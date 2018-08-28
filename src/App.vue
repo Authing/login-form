@@ -1,5 +1,5 @@
 <template>
-  <div id="_authing_login_form" @keyup.esc="handleClose" v-if="!closeForm">
+  <div id="_authing_login_form" @keyup.esc="handleClose" v-if="!removeDom">
     <div class="authing-loading-circle screen-center" id="page-loading"></div>
     <div class="authing-cover-layer" v-if="$parent.isMountedInModal && !closeForm"></div>
     <div class="container hide" id="_authing_login_form_content">
@@ -304,7 +304,7 @@
         authingOnError: false,
 
         closeForm: false,
-
+        removeDom: false,
       };
     },
     created: function () {
@@ -805,8 +805,12 @@
         }
       },
       handleClose: function handleClose() {
+        var that = this
         this.closeForm = true;
         $authing.pub('formClosed');
+        setTimeout(function () {
+          that.removeDom = true;
+        }, 800);
       }
     },
     watch: {
