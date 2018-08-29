@@ -10,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "authing-js-sdk": "^1.0.0-alpha.2",
+    "authing-js-sdk": "^1.0.0-alpha.3",
     "vue": "^2.5.11"
   },
   "browserslist": [
