@@ -1826,7 +1826,7 @@
   .authing-cover-layer {
     position:fixed;
     left:0px;top:0px;
-    background:rgba(0, 0, 0, 0.4);
+    background:#f0f0f0;
     width:100%;  /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
     height:100vh;
     filter:alpha(opacity=80);  /*设置透明度为60%*/
