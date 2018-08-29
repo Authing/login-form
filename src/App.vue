@@ -1711,15 +1711,19 @@
     }
 
     .form-footer {
-      position: fixed;
+      position: absolute;
       bottom: 0px;
       width: 100%;
-      border-radius: 0px;
+      border-radius: 0px;      
     }
 
     .form-footer .btn {
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
+    }
+
+    .authing-form-badge-bottom {
+      display: none;
     }
   }
 
