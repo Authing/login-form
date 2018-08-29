@@ -9,6 +9,7 @@
 
 <body>
   <div id="app"></div>
+  <div id="app2"></div>
   <script src="/dist/build.js"></script>
   <script>
   var form = new AuthingForm({
@@ -23,9 +24,9 @@
     hideQRCode: false,
     hideUP: false,
     hideOAuth: false,
-
     hideUsername: false,
 
+    mountId: 'app2',
     // 输入框的placeholder
     placeholder: {
       username: '',

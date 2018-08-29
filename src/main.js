@@ -54,6 +54,7 @@ var AuthingForm = function (opts) {
   $authing.opts.title = opts.title || 'Authing';
   $authing.opts.logo = opts.logo || 'https://cdn.authing.cn/authing-logo.png';
 
+  $authing.opts.mountId = opts.mountId || null;
   // 初始化小程序扫码登录配置 
   if (opts.qrcodeScanning) {
     opts.qrcodeScanning.redirect = opts.qrcodeScanning.redirect || true;
@@ -89,7 +90,8 @@ var AuthingForm = function (opts) {
 
 AuthingForm.prototype = {
   show: function (appMountId) {
-    var target = document.getElementById(appMountId) || document.body;
+    console.log(this);
+    var target = document.getElementById(appMountId) || document.getElementById(this.opts.mountId) || document.body;
     var newMount = document.createElement('div');
     newMount.setAttribute('id', '_authing_login_form');
     target.appendChild(newMount);

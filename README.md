@@ -68,6 +68,7 @@ Login-Form 的构造函数 ``AuthingForm`` 还提供了一些高级功能。
 --------------- | -------------------- | --------| --------|------------|------------
 **clientId**     |  **是**   |      无   | String   |Authing Client ID| -
 **secret**     |  **是**   |      无   | String   |Authing Client Secret| -
+mountId   |  否   |无|String|指定 Authing form 将在何处显示，接受一个 html 元素 id，不含`#`号。不指定则默认全屏弹出 Modal 登录框|-
 title     |  否   |      Authing  | String   |**产品名称**| -
 logo     |  否   |     [Authing LOGO]  | String   |**产品logo**，默认为 Authing 的官方 Logo| -
 forceLogin     |  否   |      false  | Boolean   |**是否将注册和登录合并**，合并后如果用户不存在将自动注册| -
