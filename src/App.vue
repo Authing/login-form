@@ -1786,7 +1786,7 @@
   }
 
   .authing-form-badge-bottom {
-    position: absolute;
+    position: fixed;
     bottom: 15px;
     left: 15px;
     z-index: -1;
