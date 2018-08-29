@@ -95,6 +95,9 @@ AuthingForm.prototype = {
     var target = document.getElementById(appMountId) || document.getElementById(this.opts.mountId) || document.body;
     var newMount = document.createElement('div');
     newMount.setAttribute('id', '_authing_login_form');
+    if(!(appMountId || this.opts.mountId)) {
+      newMount.classList.add('authing-login-form-modal')
+    }
     target.appendChild(newMount);
     var isMountedInModal = false;
     if (!appMountId) {

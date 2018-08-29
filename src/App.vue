@@ -1824,10 +1824,11 @@
 
   /* cover layer */
   .authing-cover-layer {
-    position:absolute;left:0px;top:0px;
+    position:fixed;
+    left:0px;top:0px;
     background:rgba(0, 0, 0, 0.4);
     width:100%;  /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
-    height:100%;
+    height:100vh;
     filter:alpha(opacity=80);  /*设置透明度为60%*/
     opacity:0.8;  /*非IE浏览器下设置透明度为60%*/
     z-Index:999;
