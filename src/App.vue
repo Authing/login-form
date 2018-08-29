@@ -2,7 +2,7 @@
   <div id="_authing_login_form" @keyup.esc="handleClose" v-if="!removeDom">
     <div class="authing-loading-circle screen-center" id="page-loading"></div>
     <div class="authing-cover-layer" v-if="$parent.isMountedInModal && !closeForm"></div>
-    <div class="container hide" id="_authing_login_form_content">
+    <div class="container hide" id="_authing_login_form_content" :class="{'authing-login-form-modal': $parent.isMountedInModal}">
       <div v-if="!closeForm" class="authing-form-badge-bottom" :class="{'authing-form-badge-white': $parent.isMountedInModal}">
         <a href="https://authing.cn/?utm_source=form&amp;utm_campaign=badge&amp;utm_medium=widget" target="_blank"
            class="authing-form-badge">
@@ -1840,5 +1840,11 @@
   .z-index1000 {
     position: relative;
     z-index: 1000;
+  }
+  .authing-login-form-modal {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
   }
 </style>
