@@ -83,10 +83,29 @@ var AuthingForm = function (opts) {
   }
 
   $authing.opts.placeholder = opts.placeholder;
-
   window.$authing = $authing;
   window.appMountId = appMountId;
   window.emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
+
+
+  var target = document.getElementById(appMountId) || document.getElementById(opts.mountId) || document.body;
+  var newMount = document.createElement('div');
+  newMount.setAttribute('id', '_authing_login_form');
+  if(!(appMountId || opts.mountId)) {
+    newMount.classList.add('authing-login-form-modal')
+  }
+  target.appendChild(newMount);
+  var isMountedInModal = false;
+  if (!appMountId) {
+    isMountedInModal = true;
+  }
+  new Vue({
+    el: '#_authing_login_form',
+    render: h => h(App),
+    data: {
+      isMountedInModal: isMountedInModal
+    }
+  });
 };
 
 AuthingForm.prototype = {
