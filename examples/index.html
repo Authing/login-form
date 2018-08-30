@@ -8,12 +8,15 @@
 </head>
 
 <body>
+  <p>Authing Login Form Example</p>
   <div id="app"></div>
   <script src="../dist/authing-login-form.js"></script>
   <script>
   var form = new AuthingForm({
     clientId: '5b7f79f519915500015f18ac',
     secret: '82f36cba243e13f81f06675193732af7',
+
+    mountId: 'app',
 
     title: 'Authing',
     logo: 'https://cdn.authing.cn/authing-logo.png',
@@ -45,8 +48,6 @@
       tips: '使用 微信 或小程序 身份管家 扫码登录', // 可选，提示信息，可写HTML
     }
   });
-
-  form.show('app');
 
   form.on('authingLoad', function(authing) {
     console.log('on authing load', authing);
