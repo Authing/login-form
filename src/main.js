@@ -58,7 +58,7 @@ var AuthingForm = function (opts) {
   $authing.opts.mountId = opts.mountId || null;
   // 初始化小程序扫码登录配置 
   if (opts.qrcodeScanning) {
-    opts.qrcodeScanning.redirect = opts.qrcodeScanning.redirect || true;
+    opts.qrcodeScanning.redirect = !!opts.qrcodeScanning.redirect;
     opts.qrcodeScanning.interval = opts.qrcodeScanning.interval || 1500;
     opts.qrcodeScanning.tips = opts.qrcodeScanning.tips || null;
   }
