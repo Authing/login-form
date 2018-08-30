@@ -51,105 +51,103 @@
           </div>
 
           <div v-show="!authingOnError">
-            <div class="form-head-content">
-              <div class="authing-header-tabs-container">
-                <ul class="authing-header-tabs">
-                  <li v-bind:class="{
+            <div class="authing-header-tabs-container">
+              <ul class="authing-header-tabs">
+                <li v-bind:class="{
                   'authing-header-tabs-current': pageVisible.wxQRCodeVisible,
                   'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin
                 }" v-show="isScanCodeEnable && !opts.hideQRCode">
-                    <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
-                  </li>
-                  <li v-bind:class="{
+                  <a href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
+                </li>
+                <li v-bind:class="{
                   'authing-header-tabs-current': pageVisible.loginVisible,
                   'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
                   'width-100': opts.hideUP && opts.hideQRCode
                 }">
-                    <a href="javascript:void(0)" @click="gotoLogin">登录</a>
-                  </li>
-                  <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
+                  <a href="javascript:void(0)" @click="gotoLogin">登录</a>
+                </li>
+                <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
                   'authing-header-tabs-current': pageVisible.signUpVisible,
                   'width-55': !isScanCodeEnable || opts.hideQRCode
                 }">
-                    <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
-                  </li>
-                </ul>
+                  <a @click="gotoSignUp" href="javascript:void(0)">注册</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="authing-oauth-form"
+                 v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
+              <div style="height: 60px;" v-show="oAuthloading">
+                <div class="authing-loading-circle margin-top-11"></div>
               </div>
 
-              <div class="authing-oauth-form"
-                   v-show="!pageVisible.forgetPasswordVisible && !pageVisible.wxQRCodeVisible && !opts.hideOAuth">
-                <div style="height: 60px;" v-show="oAuthloading">
-                  <div class="authing-loading-circle margin-top-11"></div>
+              <div v-for="(item, index) in OAuthList" class="form-group">
+                <div class="logmod__alter">
+                  <div class="logmod__alter-container">
+                    <a
+                      :href="item.url"
+                      :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
+                      <div class="connect__icon">
+                        <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
+                        <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
+                      </div>
+                      <div class="connect__context">
+                        <span>{{item.description}}</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
+            </div>
+
+            <div class="form-body" v-show="!oAuthloading">
+              <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#"
+                    class="authing-form animate-box no-shadow">
+
+                <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
+                  <p>输入帐号密码登录</p>
+                  <p>如果您没有帐号，我们会自动创建</p>
                 </div>
 
-                <div v-for="(item, index) in OAuthList" class="form-group">
-                  <div class="logmod__alter">
-                    <div class="logmod__alter-container">
-                      <a
-                        :href="item.url"
-                        :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
-                        <div class="connect__icon">
-                          <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
-                          <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
-                        </div>
-                        <div class="connect__context">
-                          <span>{{item.description}}</span>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label for="login-username" class="sr-only">邮箱</label>
+                  <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
+                         :placeholder="opts.placeholder.email"
+                         autocomplete="off" @keyup.enter="handleLogin">
                 </div>
-                <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
-              </div>
+                <div class="form-group">
+                  <label for="login-password" class="sr-only">密码</label>
+                  <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
+                         :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
+                </div>
+                <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
+                  <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
+                         :placeholder="opts.placeholder.verfiyCode"
+                         autocomplete="off" @keyup.enter="handleLogin">
 
-              <div class="form-body" v-show="!oAuthloading">
-                <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#"
-                      class="authing-form animate-box no-shadow">
+                  <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
+                  <img :src="verifyCodeUrl" id="verify-code-img" v-show="!verifyCodeLoading" @load="verifyCodeLoad">
 
-                  <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
-                    <p>输入帐号密码登录</p>
-                    <p>如果您没有帐号，我们会自动创建</p>
+                </div>
+                <div class="row">
+
+                  <div class="form-group" style="margin-bottom:0px;">
+                    <label for="login-remember" style="width:100%">
+                      <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
+                             v-model="rememberMe"><span
+                      style="vertical-align: middle"> 记住我</span>
+                    </label>
                   </div>
 
-                  <div class="form-group">
-                    <label for="login-username" class="sr-only">邮箱</label>
-                    <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
-                           :placeholder="opts.placeholder.email"
-                           autocomplete="off" @keyup.enter="handleLogin">
-                  </div>
-                  <div class="form-group">
-                    <label for="login-password" class="sr-only">密码</label>
-                    <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
-                           :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
-                  </div>
-                  <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
-                    <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
-                           :placeholder="opts.placeholder.verfiyCode"
-                           autocomplete="off" @keyup.enter="handleLogin">
 
-                    <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
-                    <img :src="verifyCodeUrl" id="verify-code-img" v-show="!verifyCodeLoading" @load="verifyCodeLoad">
-
-                  </div>
-                  <div class="row">
-
-                    <div class="form-group" style="margin-bottom:0px;">
-                      <label for="login-remember" style="width:100%">
-                        <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
-                               v-model="rememberMe"><span
-                        style="vertical-align: middle"> 记住我</span>
-                      </label>
-                    </div>
-
-
-                    <div style="font-size:14px">
-                      <a href="#" @click="gotoForgetPassword">忘记密码？</a>
-                    </div>
-
+                  <div style="font-size:14px">
+                    <a href="#" @click="gotoForgetPassword">忘记密码？</a>
                   </div>
 
-                </form>
-              </div>
+                </div>
+
+              </form>
 
               <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
                 <div v-show="!opts.hideUsername" class="form-group">
@@ -213,8 +211,8 @@
                   <div id="qrcode-node"></div>
                 </div>
               </form>
-
             </div>
+
 
             <div class="form-footer" v-show="!opts.hideUP" :class="{
               'no-height': pageVisible.wxQRCodeVisible
@@ -1673,7 +1671,10 @@
     width: 320px;
     margin: 0 auto;
   }
-
+  .form-body {
+    overflow-y: scroll;
+    height: calc(100vh - 310px)
+  }
   .form-footer .btn {
     width: 100%;
     border-radius: 0px;
@@ -1721,8 +1722,8 @@
     }
 
     .form-head-content {
-      box-sizing: border-box;
-      min-height: calc(100vh - 178px);
+      /*box-sizing: border-box;*/
+      /*min-height: calc(100vh - 178px);*/
     }
 
     .form-footer .btn {
