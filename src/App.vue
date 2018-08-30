@@ -344,7 +344,7 @@
           that.loginForm.email = localStorage.getItem('_authing_username');
         }
         if (localStorage.getItem('_authing_password')) {
-          that.loginForm.password = that.decrypt(localStorage.getItem('_authing_password'), opts.clientId);
+          that.loginForm.password = that.decrypt(localStorage.getItem('_authing_password'), $authing.opts.clientId);
         }
 
         if (!that.opts.hideOAuth) {
@@ -632,7 +632,7 @@
           .then(function (data) {
             if (that.rememberMe) {
               localStorage.setItem('_authing_username', that.loginForm.email);
-              localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, opts.clientId));
+              localStorage.setItem('_authing_password', that.encrypt(that.loginForm.password, $authing.opts.clientId));
             } else {
               localStorage.removeItem('_authing_username');
               localStorage.removeItem('_authing_password');
