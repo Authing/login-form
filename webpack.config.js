@@ -68,7 +68,14 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
-        warnings: false
+        warnings: false,
+        drop_console: true,
+        collapse_vars: true,
+        reduce_vars: true,
+      },
+      output: {
+        beautify: false,
+        comments: false,
       }
     }),
     new webpack.LoaderOptionsPlugin({
