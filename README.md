@@ -58,9 +58,20 @@
 
 ## 高级功能
 
-Login-Form 的构造函数 ``AuthingForm`` 还提供了一些高级功能。
+### 方法
+
+Login-Form 提供了两个方法用以操作界面的显示和隐藏，方法名见下表：
+
+方法名称          | 方法参数              | 功能
+--------------- | -------------------- | --------|
+**show**     |  **mountId**   | 指定 Authing form 将在何处显示，接受一个 html 元素 id，不含`#`号。不指定则默认全屏弹出 Modal 登录框
+**hide**     | 无             | 隐藏表单
+
+在初始化完构造函数后会自动执行 ``show`` 方法。
 
 ### 完整参数
+
+Login-Form 的构造函数 ``AuthingForm`` 提供了一些高级功能。
 
 以下是完整的参数列表：
 
@@ -106,10 +117,13 @@ hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，
     logo: 'https://cdn.authing.cn/authing-logo.png',
 
     forceLogin: false,
-
     hideQRCode: false,
     hideUP: false,
     hideOAuth: false,
+    hideUsername: false,
+    hideClose: true,
+
+    mountId: 'app',
 
     // 输入框的placeholder
     placeholder: {

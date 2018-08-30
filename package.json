@@ -1,5 +1,5 @@
 {
-  "name": "AuthingLoginForm",
+  "name": "authing-login-form",
   "description": "Autogeneration of Authing Login Form",
   "version": "1.0.0",
   "author": "Authing <xieyang@dodora.com>",
@@ -10,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "authing-js-sdk": "^1.0.3",
+    "authing-js-sdk": "^1.0.6",
     "vue": "^2.5.11"
   },
   "browserslist": [
