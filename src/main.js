@@ -113,7 +113,7 @@ AuthingForm.prototype = {
   },
 
   hide: function () {
-
+    document.getElementById('_authing_login_form').remove()
   },
 
   on: function (eventName, cb) {
