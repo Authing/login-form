@@ -1330,6 +1330,7 @@
 
   .form-wrapper {
     padding: 0px;
+    margin-top: 4em;
     border-radius: 5px;
   }
 
