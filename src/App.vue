@@ -101,7 +101,7 @@
               <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
             </div>
 
-            <div class="form-body" v-show="!oAuthloading">
+            <div class="form-body" v-show="!oAuthloading" :class="{height100: pageVisible.wxQRCodeVisible}">
               <form v-show="pageVisible.loginVisible && !opts.hideUP" action="#"
                     class="authing-form animate-box no-shadow">
 
@@ -1867,6 +1867,10 @@
   .z-index1000 {
     position: relative;
     z-index: 1000;
+  }
+
+  .height100 {
+    height: 100%;
   }
 
   .authing-login-form-modal {
