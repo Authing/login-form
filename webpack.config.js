@@ -5,6 +5,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
+    libraryTarget: 'umd',
     publicPath: '/dist/',
     filename: 'authing-login-form.js'
   },

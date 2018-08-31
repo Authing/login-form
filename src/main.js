@@ -153,6 +153,8 @@ AuthingForm.prototype = {
   }
 };
 
-typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = AuthingForm :
-  typeof define === 'function' && define.amd ? define(AuthingForm) :
-    (window.AuthingForm = AuthingForm);
+if(window) {
+  window.AuthingForm = AuthingForm
+}
+
+export default AuthingForm
