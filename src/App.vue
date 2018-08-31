@@ -1330,7 +1330,6 @@
 
   .form-wrapper {
     padding: 0px;
-    margin-top: 4em;
     border-radius: 5px;
   }
 
@@ -1671,9 +1670,18 @@
     width: 320px;
     margin: 0 auto;
   }
-  .form-body {
-    overflow-y: scroll;
-    height: calc(100vh - 310px)
+  .form-footer {
+    position: relative;
+  }
+  @media screen and (max-height: 495px) and (max-width: 480px) {
+    .form-body {
+      overflow-y: scroll;
+      height: calc(100vh - 310px)
+    }
+    .form-footer {
+      position: absolute;
+      bottom: 0px;
+    }
   }
   .form-footer .btn {
     width: 100%;
@@ -1696,6 +1704,10 @@
   }
 
   @media screen and (max-width: 480px) {
+    .form-footer {
+      position: absolute;
+      bottom: 0;
+    }
     .container {
       padding: 0px;
     }
@@ -1715,8 +1727,7 @@
     }
 
     .form-footer {
-      /*position: absolute;*/
-      /*bottom: 0px;*/
+
       width: 100%;
       border-radius: 0px;
     }

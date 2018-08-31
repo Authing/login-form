@@ -26,7 +26,7 @@
     hideUsername: false,
     hideClose: true,
 
-    mountId: 'app2',
+    mountId: 'app',
     // 输入框的placeholder
     placeholder: {
       username: '',
@@ -46,8 +46,6 @@
       tips: '使用 微信 或小程序 身份管家 扫码登录', // 可选，提示信息，可写HTML
     }
   });
-
-  // form.show('app');
 
   form.on('authingLoad', function(authing) {
     console.log('on authing load', authing);
