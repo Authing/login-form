@@ -1686,13 +1686,13 @@
   }
   .form-footer .btn {
     width: 100%;
-    border-radius: 0px;
+    border-radius: 0px!important;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     height: 60px;
     font-size: 16px;
     background: #00a1ea;
-    box-shadow: none;
+    box-shadow: none!important;
     font-weight: 200;
     color: #fff;
     outline: 0;
@@ -1739,8 +1739,9 @@
     }
 
     .form-footer .btn {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px!important;
+      border-bottom-right-radius: 0px!important;
+      box-shadow: none!important;
     }
 
     .authing-form-badge-bottom {
