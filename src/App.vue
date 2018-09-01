@@ -218,20 +218,25 @@
               'no-height': pageVisible.wxQRCodeVisible
             }">
               <div class="authing-loading-circle" v-show="loading"></div>
-              <input v-show="pageVisible.loginVisible && !loading" @click="handleLogin" type="button" value="登录"
-                     class="btn btn-primary">
-              <input v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp" type="button" value="注册"
-                     class="btn btn-primary">
-              <input v-show="pageVisible.forgetPasswordSendEmailVisible && !loading"
-                     @click="handleForgetPasswordSendEmail"
-                     type="button" value="发送邮件"
-                     class="btn btn-primary">
-              <input v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading"
-                     @click="handleSubmitForgetPasswordVerifyCode" type="button"
-                     value="提交验证码" class="btn btn-primary">
-              <input v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading"
-                     @click="handleSubmitForgetPasswordNewPassword"
-                     type="button" value="提交新密码" class="btn btn-primary">
+              <button v-show="pageVisible.loginVisible && !loading" @click="handleLogin"
+                      class="btn btn-primary">登录
+              </button>
+              <button v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp"
+                      class="btn btn-primary">注册
+              </button>
+              <button v-show="pageVisible.forgetPasswordSendEmailVisible && !loading"
+                      @click="handleForgetPasswordSendEmail"
+
+                      class="btn btn-primary">发送邮件
+              </button>
+              <button v-show="pageVisible.forgetPasswordVerifyCodeVisible && !loading"
+                      @click="handleSubmitForgetPasswordVerifyCode"
+                      class="btn btn-primary">提交验证码
+              </button>
+              <button v-show="pageVisible.forgetPasswordNewPasswordVisible && !loading"
+                      @click="handleSubmitForgetPasswordNewPassword"
+                      class="btn btn-primary">提交新密码
+              </button>
             </div>
 
             <div class="form-footer-non-up" v-show="opts.hideUP"></div>
@@ -1671,19 +1676,23 @@
     width: 320px;
     margin: 0 auto;
   }
+
   .form-footer {
     position: relative;
   }
+
   @media screen and (max-height: 495px) and (max-width: 480px) {
     .form-body {
       overflow-y: scroll;
       height: calc(100vh - 310px)
     }
+
     .form-footer {
       position: absolute;
       bottom: 0px;
     }
   }
+
   .form-footer .btn {
     width: 100%;
     border-radius: 0px;
@@ -1709,6 +1718,7 @@
       position: absolute;
       bottom: 0;
     }
+
     .container {
       padding: 0px;
     }
