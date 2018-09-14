@@ -2,7 +2,7 @@
   <div id="_authing_login_form" @keyup.esc="handleClose" v-if="!removeDom">
     <div class="authing-loading-circle screen-center" id="page-loading"></div>
     <div class="authing-cover-layer" v-if="$parent.isMountedInModal && !closeForm"></div>
-    <div class="container hide" id="_authing_login_form_content"
+    <div class="_authing_container hide" id="_authing_login_form_content"
          :class="{'authing-login-form-modal': $parent.isMountedInModal}">
       <div v-if="!closeForm" class="authing-form-badge-bottom"
            :class="{'authing-form-badge-white': $parent.isMountedInModal}">
@@ -13,21 +13,21 @@
       </div>
       <div class="authing-login-form-wrapper" :class="{'z-index1000': $parent.isMountedInModal}">
 
-        <div class="form-wrapper" :class="{
+        <div class="_authing_form-wrapper" :class="{
         'authing-loading-wrapper': loading || oAuthloading,
         animated: true,
         fast: true,
         fadeInUp: !closeForm,
         fadeOutDown: closeForm
       }">
-          <div class="form-header">
+          <div class="_authing_form-header">
             <span v-if="pageStack.length > 0" @click="handleGoBack" class="auth0-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
             <span @click="handleClose" v-if="!opts.hideClose" class="auth0-lock-close-button"><svg focusable="false" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon></g></svg></span>
-            <div class="form-header-bg"></div>
-            <div class="form-header-welcome">
+            <div class="_authing_form-header-bg"></div>
+            <div class="_authing_form-header-welcome">
               <img class="form-header-logo"
                    :src="opts.logo">
-              <div class="form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : opts.title}}
+              <div class="_authing_form-header-name" title="Authing">{{pageVisible.forgetPasswordVisible ? '重置密码' : opts.title}}
               </div>
             </div>
           </div>
@@ -88,8 +88,8 @@
                       :href="item.url"
                       :class="{'_authing_a': true, '_authing-connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
                       <div class="_authing-connect__icon">
-                        <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
-                        <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
+                        <i class="_authing_iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
+                        <i class="_authing_iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
                       </div>
                       <div class="_authing-connect__context">
                         <span>{{item.description}}</span>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
               </div>
-              <P class="form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
+              <P class="_authing_form-tip" v-show="!oAuthloading && OAuthList.length > 0 && !opts.hideUP">或者</P>
             </div>
 
             <div class="form-body" v-show="!oAuthloading" :class="{height100: pageVisible.wxQRCodeVisible}">
@@ -111,13 +111,11 @@
                 </div>
 
                 <div class="_authing_form-group">
-                  <label for="login-username" class="_authing_sr-only">邮箱</label>
                   <input type="text" class="_authing_input _authing_form-control" id="login-username" v-model="loginForm.email"
                          :placeholder="opts.placeholder.email"
                          autocomplete="off" @keyup.enter="handleLogin">
                 </div>
                 <div class="_authing_form-group">
-                  <label for="login-password" class="_authing_label _authing_sr-only">密码</label>
                   <input type="password" class="_authing_input _authing_form-control" id="login-password" v-model="loginForm.password"
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
                 </div>
@@ -126,7 +124,7 @@
                          :placeholder="opts.placeholder.verfiyCode"
                          autocomplete="off" @keyup.enter="handleLogin">
 
-                  <div class="verify-code-loading-circle" v-show="verifyCodeLoading"></div>
+                  <div class="_authing_verify-code-loading-circle" v-show="verifyCodeLoading"></div>
                   <img :src="verifyCodeUrl" id="verify-code-img" v-show="!verifyCodeLoading" @load="verifyCodeLoad">
 
                 </div>
@@ -151,24 +149,20 @@
 
               <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
                 <div v-show="!opts.hideUsername" class="_authing_form-group">
-                  <label for="sign-up-username" class="_authing_label _authing-sr-only">用户名</label>
                   <input type="text" class="_authing_input _authing_form-control" id="sign-up-username" v-model="signUpForm.username"
                          :placeholder="opts.placeholder.username"
                          autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
                 <div class="_authing_form-group">
-                  <label for="sign-up-email" class="_authing_label _authing-sr-only">邮箱地址</label>
                   <input type="email" class="_authing_input _authing_form-control" id="sign-up-email" v-model="signUpForm.email"
                          @blur="checkEmail" :placeholder="opts.placeholder.email"
                          autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
                 <div class="_authing_form-group">
-                  <label for="sign-up-password" class="_authing_label _authing-sr-only">密码</label>
                   <input type="password" class="_authing_input _authing_form-control" id="sign-up-password" v-model="signUpForm.password"
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
                 <div class="_authing_form-group">
-                  <label for="sign-up-re-password" class="_authing_label _authing-sr-only">确认密码</label>
                   <input type="password" class="_authing_input _authing_form-control"
                          :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
                          v-model="signUpForm.rePassword"
@@ -179,7 +173,6 @@
               <form v-if="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
                 <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="_authing_form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="_authing_label _authing-sr-only">邮箱地址</label>
                   <input type="text" class="_authing_input _authing_form-control"
                          id="forget-password-email" :placeholder="opts.placeholder.email"
                          autocomplete="off" v-model="forgetPasswordForm.email"
@@ -187,7 +180,6 @@
                 </div>
                 <div v-if="pageVisible.forgetPasswordVerifyCodeVisible" class="_authing_form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="_authing_label _authing-sr-only">验证码</label>
                   <input type="text" class="_authing_input _authing_form-control" id="forget-password-verify-code"
                          :placeholder="opts.placeholder.verfiyCode"
                          autocomplete="off" v-model="forgetPasswordForm.verifyCode"
@@ -196,7 +188,6 @@
                 </div>
                 <div v-if="pageVisible.forgetPasswordNewPasswordVisible" class="_authing_form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="_authing_label _authing-sr-only">新密码</label>
                   <input type="password" class="_authing_input _authing_form-control" id="forget-password-new-password"
                          :placeholder="opts.placeholder.newPassword"
                          autocomplete="off" v-model="forgetPasswordForm.password"
@@ -214,7 +205,7 @@
             </div>
 
 
-            <div class="form-footer" v-show="!opts.hideUP" :class="{
+            <div class="_authing_form-footer" v-show="!opts.hideUP" :class="{
               'no-height': pageVisible.wxQRCodeVisible
             }">
               <div class="authing-loading-circle" v-show="loading"></div>
@@ -239,7 +230,7 @@
               </button>
             </div>
 
-            <div class="form-footer-non-up" v-show="opts.hideUP"></div>
+            <div class="_authing_form-footer-non-up" v-show="opts.hideUP"></div>
           </div>
         </div>
       </div>
@@ -1076,19 +1067,17 @@
     box-sizing: border-box
   }
 
-  html {
+  ._authing_login_form {
     font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-  }
-
-  body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: Avenir,Helvetica,Arial,'sans-serif';
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
     background-color: #f0f0f0;
     margin: 0px;
     padding: 0px;
+    color: #2c3e50;
   }
 
   button, input, select, textarea {
@@ -1101,40 +1090,16 @@
     color: #337ab7;
     text-decoration: none;
     outline: 0;
+    font-weight: 300;
   }
 
   ._authing-btn {
     outline: 0;
   }
 
-  a._authing_a:focus, a._authing_a:hover {
-    color: #23527c;
-    text-decoration: underline
-  }
-
-  a._authing_a:focus {
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px
-  }
-
   button._authing_button::-moz-focus-inner, input._authing_input::-moz-focus-inner {
     padding: 0;
     border: 0
-  }
-
-  ._authing_sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0
-  }
-
-  img._authing_img {
-    vertical-align: middle
   }
 
   p._authing_p {
@@ -1165,13 +1130,6 @@
 
   input._authing_input[type=search]::-webkit-search-cancel-button, input._authing_input[type=search]::-webkit-search-decoration {
     -webkit-appearance: none
-  }
-
-  label._authing_label {
-    display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 700
   }
 
   ._authing_form-group {
@@ -1283,6 +1241,8 @@
   ._authing-connect__context {
     vertical-align: middle;
     text-align: center;
+    font-size: 14px;
+    font-weight: 300;    
   }
 
   ._authing-connect.github {
@@ -1311,7 +1271,7 @@
     background: #006600;
   }
 
-  .authing-form, .form-wrapper {
+  .authing-form, ._authing_form-wrapper {
     padding: 22px;
     -webkit-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -4px 7px 46px 2px rgba(0, 0, 0, 0.1);
@@ -1320,7 +1280,7 @@
     background: #FFFFFF;
   }
 
-  .form-wrapper {
+  ._authing_form-wrapper {
     padding: 0px;
     margin-top: 4em;
     border-radius: 5px;
@@ -1403,33 +1363,25 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
 
-  input, textarea {
-    color: #000;
-  }
-
-  .js .animate-box {
-    opacity: 0;
-  }
-
-  .form-footer {
+  ._authing_form-footer {
     margin-bottom: 0px;
     height: 60px;
   }
 
-  .form-footer.no-height {
+  ._authing_form-footer.no-height {
     height: 0px;
   }
 
-  .form-footer .btn {
+  ._authing_form-footer .btn {
     width: 100%;
     border: none;
   }
 
-  .form-wrapper {
+  ._authing_form-wrapper {
     background: #FFFFFF;
   }
 
-  .form-header {
+  ._authing_form-header {
     text-align: center;
     padding: 11px;
     height: 118px;
@@ -1441,7 +1393,7 @@
     box-sizing: border-box;
   }
 
-  .form-header-bg {
+  ._authing_form-header-bg {
     position: absolute;
     height: 118px;
     width: 100%;
@@ -1452,7 +1404,7 @@
     background: rgba(241, 241, 241, 0.8);
   }
 
-  .form-header-welcome {
+  ._authing_form-header-welcome {
     font-size: 18px;
     position: relative;
   }
@@ -1467,13 +1419,16 @@
     transition: margin-top 0.4s;
   }
 
-  .form-header-name {
+  ._authing_form-header-name {
     font-size: 22px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     padding: 0 10px;
     line-height: 30px;
+    font-family: Avenir,Helvetica,Arial,sans-serif;
+    letter-spacing: 2px;
+    font-weight: 300;
   }
 
   .authing-oauth-form {
@@ -1543,7 +1498,6 @@
     display: block;
     text-decoration: none;
     color: rgba(92, 102, 111, 0.6);
-    font-weight: 500;
   }
 
   .authing-header-tabs li.authing-header-tabs-current {
@@ -1613,7 +1567,7 @@
     transform: translate(-50%, -50%);
   }
 
-  .authing-loading-wrapper .form-footer .btn {
+  .authing-loading-wrapper ._authing_form-footer .btn {
     background-color: #eee !important;
     -webkit-transition: background 0.5s ease;
     transition: background 0.5s ease;
@@ -1641,7 +1595,7 @@
     animation: rotate 1s linear infinite;
   }
 
-  .verify-code-loading-circle {
+  ._authing_verify-code-loading-circle {
     margin-top: 15px;
     flex-shrink: 0;
     width: 30px;
@@ -1664,7 +1618,7 @@
     margin: 0 auto;
   }
 
-  .form-footer {
+  ._authing_form-footer {
     position: relative;
   }
 
@@ -1674,15 +1628,15 @@
       height: calc(100vh - 310px)
     }
 
-    .form-footer {
+    ._authing_form-footer {
       position: absolute;
       bottom: 0px;
     }
   }
 
-  .form-footer .btn {
+  ._authing_form-footer .btn {
     width: 100%;
-    border-radius: 0px!important;
+    border-radius: 0px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     height: 60px;
@@ -1695,18 +1649,18 @@
     cursor: pointer;
   }
 
-  .form-footer .btn:hover, .form-footer .btn:focus, .form-footer .btn:active {
+  ._authing_form-footer .btn:hover, ._authing_form-footer .btn:focus, ._authing_form-footer .btn:active {
     background: #0184bf !important;
     outline: 0;
   }
 
   @media screen and (max-width: 480px) {
-    .form-footer {
+    ._authing_form-footer {
       position: absolute;
       bottom: 0;
     }
 
-    .container {
+    ._authing_container {
       padding: 0px;
     }
 
@@ -1715,16 +1669,16 @@
       height: 100vh;
     }
 
-    .form-wrapper {
+    ._authing_form-wrapper {
       margin-top: 0px;
       height: 100%;
     }
 
-    .form-header {
+    ._authing_form-header {
       border-radius: 0px;
     }
 
-    .form-footer {
+    ._authing_form-footer {
 
       width: 100%;
       border-radius: 0px;
@@ -1735,7 +1689,7 @@
       /*min-height: calc(100vh - 178px);*/
     }
 
-    .form-footer .btn {
+    ._authing_form-footer .btn {
       border-bottom-left-radius: 0px!important;
       border-bottom-right-radius: 0px!important;
       box-shadow: none!important;
@@ -1752,14 +1706,14 @@
     left: calc(50% - 15px);
   }
 
-  .form-footer-non-up {
+  ._authing_form-footer-non-up {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     height: 6px;
   }
 
   @font-face {
-    font-family: 'iconfont';  /* project id 803924 */
+    font-family: '_authing_iconfont';  /* project id 803924 */
     src: url('//at.alicdn.com/t/font_803924_073p7nal4zk.eot');
     src: url('//at.alicdn.com/t/font_803924_073p7nal4zk.eot?#iefix') format('embedded-opentype'),
     url('//at.alicdn.com/t/font_803924_073p7nal4zk.woff') format('woff'),
@@ -1767,8 +1721,8 @@
     url('//at.alicdn.com/t/font_803924_073p7nal4zk.svg#iconfont') format('svg');
   }
 
-  .iconfont {
-    font-family: "iconfont" !important;
+  ._authing_iconfont {
+    font-family: "_authing_iconfont" !important;
     font-size: 24px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
@@ -1796,10 +1750,10 @@
     margin-top: 11px;
   }
 
-  .form-tip {
+  ._authing_form-tip {
     text-align: center;
     font-size: 11px;
-    font-weight: 400;
+    font-weight: 300;
     margin-bottom: 0px;
   }
 
@@ -1826,6 +1780,7 @@
     display: inline-block;
     color: #2c2d33;
     font-size: 14px;
+    font-weight: 300;
   }
 
   .authing-form-badge-bottom a.authing-form-badge:hover {
@@ -1876,5 +1831,9 @@
     width: 100%;
     top: 0;
     height: 100%;
+  }
+
+  #authing__retry a {
+    font-weight: 300;
   }
 </style>
