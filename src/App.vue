@@ -62,7 +62,7 @@
                 <li v-bind:class="{
                   'authing-header-tabs-current': pageVisible.loginVisible,
                   'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
-                  'width-100': opts.hideUP && opts.hideQRCode
+                  'width-100': (opts.hideUP && opts.hideQRCode) || (opts.hideQRCode && opts.forceLogin),
                 }">
                   <a class="_authing_a" href="javascript:void(0)" @click="gotoLogin">登录</a>
                 </li>
@@ -170,7 +170,7 @@
                 </div>
               </form>
 
-              <form v-if="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
+              <form v-if="pageVisible.forgetPasswordVisible" class="authing-form no-shadow">
                 <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="_authing_form-group"
                      style="margin-top: -15px;">
                   <input type="text" class="_authing_input _authing_form-control"
@@ -196,7 +196,7 @@
                 </div>
               </form>
 
-              <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
+              <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" style="height:300px"
                     class="authing-form no-shadow">
                 <div class="_authing_form-group" style="margin-top: -15px;">
                   <div id="qrcode-node"></div>
