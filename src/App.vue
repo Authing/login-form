@@ -81,17 +81,17 @@
                 <div class="authing-loading-circle margin-top-11"></div>
               </div>
 
-              <div v-for="(item, index) in OAuthList" class="form-group">
-                <div class="logmod__alter">
+              <div v-for="(item, index) in OAuthList" class="_authing-form-group">
+                <div class="_authing-logmod__alter">
                   <div class="logmod__alter-container">
                     <a
                       :href="item.url"
-                      :class="{'connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
-                      <div class="connect__icon">
+                      :class="{'_authing-connect': true, 'github': item.alias === 'github', 'wechat': item.alias === 'wechatpc'}">
+                      <div class="_authing-connect__icon">
                         <i class="iconfont" v-if="item.alias === 'github'">&#xea0a;</i>
                         <i class="iconfont" v-if="item.alias === 'wechatpc'">&#xf262;</i>
                       </div>
-                      <div class="connect__context">
+                      <div class="_authing-connect__context">
                         <span>{{item.description}}</span>
                       </div>
                     </a>
@@ -110,19 +110,19 @@
                   <p>如果您没有帐号，我们会自动创建</p>
                 </div>
 
-                <div class="form-group">
-                  <label for="login-username" class="sr-only">邮箱</label>
-                  <input type="text" class="form-control" id="login-username" v-model="loginForm.email"
+                <div class="_authing-form-group">
+                  <label for="login-username" class="_authing_sr-only">邮箱</label>
+                  <input type="text" class="_authing-form-control" id="login-username" v-model="loginForm.email"
                          :placeholder="opts.placeholder.email"
                          autocomplete="off" @keyup.enter="handleLogin">
                 </div>
-                <div class="form-group">
-                  <label for="login-password" class="sr-only">密码</label>
-                  <input type="password" class="form-control" id="login-password" v-model="loginForm.password"
+                <div class="_authing-form-group">
+                  <label for="login-password" class="_authing_sr-only">密码</label>
+                  <input type="password" class="_authing-form-control" id="login-password" v-model="loginForm.password"
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleLogin">
                 </div>
                 <div v-show="pageVisible.verifyCodeVisible" class="form-group verify-code">
-                  <input type="text" class="form-control" id="verify-code" v-model="verifyCode"
+                  <input type="text" class="_authing-form-control" id="verify-code" v-model="verifyCode"
                          :placeholder="opts.placeholder.verfiyCode"
                          autocomplete="off" @keyup.enter="handleLogin">
 
@@ -132,7 +132,7 @@
                 </div>
                 <div class="row">
 
-                  <div class="form-group" style="margin-bottom:0px;">
+                  <div class="_authing-form-group" style="margin-bottom:0px;">
                     <label for="login-remember" style="width:100%">
                       <input type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
                              v-model="rememberMe"><span
@@ -150,26 +150,26 @@
               </form>
 
               <form v-show="pageVisible.signUpVisible" action="#" class="authing-form no-shadow">
-                <div v-show="!opts.hideUsername" class="form-group">
-                  <label for="sign-up-username" class="sr-only">用户名</label>
-                  <input type="text" class="form-control" id="sign-up-username" v-model="signUpForm.username"
+                <div v-show="!opts.hideUsername" class="_authing-form-group">
+                  <label for="sign-up-username" class="_authing-sr-only">用户名</label>
+                  <input type="text" class="_authing-form-control" id="sign-up-username" v-model="signUpForm.username"
                          :placeholder="opts.placeholder.username"
                          autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
-                <div class="form-group">
-                  <label for="sign-up-email" class="sr-only">邮箱地址</label>
-                  <input type="email" class="form-control" id="sign-up-email" v-model="signUpForm.email"
+                <div class="_authing-form-group">
+                  <label for="sign-up-email" class="_authing-sr-only">邮箱地址</label>
+                  <input type="email" class="_authing-form-control" id="sign-up-email" v-model="signUpForm.email"
                          @blur="checkEmail" :placeholder="opts.placeholder.email"
                          autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
-                <div class="form-group">
-                  <label for="sign-up-password" class="sr-only">密码</label>
-                  <input type="password" class="form-control" id="sign-up-password" v-model="signUpForm.password"
+                <div class="_authing-form-group">
+                  <label for="sign-up-password" class="_authing-sr-only">密码</label>
+                  <input type="password" class="_authing-form-control" id="sign-up-password" v-model="signUpForm.password"
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
-                <div class="form-group">
-                  <label for="sign-up-re-password" class="sr-only">确认密码</label>
-                  <input type="password" class="form-control"
+                <div class="_authing-form-group">
+                  <label for="sign-up-re-password" class="_authing-sr-only">确认密码</label>
+                  <input type="password" class="_authing-form-control"
                          :class="{'err-hint': signUpForm.password!==signUpForm.rePassword}" id="sign-up-re-password"
                          v-model="signUpForm.rePassword"
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
@@ -177,27 +177,27 @@
               </form>
 
               <form v-if="pageVisible.forgetPasswordVisible" action="#" class="authing-form no-shadow">
-                <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="form-group"
+                <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="_authing-form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="sr-only">邮箱地址</label>
-                  <input type="text" class="form-control"
+                  <label for="forget-password-email" class="_authing-sr-only">邮箱地址</label>
+                  <input type="text" class="_authing-form-control"
                          id="forget-password-email" :placeholder="opts.placeholder.email"
                          autocomplete="off" v-model="forgetPasswordForm.email"
                          @keyup.enter="handleForgetPasswordSendEmail">
                 </div>
-                <div v-if="pageVisible.forgetPasswordVerifyCodeVisible" class="form-group"
+                <div v-if="pageVisible.forgetPasswordVerifyCodeVisible" class="_authing-form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="sr-only">验证码</label>
-                  <input type="text" class="form-control" id="forget-password-verify-code"
+                  <label for="forget-password-email" class="_authing-sr-only">验证码</label>
+                  <input type="text" class="_authing-form-control" id="forget-password-verify-code"
                          :placeholder="opts.placeholder.verfiyCode"
                          autocomplete="off" v-model="forgetPasswordForm.verifyCode"
                          @keyup.enter="handleSubmitForgetPasswordVerifyCode"
                   >
                 </div>
-                <div v-if="pageVisible.forgetPasswordNewPasswordVisible" class="form-group"
+                <div v-if="pageVisible.forgetPasswordNewPasswordVisible" class="_authing-form-group"
                      style="margin-top: -15px;">
-                  <label for="forget-password-email" class="sr-only">新密码</label>
-                  <input type="password" class="form-control" id="forget-password-new-password"
+                  <label for="forget-password-email" class="_authing-sr-only">新密码</label>
+                  <input type="password" class="_authing-form-control" id="forget-password-new-password"
                          :placeholder="opts.placeholder.newPassword"
                          autocomplete="off" v-model="forgetPasswordForm.password"
                          @keyup.enter="handleSubmitForgetPasswordNewPassword">
@@ -207,7 +207,7 @@
 
               <form v-show="pageVisible.wxQRCodeVisible && !opts.hideQRCode" action="#" style="height:300px"
                     class="authing-form no-shadow">
-                <div class="form-group" style="margin-top: -15px;">
+                <div class="_authing-form-group" style="margin-top: -15px;">
                   <div id="qrcode-node"></div>
                 </div>
               </form>
@@ -1092,32 +1092,32 @@
     line-height: inherit
   }
 
-  a {
+  a._authing_a {
     color: #337ab7;
     text-decoration: none;
     outline: 0;
   }
 
-  .btn {
+  ._authing-btn {
     outline: 0;
   }
 
-  a:focus, a:hover {
+  a._authing_a:focus, a._authing_a:hover {
     color: #23527c;
     text-decoration: underline
   }
 
-  a:focus {
+  a._authing_a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px
   }
 
-  button::-moz-focus-inner, input::-moz-focus-inner {
+  button._authing_button::-moz-focus-inner, input._authing_input::-moz-focus-inner {
     padding: 0;
     border: 0
   }
 
-  .sr-only {
+  ._authing_sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -1128,61 +1128,52 @@
     border: 0
   }
 
-  .sr-only-focusable:active, .sr-only-focusable:focus {
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    clip: auto
-  }
-
-  img {
+  img._authing_img {
     vertical-align: middle
   }
 
-  p {
+  p._authing_p {
     margin: 0 0 10px
   }
 
-  input {
+  input._authing_input {
     line-height: normal
   }
 
-  input[type=checkbox], input[type=radio] {
+  input._authing_input[type=checkbox], input._authing_input[type=radio] {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0
   }
 
-  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  input._authing_input[type=number]::-webkit-inner-spin-button, input._authing_input[type=number]::-webkit-outer-spin-button {
     height: auto
   }
 
-  input[type=search] {
+  input._authing_input[type=search] {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
     -webkit-appearance: textfield
   }
 
-  input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-search-decoration {
+  input._authing_input[type=search]::-webkit-search-cancel-button, input._authing_input[type=search]::-webkit-search-decoration {
     -webkit-appearance: none
   }
 
-  label {
+  label._authing_label {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: 700
   }
 
-  .form-group {
+  ._authing_form-group {
     margin-bottom: 15px
   }
 
-  .form-control {
+  ._authing_form-control {
     display: block;
     width: 100%;
     height: 34px;
@@ -1201,65 +1192,61 @@
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
   }
 
-  .form-control:focus {
+  ._authing_form-control:focus {
     border-color: #66afe9;
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
   }
 
-  .form-control::-moz-placeholder {
+  ._authing_form-control::-moz-placeholder {
     color: #999;
     opacity: 1
   }
 
-  .form-control:-ms-input-placeholder {
+  ._authing_form-control:-ms-input-placeholder {
     color: #999
   }
 
-  .form-control::-webkit-input-placeholder {
+  ._authing_form-control::-webkit-input-placeholder {
     color: #999
   }
 
-  .form-control::-ms-expand {
+  ._authing_form-control::-ms-expand {
     background-color: transparent;
     border: 0
   }
 
-  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  ._authing_form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     background-color: #eee;
     opacity: 1
   }
 
-  .form-control[disabled], fieldset[disabled] .form-control {
+  ._authing_form-control[disabled], fieldset[disabled] .form-control {
     cursor: not-allowed
   }
 
-  .warn {
-    background: #e33d3a !important;
-  }
-
-  .logmod__alter {
+  ._authing-logmod__alter {
     display: block;
     position: relative;
     margin-top: 7px;
   }
 
-  .logmod__alter::after {
+  ._authing-logmod__alter::after {
     clear: both;
     content: "";
     display: table;
   }
 
-  .logmod__alter .connect:last-child {
+  ._authing-logmod__alter ._authing-connect:last-child {
     border-radius: 0 0 4px 4px;
   }
 
-  .logmod__alter .connect:first-child {
+  ._authing-logmod__alter ._authing-connect:first-child {
     border-radius: 4px 4px 4px 4px;
   }
 
-  .connect {
+  ._authing-connect {
     overflow: hidden;
     position: relative;
     display: block;
@@ -1269,18 +1256,18 @@
     text-decoration: none;
   }
 
-  .connect::after {
+  ._authing-connect::after {
     clear: both;
     content: "";
     display: table;
   }
 
-  .connect:focus, .connect:hover, .connect:visited {
+  ._authing-connect:focus, ._authing-connect:hover, ._authing-connect:visited {
     color: #FFF;
     text-decoration: none;
   }
 
-  .connect__icon {
+  ._authing-connect__icon {
     vertical-align: middle;
     float: left;
     width: 50px;
@@ -1288,34 +1275,34 @@
     font-size: 22px;
   }
 
-  .connect__context {
+  ._authing-connect__context {
     vertical-align: middle;
     text-align: center;
   }
 
-  .connect.github {
+  ._authing-connect.github {
     background: #0099CC;
     color: #FFF;
   }
 
-  .connect.wechat {
+  ._authing-connect.wechat {
     background: #009900;
     color: #FFF;
   }
 
-  .connect.github a {
+  ._authing-connect.github a {
     color: #FFF;
   }
 
-  .connect.wechat a {
+  ._authing-connect.wechat a {
     color: #FFF;
   }
 
-  .connect.github .connect__icon {
+  ._authing-connect.github ._authing-connect__icon {
     background: #006699;
   }
 
-  .connect.wechat .connect__icon {
+  ._authing-connect.wechat ._authing-connect__icon {
     background: #006600;
   }
 
