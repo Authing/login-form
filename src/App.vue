@@ -312,7 +312,8 @@
       try {
         auth = new Authing({
           clientId: that.opts.clientId,
-          secret: that.opts.secret
+          secret: that.opts.secret,
+          host: that.opts.host
         });
       } catch (err) {
         document.getElementById('page-loading').remove();

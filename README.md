@@ -103,8 +103,8 @@ hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，
 **qrcodeScanning**.interval     |  否   |      1500  | Number   |每隔多少秒检查一次是否扫码，默认1500 | -
 **qrcodeScanning**.tips     |  否   |      使用 微信 或小程序 身份管家 扫码登录  | String   |提示信息，可写HTML | -
 **host**     |  否   |      {}  | Object   |**小程序扫码登录的配置项**| -
-**host**.user     |  否   |      'https://users.authing.cn/graphql'  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
-**host**.oauth     |  否   |      'https://oauth.authing.cn/graphql'  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
+**host**.user     |  否   |      [Authing 官方链接]  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
+**host**.oauth     |  否   |      [Authing 官方链接]  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
 
 
 完整代码：

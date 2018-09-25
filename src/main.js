@@ -82,11 +82,23 @@ var AuthingForm = function (opts) {
     };
   }
 
+  //初始化 host
+  if (opts.host) {
+    opts.host.users = opts.host.users || 'https://users.authing.cn/graphql';
+    opts.host.oauth = opts.host.oauth || 'https://oauth.authing.cn/graphql';    
+  } else {
+    opts.host = {
+      users: 'https://users.authing.cn/graphql',
+      oauth: 'https://oauth.authing.cn/graphql'
+    }
+  }
+
   $authing.opts.placeholder = opts.placeholder;
+  $authing.opts.host = opts.host;
+
   window.$authing = $authing;
   window.appMountId = appMountId;
   window.emailExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
-
 
   var target = document.getElementById(appMountId) || document.getElementById(opts.mountId) || document.body;
   var newMount = document.createElement('div');
