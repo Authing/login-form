@@ -88,20 +88,24 @@ hideUP     |  否   |      false  | Boolean   |**是否隐藏用户名-密码登
 hideUsename     |  否   |      false  | Boolean   |**是否隐藏注册时的用户名填写**，隐藏后将不显示用户名输入框| -
 hideOAuth     |  否   |      false  | Boolean   |**是否隐藏第三方 OAuth 登录**，在开发者在 Authing 控制台开启 OAuth 登录后，若此项为 true 将隐藏全部 OAuth 登录| -
 hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，如果隐藏，用户将不能通过点击按钮或按 ESC 关闭登录框| -
-**placeholder**     |  否   |      false  | Object   |**定制输入框的 paceholder**| -
+**placeholder**     |  否   |      {}  | Object   |**定制输入框的 paceholder**| -
 **placeholder**.username     |  否   |      请输入用户名  | String   |**定制输入框的 paceholder**| -
 **placeholder**.email     |  否   |      请输入邮箱  | String   |**用户名输入框的 paceholder**| -
 **placeholder**.password     |  否   |      请输入密码  | String   |**邮箱输入框的 paceholder**| -
 **placeholder**.confirmPassword     |  否   |      请确认密码  | String   |**密码输入框的 paceholder**| -
 **placeholder**.verfiyCode     |  否   |      请输入验证码  | String   |**验证码输入框的 paceholder**| -
 **placeholder**.newPassword     |  否   |      请输入新密码  | String   |**新密码输入框的 paceholder**| -
-**qrcodeScanning**     |  否   |      false  | Object   |**小程序扫码登录的配置项**| -
+**qrcodeScanning**     |  否   |      {}  | Object   |**小程序扫码登录的配置项**| -
 **qrcodeScanning**.redirect     |  否   |      true  | Boolean   |**是否执行跳转（在用户后台配置的URL）**，若值为false，用户数据会通过 onSuccess 回调函数返回| -
 **qrcodeScanning**.onSuccess     |  否   |      null  | Function   |**登录成功后回调函数，redirect为true时不回调此函数**| user
 **qrcodeScanning**.onError     |  否   |      null  | Function   |**登录失败后回调函数，一般为网络问题** | error
 **qrcodeScanning**.onIntervalStarting     |  否   |      null  | Function   |**轮询时的回调函数，intervalNum 为 setInterval 返回的数值，可使用 clearInterval 停止轮询** | intervalNum
 **qrcodeScanning**.interval     |  否   |      1500  | Number   |每隔多少秒检查一次是否扫码，默认1500 | -
 **qrcodeScanning**.tips     |  否   |      使用 微信 或小程序 身份管家 扫码登录  | String   |提示信息，可写HTML | -
+**host**     |  否   |      {}  | Object   |**小程序扫码登录的配置项**| -
+**host**.user     |  否   |      'https://users.authing.cn/graphql'  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
+**host**.oauth     |  否   |      'https://oauth.authing.cn/graphql'  | String   |**GraphQL 链接**，默认 Authing 官方链接，此处用于私有部署 Authing 的用户使用| -
+
 
 完整代码：
 
@@ -112,6 +116,11 @@ hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，
     clientId: '5b7f79f519915500015f18ac',
     // 必选，secret
     secret: '82f36cba243e13f81f06675193732af7',
+
+    host: {
+      user: null,
+      oauth: null
+    },
 
     title: 'Authing',
     logo: 'https://cdn.authing.cn/authing-logo.png',
