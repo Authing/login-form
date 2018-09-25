@@ -1,7 +1,7 @@
 {
   "name": "authing-login-form",
   "description": "Autogeneration of Authing Login Form",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "author": "Authing <xieyang@dodora.com>",
   "license": "MIT",
   "private": true,
