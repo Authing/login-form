@@ -512,7 +512,7 @@
           this.removeRedLine('sign-up-password');
           this.removeRedLine('sign-up-re-password');
         } else {
-          removeRedLine('sign-up-email');
+          this.removeRedLine('sign-up-email');
         }
       },
       handleSignUp: function handleSignUp() {
