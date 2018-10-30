@@ -46,7 +46,7 @@
 ### 3. 完整代码
 
 ``` html
-<script src="https://cdn.authing.cn/sdk/javascript/login-form.1.2.0.js"></script>
+<script src="https://cdn.authing.cn/sdk/javascript/login-form.1.2.2.js"></script>
 <script>
   new AuthingForm({
     clientId: '填入_Authing_的_client_ID',
