@@ -1622,11 +1622,18 @@
   ._authing_form-footer {
     position: relative;
   }
-
+  @media screen and (max-height: 390px) {
+    .form-body {
+      height: auto !important;
+    }
+    ._authing_form-footer {
+      position: static !important;
+    }
+  }
   @media screen and (max-height: 495px) and (max-width: 480px) {
     .form-body {
       overflow-y: scroll;
-      height: calc(100vh - 310px)
+      height: calc(100vh - 350px)
     }
 
     ._authing_form-footer {
