@@ -81,7 +81,7 @@
                 <div class="authing-loading-circle margin-top-11"></div>
               </div>
 
-              <div v-for="(item, index) in OAuthList" class="_authing_form-group">
+              <div v-for="(item, index) in OAuthList" :key="item._id" class="_authing_form-group">
                 <div class="_authing-logmod__alter">
                   <div class="logmod__alter-container">
                     <a
