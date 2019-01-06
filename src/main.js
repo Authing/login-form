@@ -166,7 +166,7 @@ AuthingForm.prototype = {
 };
 
 if(window) {
-  window.AuthingForm = AuthingForm
+  window.AuthingForm = AuthingForm;
 }
 
-export default AuthingForm
+export default AuthingForm;

@@ -21,8 +21,8 @@
         fadeOutDown: closeForm
       }">
           <div class="_authing_form-header">
-            <span v-if="pageStack.length > 0" @click="handleGoBack" class="auth0-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
-            <span @click="handleClose" v-if="!opts.hideClose" class="auth0-lock-close-button"><svg focusable="false" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon></g></svg></span>
+            <span v-if="pageStack.length > 0" @click="handleGoBack" class="authing-lock-back-button"><svg focusable="false" enable-background="new 0 0 24 24" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <polyline fill="none" points="12.5,21 3.5,12 12.5,3 " stroke="#000000" stroke-miterlimit="10" stroke-width="2"></polyline> <line fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2" x1="22" x2="3.5" y1="12" y2="12"></line> </svg></span>
+            <span @click="handleClose" v-if="!opts.hideClose" class="authing-lock-close-button"><svg focusable="false" enable-background="new 0 0 128 128" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><polygon fill="#373737" points="123.5429688,11.59375 116.4765625,4.5185547 64.0019531,56.9306641 11.5595703,4.4882813     4.4882813,11.5595703 56.9272461,63.9970703 4.4570313,116.4052734 11.5244141,123.4814453 63.9985352,71.0683594     116.4423828,123.5117188 123.5126953,116.4414063 71.0732422,64.0019531   "></polygon></g></svg></span>
             <div class="_authing_form-header-bg"></div>
             <div class="_authing_form-header-welcome">
               <img class="form-header-logo"
@@ -54,12 +54,16 @@
             <div class="authing-header-tabs-container">
               <ul class="authing-header-tabs">
                 <li v-bind:class="{
-                  'authing-header-tabs-current': pageVisible.wxQRCodeVisible,
-                  'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin
+                  'authing-header-tabs-current': pageVisible.wxQRCodeVisible || (opts.hideUP && opts.hideOAuth),
+                  'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin,
+                  'width-100': (opts.hideUP && opts.hideOAuth),
+                  'shadow-eee': (opts.hideUP && opts.hideOAuth),
                 }" v-show="isScanCodeEnable && !opts.hideQRCode">
                   <a class="_authing_a" href="javascript:void(0)" @click="gotoWxQRCodeScanning">扫码登录</a>
                 </li>
-                <li v-bind:class="{
+                <li 
+                  v-show="!(opts.hideUP && opts.hideOAuth)"
+                  v-bind:class="{
                   'authing-header-tabs-current': pageVisible.loginVisible,
                   'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
                   'width-100': (opts.hideUP && opts.hideQRCode) || (opts.hideQRCode && opts.forceLogin),
@@ -305,7 +309,7 @@
         removeDom: false,
       };
     },
-    created: function () {
+    mounted: function () {
       var that = this;
       var auth = null;
 
@@ -357,7 +361,6 @@
               });
 
               that.OAuthList = OAuthList;
-
             })
             .catch(function (err) {
               $authing.pub('oauthUnload', err);
@@ -368,6 +371,10 @@
             that.isScanCodeEnable = true;
           }
         }
+
+        if (that.opts.hideOAuth && that.opts.hideUP) {
+          that.gotoWxQRCodeScanning();
+        }
       })
         .catch(function (err) {
           document.getElementById('page-loading').remove();
@@ -377,7 +384,7 @@
           $authing.pub('authingUnload', err);
         });
     },
-    mounted: function () {
+    created: function () {
       this.pageVisible.loginVisible = true;
       document.onkeydown = (event) => {
         var e = event || window.event || arguments.callee.caller.arguments[0];
@@ -769,7 +776,9 @@
           });
       },
       gotoWxQRCodeScanning: function gotoWxQRCodeScanning() {
-        this.pageStack.push(this.getPageState());
+        if (!(this.opts.hideOAuth && this.opts.hideUP)) {
+          this.pageStack.push(this.getPageState());
+        }
         this.turnOnPage('wxQRCodeVisible');
 
         var scanOpts = $authing.opts.qrcodeScanning || {
@@ -1494,6 +1503,10 @@
     width: 100%;
   }
 
+  .authing-header-tabs li.shadow-eee {
+    box-shadow: 0 1px 0 0 #eee!important;
+  }
+
   .authing-header-tabs li a {
     padding: 11px 10px;
     display: block;
@@ -1510,7 +1523,7 @@
     color: #5c666f;
   }
 
-  .auth0-lock-back-button, .auth0-lock-close-button {
+  .authing-lock-back-button, .authing-lock-close-button {
     box-sizing: content-box !important;
     background: #fff;
     border-radius: 100px;
@@ -1526,11 +1539,11 @@
     line-height: 0;
   }
 
-  .auth0-lock-back-button {
+  .authing-lock-back-button {
     left: 14px;
   }
 
-  .auth0-lock-close-button {
+  .authing-lock-close-button {
     right: 14px;
   }
 

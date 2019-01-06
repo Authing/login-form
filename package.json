@@ -2,7 +2,7 @@
   "name": "authing-login-form",
   "description": "Autogeneration of Authing Login Form",
   "version": "1.2.0",
-  "author": "Authing <xieyang@dodora.com>",
+  "author": "Authing <xieyang@dodora.cn>",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -30,6 +30,6 @@
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": ">=3.1.11"
+    "webpack-dev-server": "^2.9.1"
   }
 }
