@@ -98,9 +98,6 @@ hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，
 **placeholder**.newPassword     |  否   |      请输入新密码  | String   |**新密码输入框的 paceholder**| -
 **qrcodeScanning**     |  否   |      {}  | Object   |**小程序扫码登录的配置项**| -
 **qrcodeScanning**.redirect     |  否   |      true  | Boolean   |**是否执行跳转（在用户后台配置的URL）**，若值为false，用户数据会通过 onSuccess 回调函数返回| -
-**qrcodeScanning**.onSuccess     |  否   |      null  | Function   |**登录成功后回调函数，redirect为true时不回调此函数**| user
-**qrcodeScanning**.onError     |  否   |      null  | Function   |**登录失败后回调函数，一般为网络问题** | error
-**qrcodeScanning**.onIntervalStarting     |  否   |      null  | Function   |**轮询时的回调函数，intervalNum 为 setInterval 返回的数值，可使用 clearInterval 停止轮询** | intervalNum
 **qrcodeScanning**.interval     |  否   |      1500  | Number   |每隔多少秒检查一次是否扫码，默认1500 | -
 **qrcodeScanning**.tips     |  否   |      使用 微信 或小程序 身份管家 扫码登录  | String   |提示信息，可写HTML | -
 **host**     |  否   |      {}  | Object   |**小程序扫码登录的配置项**| -
