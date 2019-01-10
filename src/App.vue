@@ -361,6 +361,11 @@
               });
 
               that.OAuthList = OAuthList;
+
+              if (OAuthList.length === 0 && that.opts.hideUP) {
+                that.opts.hideOAuth = true;
+                that.gotoWxQRCodeScanning();
+              }
             })
             .catch(function (err) {
               $authing.pub('oauthUnload', err);
