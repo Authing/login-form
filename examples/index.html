@@ -10,11 +10,13 @@
 <body>
   <p>Authing Login Form Example</p>
   <div id="app"></div>
-  <script src="../dist/authing-login-form.js"></script>
+  <script src="../dist/authing-login-form.js?v=2"></script>
   <script>
   var form = new AuthingForm({
     clientId: '5b7f79f519915500015f18ac',
-    secret: '82f36cba243e13f81f06675193732af7',
+    timestamp: Math.round(new Date() / 1000),
+    // 必填，nonce
+    nonce: Math.ceil(Math.random() * Math.pow(10, 6)),
 
     mountId: 'app',
 
@@ -98,6 +100,7 @@
   });
 
   form.on('scanning', function(data) {
+    alert('扫码成功，请打开控制台查看结果');
     console.log('on scanning success', data);
   });
 

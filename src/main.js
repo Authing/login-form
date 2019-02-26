@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import App from './App.vue';
-import Authing from 'authing-js-sdk';
 
 var AuthingForm = function (opts) {
   var

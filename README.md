@@ -29,13 +29,19 @@
 
 ### 2. 显示表单
 
-初始化 AuthingForm 即可，查看怎么获取 Client Id 和 Secret 请 [点击这里](https://docs.authing.cn/#/quick_start/howto)。
+初始化 AuthingForm 即可，查看怎么获取 Client Id 请 [点击这里](https://docs.authing.cn/#/quick_start/howto)。
+
+初始化 AuthingForm 的参数和 `authing-js-sdk` 的参数部分一样，请参考[文档](https://docs.authing.cn/#/quick_start/javascript?id=%E5%AE%A2%E6%88%B7%E7%AB%AF)。
 
 ``` javascript
 
   new AuthingForm({
-    clientId: '填入_Authing_的_client_ID',
-    secret: '填入_Authing_client_ID_的_secret'
+  	// 必填，client ID
+    clientId: 'your_client_id',
+    // 必填，timestamp
+    timestamp: Math.round(new Date() / 1000),
+    // 必填，nonce
+    nonce: Math.ceil(Math.random() * Math.pow(10, 6)),
   });
 
 ```
@@ -48,13 +54,13 @@
 <script src="https://cdn.authing.cn/sdk/javascript/login-form.1.2.2.js"></script>
 <script>
   new AuthingForm({
-    clientId: '填入_Authing_的_client_ID',
-    secret: '填入_Authing_client_ID_的_secret'
-  });
+    clientId: 'your_client_id',
+    timestamp: Math.round(new Date() / 1000),
+    nonce: Math.ceil(Math.random() * Math.pow(10, 6)),
+  });  
 </script>
 ```
 
-为了应用的安全起见，建议参数中的 ``secret`` 以加密方式存储在客户端代码中。
 如果你想获取用户登录事件，请参考[完整事件列表](https://docs.authing.cn/#/quick_start/login-form?id=%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94)。
 
 ## 高级功能
@@ -110,10 +116,12 @@ hideClose|否|false|Boolean|**是否隐藏登录框右上角的关闭按钮**，
 ``` javascript
   var form = new AuthingForm({
 
-  	// 必选，client ID
-    clientId: '5b7f79f519915500015f18ac',
-    // 必选，secret
-    secret: '82f36cba243e13f81f06675193732af7',
+  	// 必填，client ID
+    clientId: 'your_client_id',
+    // 必填，timestamp
+    timestamp: Math.round(new Date() / 1000),
+    // 必填，nonce
+    nonce: Math.ceil(Math.random() * Math.pow(10, 6)),
 
     host: {
       user: null,

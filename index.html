@@ -14,7 +14,9 @@
   <script>
   var form = new AuthingForm({
     clientId: '5b7f79f519915500015f18ac',
-    secret: '82f36cba243e13f81f06675193732af7',
+    timestamp: Math.round(new Date() / 1000),
+    // 必填，nonce
+    nonce: Math.ceil(Math.random() * Math.pow(10, 6)),
 
     title: 'Authing',
     logo: 'https://cdn.authing.cn/authing-logo.png',
@@ -93,6 +95,7 @@
   });
 
   form.on('scanning', function(data) {
+    alert('扫码成功，请打开控制台查看结果');
     console.log('on scanning success', data);
   });
 
