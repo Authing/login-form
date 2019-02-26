@@ -36,7 +36,7 @@
 ``` javascript
 
   new AuthingForm({
-  	// 必填，client ID
+    // 必填，client ID
     clientId: 'your_client_id',
     // 必填，timestamp
     timestamp: Math.round(new Date() / 1000),
