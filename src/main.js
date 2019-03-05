@@ -83,11 +83,11 @@ var AuthingForm = function (opts) {
 
   //初始化 host
   if (opts.host) {
-    opts.host.users = opts.host.users || 'https://users.authing.cn/graphql';
+    opts.host.user = opts.host.user || 'https://users.authing.cn/graphql';
     opts.host.oauth = opts.host.oauth || 'https://oauth.authing.cn/graphql';    
   } else {
     opts.host = {
-      users: 'https://users.authing.cn/graphql',
+      user: 'https://users.authing.cn/graphql',
       oauth: 'https://oauth.authing.cn/graphql'
     }
   }
