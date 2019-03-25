@@ -49,6 +49,7 @@ var AuthingForm = function (opts) {
   $authing.opts.hideOAuth = opts.hideOAuth || false;
   $authing.opts.hideUsername = opts.hideUsername || false;
   $authing.opts.hideClose = opts.hideClose || false;
+  $authing.opts.hideRegister = opts.hideRegister || false;
 
   $authing.opts.forceLogin = opts.forceLogin || false;
   $authing.opts.title = opts.title || 'Authing';

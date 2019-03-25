@@ -55,7 +55,7 @@
               <ul class="authing-header-tabs">
                 <li v-bind:class="{
                   'authing-header-tabs-current': pageVisible.wxQRCodeVisible || (opts.hideUP && opts.hideOAuth),
-                  'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin,
+                  'width-55': !isScanCodeEnable || opts.hideUP || opts.forceLogin || opts.hideRegister,
                   'width-100': (opts.hideUP && opts.hideOAuth),
                   'shadow-eee': (opts.hideUP && opts.hideOAuth),
                 }" v-show="isScanCodeEnable && !opts.hideQRCode">
@@ -65,12 +65,12 @@
                   v-show="!(opts.hideUP && opts.hideOAuth)"
                   v-bind:class="{
                   'authing-header-tabs-current': pageVisible.loginVisible,
-                  'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin,
+                  'width-55': !isScanCodeEnable || opts.hideQRCode || opts.hideUP || opts.forceLogin || opts.hideRegister,
                   'width-100': (opts.hideUP && opts.hideQRCode) || (opts.hideQRCode && opts.forceLogin),
                 }">
                   <a class="_authing_a" href="javascript:void(0)" @click="gotoLogin">登录</a>
                 </li>
-                <li v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
+                <li v-if="!opts.hideRegister" v-show="!opts.hideUP && !opts.forceLogin" v-bind:class="{
                   'authing-header-tabs-current': pageVisible.signUpVisible,
                   'width-55': !isScanCodeEnable || opts.hideQRCode
                 }">
