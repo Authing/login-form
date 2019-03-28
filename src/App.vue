@@ -111,7 +111,7 @@
 
                 <div v-show="opts.forceLogin" class="authing_force_login_tips" style="text-align:center">
                   <p>输入帐号密码登录</p>
-                  <p>如果您没有帐号，我们会自动创建</p>
+                  <p>如果你没有帐号，我们会自动创建</p>
                 </div>
 
                 <div class="_authing_form-group">
@@ -136,12 +136,12 @@
 
                   <div class="_authing_form-group" style="margin-bottom:0px;">
                     <label class="_authing_label" for="login-remember" style="width:100%">
-                      <input class="_authing_input" type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
+                      <!-- <input class="_authing_input" type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
                              v-model="rememberMe"><span
-                      style="vertical-align: middle"> 记住我</span>
+                      style="vertical-align: middle"> 记住我</span> -->
+                      <a class="_authing_a" href="#" @click="gotoUsingPhone">使用手机登录</a>
                     </label>
                   </div>
-
 
                   <div style="font-size:14px">
                     <a class="_authing_a" href="#" @click="gotoForgetPassword">忘记密码？</a>
@@ -173,6 +173,35 @@
                          :placeholder="opts.placeholder.password" autocomplete="off" @keyup.enter="handleSignUp">
                 </div>
               </form>
+
+              <form v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
+                <div class="_authing_form-group">
+                  <input type="text" class="_authing_input _authing_form-control" id="sign-up-phone" v-model="loginByPhoneCodeForm.phone"
+                         :placeholder="opts.placeholder.phone"
+                         autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
+                </div>
+                <div class="_authing_form-group">
+                  <input type="number" class="_authing_input _authing_form-control" id="sign-up-phone-code" v-model="loginByPhoneCodeForm.phoneCode"
+                        :placeholder="opts.placeholder.phoneCode"
+                         autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
+                  <div class="_authing_form-footer" style="float: right;padding-top: 9px;padding-bottom: 9px;margin-top: -50px;height: 15px;">
+                    <button
+                      @click="handleSendingPhoneCode"
+                      style="height: 40px;font-size: 12px;border-radius: 0px;"
+                      class="btn btn-primary">获取验证码
+                    </button>
+                  </div>
+                </div>
+                <div class="row">
+
+                  <div class="_authing_form-group" style="margin-bottom:0px;">
+                    <label class="_authing_label" for="login-remember" style="width:100%">
+                      <a class="_authing_a" href="#" @click="gotoLogin">使用邮箱登录</a>
+                    </label>
+                  </div>
+
+                </div>                
+              </form>              
 
               <form v-if="pageVisible.forgetPasswordVisible" class="authing-form no-shadow">
                 <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="_authing_form-group"
@@ -214,6 +243,9 @@
             }">
               <div class="authing-loading-circle" v-show="loading"></div>
               <button v-show="pageVisible.loginVisible && !loading" @click="handleLogin"
+                      class="btn btn-primary">登录
+              </button>
+              <button v-show="pageVisible.loginByPhoneCodeVisible && !loading" @click="handleLoginByPhoneCode"
                       class="btn btn-primary">登录
               </button>
               <button v-show="pageVisible.signUpVisible && !loading" @click="handleSignUp"
@@ -258,7 +290,7 @@
         errVisible: false,
         warnVisible: false,
 
-        rememberMe: false,
+        rememberMe: true,
 
         pageVisible: {
           wxQRCodeVisible: false,
@@ -270,6 +302,7 @@
           forgetPasswordVerifyCodeVisible: false,
           forgetPasswordNewPasswordVisible: false,
           forgetPasswordSendEmailVisible: false,
+          loginByPhoneCodeVisible: false,
         },
 
         pageStack: [],
@@ -283,6 +316,10 @@
           password: '',
           email: '',
           rePassword: ''
+        },
+        loginByPhoneCodeForm: {
+          phone: '',
+          phoneCode: '',
         },
         loginForm: {
           email: '',
@@ -518,6 +555,13 @@
         this.turnOnPage('forgetPasswordVisible');
         this.forgetPasswordForm.email = this.loginForm.email;
         this.pageVisible.forgetPasswordSendEmailVisible = true;
+      },
+      gotoUsingPhone: function gotoUsingPhone() {
+        this.pageStack.push(this.getPageState());
+        this.turnOnPage('loginByPhoneCodeVisible');
+        // this.forgetPasswordForm.email = this.loginForm.email;
+        // this.pageVisible.forgetPasswordSendEmailVisible = true;
+        this.pageVisible.signUpVisible = false;
       },
       checkEmail: function checkEmail() {
         if (!emailExp.test(this.signUpForm.email)) {
@@ -830,7 +874,47 @@
         setTimeout(function () {
           that.removeDom = true;
         }, 800);
-      }
+      },
+      handleLoginByPhoneCode: function handleLoginByPhoneCode() {
+        if(!(/^1[34578]\d{9}$/.test(this.loginByPhoneCodeForm.phone))) {
+          this.showGlobalErr('请填写正确的手机号');
+          return;
+        }
+
+        if(!this.loginByPhoneCodeForm.phoneCode) {
+          this.showGlobalErr('请输入验证码');
+          return;
+        }
+
+        if(this.loginByPhoneCodeForm.phoneCode.length !== 4) {
+          this.showGlobalErr('验证码为四位，请重新输入');
+          return;
+        }
+
+        validAuth.loginByPhoneCode(this.loginByPhoneCodeForm).then((res) => {
+          console.log('res-------', res);
+        }).catch((err) => {
+          console.log('err', err);
+        });
+
+        // validAuth.
+
+      },
+      handleSendingPhoneCode: function handleSendingPhoneCode() {
+        if(!(/^1[34578]\d{9}$/.test(this.loginByPhoneCodeForm.phone))) {
+          this.showGlobalErr('请填写正确的手机号');
+          return;
+        }
+
+        this.showGlobalSuccess('手机号验证通过');
+
+        validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((res) => {
+          console.log('res-------', res);
+        }).catch((err) => {
+          console.log('err', err);
+        });
+
+      },
     },
     watch: {
       rememberMe: function (newVal, oldVal) {
@@ -1821,7 +1905,7 @@
   }
 
   span.authing-form-badge-logo {
-    background-image: url('https://cdn.authing.cn/authing-logo.png');
+    background-image: url('https://usercontents.authing.cn/client/logo@2.png');
     display: inline-block;
     width: 14px;
     height: 14px;

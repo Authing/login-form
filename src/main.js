@@ -10,7 +10,9 @@ var AuthingForm = function (opts) {
       'PASSWORD': '请输入密码',
       'CONFIRM_PASSWORD': '请确认密码',
       'VERIFY_CODE': '请输入验证码',
-      'NEW_PASSWORD': '请输入新密码'
+      'NEW_PASSWORD': '请输入新密码',
+      'PHONE': '请输入手机号',
+      'PHONE_CODE': '4 位验证码'
     },
 
 
@@ -53,7 +55,7 @@ var AuthingForm = function (opts) {
 
   $authing.opts.forceLogin = opts.forceLogin || false;
   $authing.opts.title = opts.title || 'Authing';
-  $authing.opts.logo = opts.logo || 'https://cdn.authing.cn/authing-logo.png';
+  $authing.opts.logo = opts.logo || 'https://usercontents.authing.cn/client/logo@2.png';
 
   $authing.opts.mountId = opts.mountId || null;
   // 初始化小程序扫码登录配置 
@@ -71,6 +73,8 @@ var AuthingForm = function (opts) {
     opts.placeholder.confirmPassword = opts.placeholder.confirmPassword || PLACEHOLDER_TEXT.USERNAME;
     opts.placeholder.verfiyCode = opts.placeholder.verfiyCode || PLACEHOLDER_TEXT.VERIFY_CODE;
     opts.placeholder.newPassword = opts.placeholder.newPassword || PLACEHOLDER_TEXT.NEW_PASSWORD;
+    opts.placeholder.phone = opts.placeholder.phone || PLACEHOLDER_TEXT.PHONE;
+    opts.placeholder.phoneCode = opts.placeholder.phoneCode || PLACEHOLDER_TEXT.PHONE_CODE;
   } else {
     opts.placeholder = {
       username: PLACEHOLDER_TEXT.USERNAME,
@@ -78,7 +82,9 @@ var AuthingForm = function (opts) {
       password: PLACEHOLDER_TEXT.PASSWORD,
       confirmPassword: PLACEHOLDER_TEXT.CONFIRM_PASSWORD,
       verfiyCode: PLACEHOLDER_TEXT.VERIFY_CODE,
-      newPassword: PLACEHOLDER_TEXT.NEW_PASSWORD
+      newPassword: PLACEHOLDER_TEXT.NEW_PASSWORD,
+      phone: PLACEHOLDER_TEXT.PHONE,
+      phoneCode: PLACEHOLDER_TEXT.PHONE_CODE,
     };
   }
 
