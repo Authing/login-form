@@ -176,12 +176,12 @@
 
               <form v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
                 <div class="_authing_form-group">
-                  <input type="text" class="_authing_input _authing_form-control" id="sign-up-phone" v-model="loginByPhoneCodeForm.phone"
+                  <input type="text" class="_authing_input _authing_form-control" id="login-phone" v-model="loginByPhoneCodeForm.phone"
                          :placeholder="opts.placeholder.phone"
                          autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
                 </div>
                 <div class="_authing_form-group">
-                  <input type="number" class="_authing_input _authing_form-control" id="sign-up-phone-code" v-model="loginByPhoneCodeForm.phoneCode"
+                  <input type="number" class="_authing_input _authing_form-control" id="login-phoneCode" v-model="loginByPhoneCodeForm.phoneCode"
                         :placeholder="opts.placeholder.phoneCode"
                          autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
                   <div class="_authing_form-footer" style="float: right;padding-top: 9px;padding-bottom: 9px;margin-top: -50px;height: 15px;">
@@ -647,7 +647,7 @@
             $authing.pub('registerError', err);
             if (err.message.code === 2026) {
               that.addAnimation('sign-up-email');
-              that.emoveRedLine('sign-up-re-password');
+              that.removeRedLine('sign-up-re-password');
               that.removeRedLine('sign-up-username');
               that.removeRedLine('sign-up-password');
             }
@@ -920,7 +920,7 @@
 
         this.setLoading();
 
-        validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((userInfo) => {
+        validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((res) => {
           this.unLoading();
           this.showGlobalSuccess('短信发送成功，请打开手机查看');
           console.log('res-------', res);

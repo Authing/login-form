@@ -11,7 +11,7 @@
     "example": "cross-env NODE_ENV=development webpack-dev-server --content-base examples"
   },
   "dependencies": {
-    "authing-js-sdk": "^1.4.1",
+    "authing-js-sdk": "^1.9.0",
     "vue": "^2.5.11"
   },
   "browserslist": [
