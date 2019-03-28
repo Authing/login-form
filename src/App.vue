@@ -878,39 +878,55 @@
       handleLoginByPhoneCode: function handleLoginByPhoneCode() {
         if(!(/^1[34578]\d{9}$/.test(this.loginByPhoneCodeForm.phone))) {
           this.showGlobalErr('请填写正确的手机号');
+          this.addAnimation('login-phone');
+          $authing.pub('loginError', '请填写正确的手机号');
           return;
         }
 
         if(!this.loginByPhoneCodeForm.phoneCode) {
           this.showGlobalErr('请输入验证码');
+          this.addAnimation('login-phoneCode');
+          $authing.pub('loginError', '请输入验证码');
           return;
         }
 
         if(this.loginByPhoneCodeForm.phoneCode.length !== 4) {
           this.showGlobalErr('验证码为四位，请重新输入');
+          this.addAnimation('login-phoneCode');
+          $authing.pub('loginError', '验证码为四位，请重新输入');
           return;
         }
 
-        validAuth.loginByPhoneCode(this.loginByPhoneCodeForm).then((res) => {
-          console.log('res-------', res);
+        this.setLoading();
+
+        validAuth.loginByPhoneCode(this.loginByPhoneCodeForm).then((userInfo) => {
+          this.unLoading();
+          this.showGlobalSuccess('验证通过，欢迎你：' + userInfo.username || userInfo.phone);
+          $authing.pub('login', userInfo);
         }).catch((err) => {
+          this.unLoading();
+          this.showGlobalSuccess('登录失败，请重试');
           console.log('err', err);
         });
-
-        // validAuth.
 
       },
       handleSendingPhoneCode: function handleSendingPhoneCode() {
         if(!(/^1[34578]\d{9}$/.test(this.loginByPhoneCodeForm.phone))) {
           this.showGlobalErr('请填写正确的手机号');
+          this.addAnimation('login-phone');
+          $authing.pub('loginError', '请填写正确的手机号');
           return;
         }
 
-        this.showGlobalSuccess('手机号验证通过');
+        this.setLoading();
 
-        validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((res) => {
+        validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((userInfo) => {
+          this.unLoading();
+          this.showGlobalSuccess('短信发送成功，请打开手机查看');
           console.log('res-------', res);
         }).catch((err) => {
+          this.unLoading();
+          this.showGlobalErr(err.message);
           console.log('err', err);
         });
 
