@@ -181,16 +181,16 @@
                          autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
                 </div>
                 <div class="_authing_form-group">
-                  <input type="number" class="_authing_input _authing_form-control" id="login-phoneCode" v-model="loginByPhoneCodeForm.phoneCode"
-                        :placeholder="opts.placeholder.phoneCode"
-                         autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
-                  <div class="_authing_form-footer" style="float: right;padding-top: 9px;padding-bottom: 9px;margin-top: -50px;height: 15px;">
+                  <div class="_authing_form-footer phone-code-wrapper" style="float: right;padding-top: 9px;padding-bottom: 9px;margin-top: -50px;height: 15px;">
                     <button
                       @click="handleSendingPhoneCode"
                       style="height: 40px;font-size: 12px;border-radius: 0px;"
                       class="btn btn-primary">获取验证码
                     </button>
                   </div>
+                  <input style="margin-top: 55px;" type="number" class="_authing_input _authing_form-control" id="login-phoneCode" v-model="loginByPhoneCodeForm.phoneCode"
+                        :placeholder="opts.placeholder.phoneCode"
+                         autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
                 </div>
                 <div class="row">
 
@@ -1780,11 +1780,23 @@
     outline: 0;
   }
 
+  @media screen and (min-width: 480px) {
+    ._authing_form-footer.phone-code-wrapper {
+      position: absolute;
+      right: 22px;
+      margin-top: 0px!important;
+    }
+  }
+
   @media screen and (max-width: 480px) {
     ._authing_form-footer {
       position: absolute;
       bottom: 0;
     }
+
+    ._authing_form-footer.phone-code-wrapper {
+      position: relative;
+    }    
 
     ._authing_container {
       padding: 0px;
