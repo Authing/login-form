@@ -174,7 +174,7 @@
                 </div>
               </form>
 
-              <form v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
+              <form @submit.native.prevent="() => { return false; }" v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
                 <div class="_authing_form-group">
                   <input type="text" class="_authing_input _authing_form-control" id="login-phone" v-model="loginByPhoneCodeForm.phone"
                          :placeholder="opts.placeholder.phone"
@@ -203,7 +203,7 @@
                 </div>                
               </form>              
 
-              <form v-if="pageVisible.forgetPasswordVisible" class="authing-form no-shadow">
+              <form @submit.native.prevent="() => { return false; }" v-if="pageVisible.forgetPasswordVisible" class="authing-form no-shadow">
                 <div v-if="pageVisible.forgetPasswordSendEmailVisible" class="_authing_form-group"
                      style="margin-top: -15px;">
                   <input type="text" class="_authing_input _authing_form-control"
@@ -905,8 +905,7 @@
           $authing.pub('login', userInfo);
         }).catch((err) => {
           this.unLoading();
-          this.showGlobalSuccess('登录失败，请重试');
-          console.log('err', err);
+          this.showGlobalErr(err.message.message);
         });
 
       },
@@ -923,11 +922,9 @@
         validAuth.getVerificationCode(this.loginByPhoneCodeForm.phone).then((res) => {
           this.unLoading();
           this.showGlobalSuccess('短信发送成功，请打开手机查看');
-          console.log('res-------', res);
         }).catch((err) => {
           this.unLoading();
           this.showGlobalErr(err.message);
-          console.log('err', err);
         });
 
       },
