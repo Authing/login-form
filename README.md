@@ -52,7 +52,7 @@
 ### 3. 完整代码
 
 ``` html
-<script src="https://cdn.authing.cn/sdk/javascript/authing-login-form-1.6.0.js"></script>
+<script src="https://cdn.authing.cn/sdk/javascript/authing-login-form-1.7.0.js"></script>
 <script>
   new AuthingForm({
     clientId: 'your_client_id',
