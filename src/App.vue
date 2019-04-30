@@ -139,12 +139,12 @@
                       <!-- <input class="_authing_input" type="checkbox" id="login-remember" style="vertical-align: middle; margin: 0"
                              v-model="rememberMe"><span
                       style="vertical-align: middle"> 记住我</span> -->
-                      <a class="_authing_a" href="#" @click="gotoUsingPhone">使用手机登录</a>
+                      <a class="_authing_a" @click="gotoUsingPhone">使用手机登录</a>
                     </label>
                   </div>
 
                   <div style="font-size:14px">
-                    <a class="_authing_a" href="#" @click="gotoForgetPassword">忘记密码？</a>
+                    <a class="_authing_a" @click="gotoForgetPassword">忘记密码？</a>
                   </div>
 
                 </div>
@@ -174,7 +174,7 @@
                 </div>
               </form>
 
-              <form @submit.native.prevent="() => { return false; }" v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
+              <form @submit.prevent="() => { return false; }" v-show="pageVisible.loginByPhoneCodeVisible" action="#" class="authing-form no-shadow">
                 <div class="_authing_form-group">
                   <input type="text" class="_authing_input _authing_form-control" id="login-phone" v-model="loginByPhoneCodeForm.phone"
                          :placeholder="opts.placeholder.phone"
@@ -188,7 +188,7 @@
                       class="btn btn-primary">获取验证码
                     </button>
                   </div>
-                  <input style="margin-top: 55px;" type="number" class="_authing_input _authing_form-control" id="login-phoneCode" v-model="loginByPhoneCodeForm.phoneCode"
+                  <input type="number" class="_authing_input _authing_form-control" id="login-phoneCode" v-model="loginByPhoneCodeForm.phoneCode"
                         :placeholder="opts.placeholder.phoneCode"
                          autocomplete="off" @keyup.enter="handleLoginByPhoneCode">
                 </div>
@@ -196,7 +196,7 @@
 
                   <div class="_authing_form-group" style="margin-bottom:0px;">
                     <label class="_authing_label" for="login-remember" style="width:100%">
-                      <a class="_authing_a" href="#" @click="gotoLogin">使用邮箱登录</a>
+                      <a class="_authing_a" @click="gotoLogin">使用邮箱登录</a>
                     </label>
                   </div>
 
@@ -1973,5 +1973,11 @@
 
   #authing__retry a {
     font-weight: 300;
+  }
+
+  @media screen and (max-width: 480px) {
+    #login-phoneCode {
+      margin-top: 55px;
+    }
   }
 </style>
