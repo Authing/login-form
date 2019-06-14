@@ -662,14 +662,17 @@
         };
 
         if (!emailExp.test(this.loginForm.email)) {
-          this.showGlobalErr('请输入正确格式的邮箱');
-          this.addAnimation('login-username');
-          this.removeRedLine('login-password');
-          this.removeRedLine('verify-code');
-          that.unLoading();
-          $authing.pub('loginError', '请输入正确格式的邮箱');
-          return false;
+          info = {
+            username: this.loginForm.email,
+            password: this.loginForm.password
+          }
+        } else {
+          info = {
+            email: this.loginForm.email,
+            password: this.loginForm.password
+          }
         }
+
         if (!this.loginForm.password) {
           this.showGlobalErr('请输入密码');
           this.addAnimation('login-password');
@@ -679,6 +682,7 @@
           $authing.pub('loginError', '请输入密码');
           return false;
         }
+        
         if (this.pageVisible.verifyCodeVisible) {
           info.verifyCode = this.verifyCode;
         }

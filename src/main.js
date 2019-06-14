@@ -5,14 +5,14 @@ var AuthingForm = function (opts) {
   var
 
     PLACEHOLDER_TEXT = {
-      'USERNAME': '请输入用户名',
-      'EMAIL': '请输入邮箱',
-      'PASSWORD': '请输入密码',
-      'CONFIRM_PASSWORD': '请确认密码',
-      'VERIFY_CODE': '请输入验证码',
-      'NEW_PASSWORD': '请输入新密码',
-      'PHONE': '请输入手机号',
-      'PHONE_CODE': '4 位验证码'
+      USERNAME: "请输入用户名",
+      EMAIL: "请输入邮箱或用户名",
+      PASSWORD: "请输入密码",
+      CONFIRM_PASSWORD: "请确认密码",
+      VERIFY_CODE: "请输入验证码",
+      NEW_PASSWORD: "请输入新密码",
+      PHONE: "请输入手机号",
+      PHONE_CODE: "4 位验证码"
     },
 
 
